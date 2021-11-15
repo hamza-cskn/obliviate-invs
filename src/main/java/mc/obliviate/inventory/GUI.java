@@ -1,6 +1,5 @@
 package mc.obliviate.inventory;
 
-import com.sun.istack.internal.NotNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -186,7 +185,6 @@ public abstract class GUI implements InventoryHolder {
 		return advancedSlotManager;
 	}
 
-	@NotNull
 	public Pagination getPagination() {
 		if (pagination == null) {
 			pagination = new Pagination(this);
