@@ -15,7 +15,7 @@ Obliviate Invs is a inventory GUI api for Bukkit.
 - Put GUI a lot of icons with fillColumn(), fillRow(), fillGui() methods.
 
 
-## How to use?
+## How to use
 
 ```java
 public class SelectServerGUI extends GUI {
