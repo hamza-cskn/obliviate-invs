@@ -6,7 +6,7 @@
 
     <groupId>mc.obliviate</groupId>
     <artifactId>ObliviateInvs</artifactId>
-    <version>3.0</version>
+    <version>4.0</version>
 
     <name>Inventory</name>
 
@@ -26,6 +26,11 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+            <repository>
+                <id>jitpack.io</id>
+                <url>https://jitpack.io</url>
+            </repository>
+
     </repositories>
 
     <dependencies>
@@ -35,5 +40,6 @@
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 </project>
