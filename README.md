@@ -1,4 +1,6 @@
-# ObliviateInvs
+[![](https://jitpack.io/v/Obliviated/ObliviateInvs.svg)](https://jitpack.io/#Obliviated/ObliviateInvs)
+
+# ObliviateInvs 
 
 Obliviate Invs is a inventory GUI api for Bukkit.
 
