@@ -67,7 +67,7 @@ public class SelectServerGUI extends GUI {
 		});
 
 		anIcon.onDrag(e -> { //define drag event as variable named 'e'
-			player.sendMessage("You draged the icon!"); //send message when player clicked
+			player.sendMessage("You draged the icon!"); //send message when player draged
 			e.getCursor(); //you can use drag action as 'e' variable
 		});
 
