@@ -2,7 +2,7 @@
 
 # ObliviateInvs 
 
-Obliviate Invs is a inventory GUI api for Bukkit.
+Obliviate Invs is an inventory GUI api for Bukkit.
 
 ## Features
 - Create custom GUIs easly
