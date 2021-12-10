@@ -15,8 +15,11 @@ Obliviate Invs is an inventory GUI api for Bukkit.
 - Put GUI a lot of icons with fillColumn(), fillRow(), fillGui() methods.
 
 # Advanced Slots
-https://images-ext-1.discordapp.net/external/WXH1g-M7v0rCy-SzQJIP5hQFaFeESgK74TogHkoz5sk/https/media.discordapp.net/attachments/860952539335622668/874261379027206164/advslots.gif?width=884&height=676
 
+- Slot icon can be from all items (barrier, air etc...)
+- Imitates all click types
+- Calls onPut() and onPickup() events.
+![](https://images-ext-1.discordapp.net/external/WXH1g-M7v0rCy-SzQJIP5hQFaFeESgK74TogHkoz5sk/https/media.discordapp.net/attachments/860952539335622668/874261379027206164/advslots.gif?width=884&height=676)
 
 ## How to use
 
