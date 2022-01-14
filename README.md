@@ -1,5 +1,23 @@
 [![](https://jitpack.io/v/Obliviated/ObliviateInvs.svg)](https://jitpack.io/#Obliviated/ObliviateInvs)
 
+# Maven
+```
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	</repository>
+</repositories>
+
+<dependency>
+	<groupId>com.github.Obliviated</groupId>
+	<artifactId>ObliviateInvs</artifactId>
+	<version>Tag</version>
+</dependency>
+```
+
+
+
 # ObliviateInvs 
 
 Obliviate Invs is an inventory GUI api for Bukkit.
