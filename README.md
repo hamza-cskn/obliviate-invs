@@ -12,7 +12,7 @@
 <dependency>
 	<groupId>com.github.Obliviated</groupId>
 	<artifactId>ObliviateInvs</artifactId>
-	<version>Tag</version>
+	<version>3.0.1</version>
 </dependency>
 ```
 
