@@ -2,17 +2,15 @@
 
 # Maven
 ```
-<repositories>
-	<repository>
-	    <id>jitpack.io</id>
-	    <url>https://jitpack.io</url>
-	</repository>
-</repositories>
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
 
 <dependency>
-	<groupId>com.github.Obliviated</groupId>
-	<artifactId>ObliviateInvs</artifactId>
-	<version>3.0.1</version>
+    <groupId>com.github.Obliviated</groupId>
+    <artifactId>ObliviateInvs</artifactId>
+    <version>3.0.1</version>
 </dependency>
 ```
 
