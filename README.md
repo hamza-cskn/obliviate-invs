@@ -35,9 +35,13 @@ Obliviate Invs is an inventory GUI api for Bukkit.
 - Slot icon can be from all items (barrier, air etc...)
 - Imitates all click types
 - Calls onPut() and onPickup() events.
-![](https://images-ext-1.discordapp.net/external/WXH1g-M7v0rCy-SzQJIP5hQFaFeESgK74TogHkoz5sk/https/media.discordapp.net/attachments/860952539335622668/874261379027206164/advslots.gif?width=884&height=676)
+![advslots](https://user-images.githubusercontent.com/36128276/151204354-dc9f279a-dc6c-48bb-b41d-5dac4479afdd.gif)
 
-## How to use
+# Pagination
+![sa](https://user-images.githubusercontent.com/36128276/151204704-cd2ba642-e3d1-4810-bece-38a40dc26ee1.gif)
+
+
+## Example Code
 
 ```java
 public class SelectServerGUI extends GUI {
