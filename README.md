@@ -110,7 +110,7 @@ public class SelectServerGUI extends GUI {
 		getId(); id of gui
 		getItems(); item map of gui
 		getPagination(); pagination manager of gui
-		getPlugin(); You plugin instance
+		getPlugin(); your plugin's instance
 		getSize(); row amount of the gui
 		getTitle(); title text of the gui
 		 */
