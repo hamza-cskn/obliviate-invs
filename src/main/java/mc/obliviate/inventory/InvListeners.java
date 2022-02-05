@@ -23,8 +23,6 @@ public class InvListeners implements Listener {
 
         final GUI openGui = inventoryAPI.getPlayersCurrentGui((Player) event.getWhoClicked());
         if (openGui == null) return;
-        openGui.onClick(event);
-        openGui.getAdvancedSlotManager().onClick(event);
         if (event.getClickedInventory() == null) return;
         final int index = event.getRawSlot();
         if (event.getSlot() == index) {
@@ -48,6 +46,8 @@ public class InvListeners implements Listener {
         }
 
         item.getClickAction().click(event);
+        openGui.onClick(event);
+        openGui.getAdvancedSlotManager().onClick(event);
     }
 
     @EventHandler
