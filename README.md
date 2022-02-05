@@ -1,8 +1,24 @@
 [![](https://jitpack.io/v/Obliviated/ObliviateInvs.svg)](https://jitpack.io/#Obliviated/ObliviateInvs)
 
+# Maven
+```
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
+
+<dependency>
+    <groupId>com.github.Obliviated</groupId>
+    <artifactId>ObliviateInvs</artifactId>
+    <version>3.0.1</version>
+</dependency>
+```
+
+
+
 # ObliviateInvs 
 
-Obliviate Invs is a inventory GUI api for Bukkit.
+Obliviate Invs is an inventory GUI api for Bukkit.
 
 ## Features
 - Create custom GUIs easly
@@ -14,8 +30,18 @@ Obliviate Invs is a inventory GUI api for Bukkit.
 - Use onClose(), onOpen(), onClick() events.
 - Put GUI a lot of icons with fillColumn(), fillRow(), fillGui() methods.
 
+# Advanced Slots
 
-## How to use
+- Slot icon can be from all items (barrier, air etc...)
+- Imitates all click types
+- Calls onPut() and onPickup() events.
+![advslots](https://user-images.githubusercontent.com/36128276/151204354-dc9f279a-dc6c-48bb-b41d-5dac4479afdd.gif)
+
+# Pagination
+![sa](https://user-images.githubusercontent.com/36128276/151204704-cd2ba642-e3d1-4810-bece-38a40dc26ee1.gif)
+
+
+## Example Code
 
 ```java
 public class SelectServerGUI extends GUI {
@@ -67,7 +93,7 @@ public class SelectServerGUI extends GUI {
 		});
 
 		anIcon.onDrag(e -> { //define drag event as variable named 'e'
-			player.sendMessage("You draged the icon!"); //send message when player clicked
+			player.sendMessage("You draged the icon!"); //send message when player draged
 			e.getCursor(); //you can use drag action as 'e' variable
 		});
 
@@ -84,7 +110,7 @@ public class SelectServerGUI extends GUI {
 		getId(); id of gui
 		getItems(); item map of gui
 		getPagination(); pagination manager of gui
-		getPlugin(); You plugin instance
+		getPlugin(); your plugin's instance
 		getSize(); row amount of the gui
 		getTitle(); title text of the gui
 		 */
