@@ -42,10 +42,12 @@ public abstract class GUI implements InventoryHolder {
 
 
 	/**
-	 * EVENTS
+	 *
+	 * @param e event
+	 * @return force to uncancel
 	 */
-	public void onClick(InventoryClickEvent e) {
-
+	public boolean onClick(InventoryClickEvent e) {
+		return false;
 	}
 
 	public void onOpen(InventoryOpenEvent event) {
