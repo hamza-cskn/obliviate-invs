@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -49,6 +50,16 @@ public abstract class GUI implements InventoryHolder {
 	public boolean onClick(InventoryClickEvent e) {
 		return false;
 	}
+
+	/**
+	 *
+	 * @param e event
+	 * @return force to uncancel
+	 */
+	public boolean onDrag(InventoryDragEvent e) {
+		return false;
+	}
+
 
 	public void onOpen(InventoryOpenEvent event) {
 

@@ -78,7 +78,8 @@ public class InvListeners implements Listener {
 		final GUI openGui = inventoryAPI.getPlayersCurrentGui(player);
 		if (openGui == null) return;
 
-		event.setCancelled(true);
+		//if forced to uncancel, uncancel. else cancel.
+		event.setCancelled(!openGui.onDrag(event));
 		for (int index : event.getRawSlots()) {
 			final Icon item = openGui.getItems().get(index);
 
