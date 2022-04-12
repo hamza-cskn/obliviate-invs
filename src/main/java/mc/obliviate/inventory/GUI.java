@@ -34,11 +34,15 @@ public abstract class GUI implements InventoryHolder {
 	private boolean closed = false;
 
 	public GUI(Player player, String id, String title, int rows) {
+		this(player, id, title, rows, InventoryType.CHEST);
+	}
+
+	public GUI(Player player, String id, String title, int rows, InventoryType inventoryType) {
 		this.player = player;
 		this.size = rows * 9;
 		this.title = title;
 		this.id = id;
-
+		this.inventoryType = inventoryType;
 	}
 
 
@@ -79,7 +83,12 @@ public abstract class GUI implements InventoryHolder {
 		}
 
 		InventoryAPI.getInstance().getPlayers().put(player.getUniqueId(), this);
-		inventory = Bukkit.createInventory(null, size, title);
+
+		if (inventoryType.equals(InventoryType.CHEST)) {
+			inventory = Bukkit.createInventory(null, size, title);
+		} else {
+			inventory = Bukkit.createInventory(null, inventoryType, title);
+		}
 
 		player.openInventory(inventory);
 	}
