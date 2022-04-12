@@ -64,6 +64,13 @@ public class AdvancedSlot {
 		});
 	}
 
+	/**
+	 * Replace slot to display icon.
+	 */
+	public void resetSlot() {
+		asm.getGui().addItem(slot, getDisplayIcon());
+	}
+
 	public int getSlot() {
 		return slot;
 	}

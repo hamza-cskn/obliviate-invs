@@ -182,7 +182,7 @@ public abstract class GUI implements InventoryHolder {
 	public AdvancedSlot addAdvancedIcon(int slot, Icon item) {
 		final AdvancedSlot aSlot = new AdvancedSlot(slot, item, advancedSlotManager);
 		advancedSlotManager.registerSlot(aSlot);
-		addItem(slot, aSlot.getDisplayIcon());
+		aSlot.resetSlot();
 		return aSlot;
 	}
 

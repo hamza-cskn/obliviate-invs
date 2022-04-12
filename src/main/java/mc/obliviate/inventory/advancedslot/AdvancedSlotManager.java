@@ -49,7 +49,7 @@ public class AdvancedSlotManager {
 
 					Bukkit.getScheduler().runTaskLater(gui.getPlugin(), () -> {
 						if (gui.getInventory().getItem(aSlot.getSlot()) == null) {
-							gui.addItem(aSlot.getSlot(), aSlot.getDisplayIcon());
+							aSlot.resetSlot();
 						}
 					}, 1);
 				}));
