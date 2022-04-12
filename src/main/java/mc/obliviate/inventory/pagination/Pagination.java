@@ -33,6 +33,10 @@ public class Pagination {
 		}
 	}
 
+	public void clearSlots() {
+		slots.clear();
+	}
+
 	public GUI getGui() {
 		return gui;
 	}
@@ -81,7 +85,7 @@ public class Pagination {
 
 		for (int i = 0; i < slots.size(); i++) {
 			if (items.size() < i + 1) return;
-			gui.addItem(slots.get(i), items.get(i + +(page * slots.size())));
+			gui.addItem(slots.get(i), items.get(i + (page * slots.size())));
 		}
 	}
 }
