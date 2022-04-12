@@ -66,8 +66,8 @@ public class Pagination {
 		return m != -1 ? m : 0;
 	}
 
-	public void addHytem(Icon... hytems) {
-		items.addAll(Arrays.asList(hytems));
+	public void addIcon(Icon... icons) {
+		items.addAll(Arrays.asList(icons));
 	}
 
 	public List<Icon> getItems() {
