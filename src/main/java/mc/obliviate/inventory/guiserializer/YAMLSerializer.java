@@ -14,23 +14,7 @@ import java.util.Map;
 
 public class YAMLSerializer {
 
-	public static ConfigurationSection serializeGUI(GUI gui) {
-		final ConfigurationSection serializedSection = new YamlConfiguration();
-
-		serializedSection.set("properties.title", gui.getTitle());
-		serializedSection.set("properties.id", gui.getId());
-		serializedSection.set("properties.row", gui.getSize() / 9);
-
-		int i = 1;
-		for (Map.Entry<Integer, Icon> item : gui.getItems().entrySet()) {
-			serializerIcon(serializedSection.getConfigurationSection("items." + i++), item.getKey(), item.getValue());
-		}
-
-		return serializedSection;
-	}
-
-
-	private static void serializerIcon(final ConfigurationSection serializedSection, final int slot, final Icon item) {
+	public static void serializeItemStack(final ConfigurationSection serializedSection, final int slot, final Icon item) {
 		final ItemMeta meta = item.getItem().getItemMeta();
 
 		setSafe(serializedSection, "type", item.getItem().getType());

@@ -3,10 +3,7 @@ package mc.obliviate.inventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -24,8 +21,8 @@ public abstract class GUI implements InventoryHolder {
 
 	private final Map<Integer, Icon> items = new HashMap<>();
 	private final String id;
-	private final Map<Integer, ItemStack> animations = new HashMap<>();
 	private final AdvancedSlotManager advancedSlotManager = new AdvancedSlotManager(this);
+	private final InventoryType inventoryType;
 	public Player player;
 	private Pagination pagination = null;
 	private Inventory inventory;
@@ -47,7 +44,6 @@ public abstract class GUI implements InventoryHolder {
 
 
 	/**
-	 *
 	 * @param e event
 	 * @return force to uncancel
 	 */
@@ -56,7 +52,6 @@ public abstract class GUI implements InventoryHolder {
 	}
 
 	/**
-	 *
 	 * @param e event
 	 * @return force to uncancel
 	 */
