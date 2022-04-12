@@ -10,25 +10,21 @@
 <dependency>
     <groupId>com.github.Obliviated</groupId>
     <artifactId>ObliviateInvs</artifactId>
-    <version>3.0.1</version>
+    <version>PUT_VERSION</version>
 </dependency>
 ```
 
+## ObliviateInvs 
 
-
-# ObliviateInvs 
-
-Obliviate Invs is an inventory GUI api for Bukkit.
+Obliviate Invs is an inventory GUI api for Bukkit servers.
 
 ## Features
-- Create custom GUIs easly
-- Create advanced slots like real GUI slots. (Enchantment Table Slots, Anvil Slots etc.)
-- Make advanced custom GUI icons! edit their names, lores, enchantments, flags, click/drag actions...
-- Order your data sets with easy-to-use pagination algorithms.
-- Automatic update methods.
-- Tested and experienced in live.
-- Use onClose(), onOpen(), onClick() events.
-- Put GUI a lot of icons with fillColumn(), fillRow(), fillGui() methods.
+- Create, listen, manage GUIs in only one class.
+- Create advanced slots to make completely interactive slots. (for example: Anvil's slots)
+- Add pagination support to your GUIs easily.
+- Create automatic update task for GUI
+- Don't work hard work smart. These methods will handle your boring works: fillColumn(), fillRow(), fillGui(), sendTitleUpdate(), sendSizeUpdate()
+- Feel safe. ObliviateInvs test in live. It is stable.
 
 # Advanced Slots
 
