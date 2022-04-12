@@ -232,6 +232,26 @@ public abstract class GUI implements InventoryHolder {
 		this.title = title;
 	}
 
+	/**
+	 * Automatically updates GUI title and reopens inventory
+	 *
+	 * @param titleUpdate
+	 */
+	public void sendTitleUpdate(String titleUpdate) {
+		this.title = titleUpdate;
+		open();
+	}
+
+	/**
+	 * Automatically updates GUI size and reopens inventory
+	 *
+	 * @param sizeUpdate
+	 */
+	public void sendSizeUpdate(int sizeUpdate) {
+		this.size = sizeUpdate;
+		open();
+	}
+
 	public int getSize() {
 		return size;
 	}
