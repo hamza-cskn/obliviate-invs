@@ -22,9 +22,18 @@ public class Pagination {
 		return slots;
 	}
 
+	/**
+	 * Registers pagination slots
+	 * @param ints slots to be registered
+	 */
 	public void addItemSlots(Integer... ints) {
 		slots.addAll(Arrays.asList(ints));
 	}
+
+	/**
+	 * Registers pagination slots between
+	 * the numbers
+	 */
 
 	public void addSlotsBetween(int from, int to) {
 		if (from > to) return;

@@ -79,6 +79,7 @@ public abstract class GUI implements InventoryHolder {
 	public void open() {
 		final GUI gui = InventoryAPI.getInstance().getPlayersCurrentGui(player);
 		if (gui != null) {
+			//call Bukkit's inventory close event
 			Bukkit.getPluginManager().callEvent(new InventoryCloseEvent(player.getOpenInventory()));
 		}
 
