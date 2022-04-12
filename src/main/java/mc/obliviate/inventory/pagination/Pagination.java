@@ -24,9 +24,10 @@ public class Pagination {
 
 	/**
 	 * Registers pagination slots
+	 *
 	 * @param ints slots to be registered
 	 */
-	public void addItemSlots(Integer... ints) {
+	public void registerItemSlots(Integer... ints) {
 		slots.addAll(Arrays.asList(ints));
 	}
 
@@ -34,15 +35,17 @@ public class Pagination {
 	 * Registers pagination slots between
 	 * the numbers
 	 */
-
-	public void addSlotsBetween(int from, int to) {
+	public void registerSlotsBetween(int from, int to) {
 		if (from > to) return;
 		for (; from <= to; from++) {
 			slots.add(from);
 		}
 	}
 
-	public void clearSlots() {
+	/**
+	 * Unregisters pagination slots
+	 */
+	public void unregisterAllSlots() {
 		slots.clear();
 	}
 
@@ -72,6 +75,14 @@ public class Pagination {
 
 	public void lastPage() {
 		page = getLastPage();
+	}
+
+	public boolean isLastPage() {
+		return page == getLastPage();
+	}
+
+	public boolean isFirstPage() {
+		return page == 0;
 	}
 
 	public int getLastPage() {
