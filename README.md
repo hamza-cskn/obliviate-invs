@@ -23,4 +23,4 @@ ObliviateInvs is an inventory GUI library for Bukkit servers.
 - Add pagination support to your GUIs easily.
 - Create automatic update task for GUI
 - Don't work hard work smart. These methods will handle your boring works: fillColumn(), fillRow(), fillGui(), sendTitleUpdate(), sendSizeUpdate()
-- Feel safe. ObliviateInvs test in live. It is stable.
+- Feel safe. ObliviateInvs tested in live. It is stable.
