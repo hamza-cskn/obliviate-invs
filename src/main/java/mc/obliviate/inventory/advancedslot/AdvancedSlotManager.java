@@ -130,4 +130,7 @@ public class AdvancedSlotManager {
 		return false;
 	}
 
+	public GUI getGui() {
+		return gui;
+	}
 }

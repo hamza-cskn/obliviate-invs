@@ -1,11 +1,9 @@
 package mc.obliviate.inventory.guiserializer;
 
+import mc.obliviate.inventory.Icon;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.meta.ItemMeta;
-import mc.obliviate.inventory.GUI;
-import mc.obliviate.inventory.Icon;
 
 import java.util.ArrayList;
 import java.util.Collections;
