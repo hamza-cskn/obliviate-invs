@@ -76,6 +76,19 @@ public class Icon {
 		return appendLore(new ArrayList<>(Arrays.asList(appendLore)));
 	}
 
+	public Icon insertLore(final int index, final String... strings) {
+		return insertLore(index, new ArrayList<>(Arrays.asList(strings)));
+	}
+
+	public Icon insertLore(final int index, final List<String> strings) {
+		final ItemMeta meta = item.getItemMeta();
+		if (meta == null) return this;
+		List<String> lore = meta.getLore();
+		if (lore != null) lore.addAll(index, strings);
+		else lore = strings;
+		return setLore(lore);
+	}
+
 	public Icon setAmount(final int amount) {
 		item.setAmount(amount);
 		return this;
