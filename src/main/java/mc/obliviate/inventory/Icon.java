@@ -103,7 +103,13 @@ public class Icon {
 	}
 
 	public Icon hideFlags() {
-		hideFlags(ItemFlag.HIDE_ATTRIBUTES);
+		hideFlags(ItemFlag.HIDE_ATTRIBUTES)
+				.hideFlags(ItemFlag.HIDE_DYE)
+				.hideFlags(ItemFlag.HIDE_DESTROYS)
+				.hideFlags(ItemFlag.HIDE_ENCHANTS)
+				.hideFlags(ItemFlag.HIDE_PLACED_ON)
+				.hideFlags(ItemFlag.HIDE_POTION_EFFECTS)
+				.hideFlags(ItemFlag.HIDE_UNBREAKABLE);
 		return this;
 	}
 
