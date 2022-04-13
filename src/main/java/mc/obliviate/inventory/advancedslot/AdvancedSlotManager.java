@@ -2,6 +2,7 @@ package mc.obliviate.inventory.advancedslot;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -31,11 +32,37 @@ public class AdvancedSlotManager {
 		slots.put(slot.getSlot(), slot);
 	}
 
-	public void putIcon(AdvancedSlot aSlot, ItemStack item, InventoryClickEvent e) {
+	private ItemStack getItemStackFromHotkeyClick(InventoryClickEvent event) {
+		if (event.getHotbarButton() == -1) return null;
+		final Player player = (Player) event.getWhoClicked();
+		return player.getInventory().getItem(event.getHotbarButton());
+	}
+
+	public void putIcon(AdvancedSlot aSlot, ItemStack item, InventoryClickEvent event) {
 		gui.addItem(aSlot.getSlot(), new Icon(item)
-				.onClick(event -> {
-					event.setCancelled(false);
-					switch (event.getAction()) {
+				.onClick(e -> {
+					//pre put action checks
+					switch (e.getAction()) {
+						case HOTBAR_MOVE_AND_READD:
+						case HOTBAR_SWAP: // theoretically its impossible but i'll add for guarantee.
+
+							//check is it put action
+							if (!isNullOrAir(getItemStackFromHotkeyClick(e))) {
+								if (aSlot.getPrePutClickAction().onPrePutClick(e, e.getCursor())) return;
+							}
+							break;
+						case SWAP_WITH_CURSOR:
+							//check is it put action
+							if (!isNullOrAir(e.getCursor())) {
+								if (aSlot.getPrePutClickAction().onPrePutClick(e, e.getCursor())) return;
+							}
+							break;
+					}
+
+					e.setCancelled(false);
+
+					//general checks
+					switch (e.getAction()) {
 						case PICKUP_ALL:
 						case DROP_ALL_SLOT:
 						case HOTBAR_SWAP:
@@ -46,14 +73,13 @@ public class AdvancedSlotManager {
 						default:
 							aSlot.getPutAction().put(e);
 					}
-
 					Bukkit.getScheduler().runTaskLater(gui.getPlugin(), () -> {
 						if (gui.getInventory().getItem(aSlot.getSlot()) == null) {
 							aSlot.resetSlot();
 						}
 					}, 1);
 				}));
-		aSlot.getPutAction().put(e);
+		aSlot.getPutAction().put(event);
 	}
 
 	public void onClick(InventoryClickEvent e) {
@@ -66,11 +92,16 @@ public class AdvancedSlotManager {
 
 				//if aSlot is empty, just put the clicked item.
 				if ((isNullOrAir(itemOnSlot) && isNullOrAir(aSlot.getDisplayIcon().getItem())) || aSlot.getDisplayIcon().getItem().equals(itemOnSlot)) {
+					if (aSlot.getPrePutClickAction().onPrePutClick(e, clickedItem)) {
+						return;
+					}
 					putIcon(aSlot, clickedItem, e);
 					e.setCurrentItem(new ItemStack(Material.AIR));
 
-					//else, compare aSlot item and clicked item then merge item amount.
+					//else, compare aSlot item and clicked item to merge item amount.
 				} else if (clickedItem != null && itemOnSlot != null && compareSimilar(clickedItem, itemOnSlot) && itemOnSlot.getAmount() < itemOnSlot.getType().getMaxStackSize()) {
+					if (aSlot.getPrePutClickAction().onPrePutClick(e, clickedItem)) return;
+
 					int maxSize = itemOnSlot.getType().getMaxStackSize();
 
 					int transferSize;
