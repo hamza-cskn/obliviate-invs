@@ -10,7 +10,7 @@
 <dependency>
     <groupId>com.github.Obliviated</groupId>
     <artifactId>ObliviateInvs</artifactId>
-    <version>3.1.0</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 
