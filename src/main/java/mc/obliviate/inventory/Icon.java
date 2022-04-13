@@ -22,13 +22,17 @@ public class Icon {
 
 	public Icon(final ItemStack item) {
 		this.item = item;
-		this.dragAction = event -> {};
-		this.clickAction = event -> {};
+		this.dragAction = event -> {
+		};
+		this.clickAction = event -> {
+		};
 	}
 
 	public Icon(final Material material) {
-		this.clickAction = event -> {};
-		this.dragAction = event -> {};
+		this.clickAction = event -> {
+		};
+		this.dragAction = event -> {
+		};
 		this.item = new ItemStack(material);
 	}
 
@@ -63,17 +67,17 @@ public class Icon {
 		return setLore(new ArrayList<>(Arrays.asList(lore)));
 	}
 
-	public Icon appendLore(final List<String> appendLore) {
+	public Icon appendLore(final List<String> strings) {
 		final ItemMeta meta = item.getItemMeta();
 		if (meta == null) return this;
 		List<String> lore = meta.getLore();
-		if (lore != null) lore.addAll(appendLore);
-		else lore = appendLore;
+		if (lore != null) lore.addAll(strings);
+		else lore = strings;
 		return setLore(lore);
 	}
 
-	public Icon appendLore(final String... appendLore) {
-		return appendLore(new ArrayList<>(Arrays.asList(appendLore)));
+	public Icon appendLore(final String... strings) {
+		return appendLore(new ArrayList<>(Arrays.asList(strings)));
 	}
 
 	public Icon insertLore(final int index, final String... strings) {
