@@ -4,6 +4,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 @FunctionalInterface
 public interface ClickAction {
+
 	void click(InventoryClickEvent event);
 
 }

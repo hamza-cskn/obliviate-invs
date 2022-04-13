@@ -3,9 +3,7 @@ package mc.obliviate.inventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -23,8 +21,8 @@ public abstract class GUI implements InventoryHolder {
 
 	private final Map<Integer, Icon> items = new HashMap<>();
 	private final String id;
-	private final Map<Integer, ItemStack> animations = new HashMap<>();
 	private final AdvancedSlotManager advancedSlotManager = new AdvancedSlotManager(this);
+	private final InventoryType inventoryType;
 	public Player player;
 	private Pagination pagination = null;
 	private Inventory inventory;
@@ -37,18 +35,34 @@ public abstract class GUI implements InventoryHolder {
 		this.size = rows * 9;
 		this.title = title;
 		this.id = id;
+		this.inventoryType = InventoryType.CHEST;
+	}
 
+	public GUI(Player player, String id, String title, InventoryType inventoryType) {
+		this.player = player;
+		this.size = Integer.MAX_VALUE;
+		this.title = title;
+		this.id = id;
+		this.inventoryType = inventoryType;
 	}
 
 
 	/**
-	 *
 	 * @param e event
 	 * @return force to uncancel
 	 */
 	public boolean onClick(InventoryClickEvent e) {
 		return false;
 	}
+
+	/**
+	 * @param e event
+	 * @return force to uncancel
+	 */
+	public boolean onDrag(InventoryDragEvent e) {
+		return false;
+	}
+
 
 	public void onOpen(InventoryOpenEvent event) {
 
@@ -64,25 +78,39 @@ public abstract class GUI implements InventoryHolder {
 	public void open() {
 		final GUI gui = InventoryAPI.getInstance().getPlayersCurrentGui(player);
 		if (gui != null) {
+			//call Bukkit's inventory close event
 			Bukkit.getPluginManager().callEvent(new InventoryCloseEvent(player.getOpenInventory()));
 		}
 
 		InventoryAPI.getInstance().getPlayers().put(player.getUniqueId(), this);
-		inventory = Bukkit.createInventory(null, size, title);
+
+		if (inventoryType.equals(InventoryType.CHEST)) {
+			inventory = Bukkit.createInventory(null, size, title);
+		} else {
+			inventory = Bukkit.createInventory(null, inventoryType, title);
+		}
 
 		player.openInventory(inventory);
 	}
 
-	public void fillGui(ItemStack item) {
+	public void fillGui(Icon icon) {
 		for (int slot = 0; slot < size; slot++) {
-			addItem(slot, item);
+			addItem(slot, icon);
 		}
 	}
 
-	public void fillGui(ItemStack item, Integer... blacklisted_slots) {
+	public void fillGui(ItemStack item) {
+		fillGui(new Icon(item));
+	}
+
+	public void fillGui(Material material) {
+		fillGui(new Icon(material));
+	}
+
+	public void fillGui(Icon icon, Integer... blacklisted_slots) {
 		for (int slot = 0; slot < size; slot++) {
 			if (!checkContainsInt(slot, blacklisted_slots)) {
-				addItem(slot, item);
+				addItem(slot, icon);
 			}
 		}
 	}
@@ -164,10 +192,10 @@ public abstract class GUI implements InventoryHolder {
 	}
 
 
-	public AdvancedSlot addAdvancedHytem(int slot, Icon hytem) {
-		final AdvancedSlot aSlot = new AdvancedSlot(slot, hytem, advancedSlotManager);
+	public AdvancedSlot addAdvancedIcon(int slot, Icon item) {
+		final AdvancedSlot aSlot = new AdvancedSlot(slot, item, advancedSlotManager);
 		advancedSlotManager.registerSlot(aSlot);
-		addItem(slot, aSlot.getDisplayIcon());
+		aSlot.resetSlot();
 		return aSlot;
 	}
 
@@ -211,6 +239,26 @@ public abstract class GUI implements InventoryHolder {
 	 */
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	/**
+	 * Automatically updates GUI title and reopens inventory
+	 *
+	 * @param titleUpdate
+	 */
+	public void sendTitleUpdate(String titleUpdate) {
+		this.title = titleUpdate;
+		open();
+	}
+
+	/**
+	 * Automatically updates GUI size and reopens inventory
+	 *
+	 * @param sizeUpdate
+	 */
+	public void sendSizeUpdate(int sizeUpdate) {
+		this.size = sizeUpdate;
+		open();
 	}
 
 	public int getSize() {

@@ -22,15 +22,31 @@ public class Pagination {
 		return slots;
 	}
 
-	public void addItemSlots(Integer... ints) {
+	/**
+	 * Registers pagination slots
+	 *
+	 * @param ints slots to be registered
+	 */
+	public void registerItemSlots(Integer... ints) {
 		slots.addAll(Arrays.asList(ints));
 	}
 
-	public void addSlotsBetween(int from, int to) {
+	/**
+	 * Registers pagination slots between
+	 * the numbers
+	 */
+	public void registerSlotsBetween(int from, int to) {
 		if (from > to) return;
 		for (; from <= to; from++) {
 			slots.add(from);
 		}
+	}
+
+	/**
+	 * Unregisters pagination slots
+	 */
+	public void unregisterAllSlots() {
+		slots.clear();
 	}
 
 	public GUI getGui() {
@@ -61,13 +77,21 @@ public class Pagination {
 		page = getLastPage();
 	}
 
+	public boolean isLastPage() {
+		return page == getLastPage();
+	}
+
+	public boolean isFirstPage() {
+		return page == 0;
+	}
+
 	public int getLastPage() {
 		int m = (int) Math.ceil((double) items.size() / slots.size()) - 1;
 		return m != -1 ? m : 0;
 	}
 
-	public void addHytem(Icon... hytems) {
-		items.addAll(Arrays.asList(hytems));
+	public void addIcon(Icon... icons) {
+		items.addAll(Arrays.asList(icons));
 	}
 
 	public List<Icon> getItems() {
@@ -81,7 +105,7 @@ public class Pagination {
 
 		for (int i = 0; i < slots.size(); i++) {
 			if (items.size() < i + 1) return;
-			gui.addItem(slots.get(i), items.get(i + +(page * slots.size())));
+			gui.addItem(slots.get(i), items.get(i + (page * slots.size())));
 		}
 	}
 }
