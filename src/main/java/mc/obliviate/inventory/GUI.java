@@ -93,16 +93,24 @@ public abstract class GUI implements InventoryHolder {
 		player.openInventory(inventory);
 	}
 
-	public void fillGui(ItemStack item) {
+	public void fillGui(Icon icon) {
 		for (int slot = 0; slot < size; slot++) {
-			addItem(slot, item);
+			addItem(slot, icon);
 		}
 	}
 
-	public void fillGui(ItemStack item, Integer... blacklisted_slots) {
+	public void fillGui(ItemStack item) {
+		fillGui(new Icon(item));
+	}
+
+	public void fillGui(Material material) {
+		fillGui(new Icon(material));
+	}
+
+	public void fillGui(Icon icon, Integer... blacklisted_slots) {
 		for (int slot = 0; slot < size; slot++) {
 			if (!checkContainsInt(slot, blacklisted_slots)) {
-				addItem(slot, item);
+				addItem(slot, icon);
 			}
 		}
 	}
