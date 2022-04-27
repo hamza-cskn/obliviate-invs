@@ -1,20 +1,21 @@
 package mc.obliviate.inventory.advancedslot;
 
-import mc.obliviate.inventory.advancedslot.action.PrePutClickAction;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import mc.obliviate.inventory.Icon;
-import mc.obliviate.inventory.advancedslot.action.PickupAction;
-import mc.obliviate.inventory.advancedslot.action.PutAction;
+
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 
 public class AdvancedSlot {
 
 	private final int slot;
 	private final Icon displayIcon;
 	private final AdvancedSlotManager asm;
-	private PrePutClickAction prePutClickAction;
-	private PickupAction pickupAction;
-	private PutAction putAction;
+	private BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction;
+	private Consumer<InventoryClickEvent> pickupAction;
+	private Consumer<InventoryClickEvent> putAction;
 
 	public AdvancedSlot(int slot, Icon displayIcon, AdvancedSlotManager asm) {
 		this.slot = slot;
@@ -25,36 +26,36 @@ public class AdvancedSlot {
 		prePutClickAction = (e, item) -> false;
 	}
 
-	public PrePutClickAction getPrePutClickAction() {
+	public BiPredicate<InventoryClickEvent, ItemStack> getPrePutClickAction() {
 		return prePutClickAction;
 	}
 
-	public PickupAction getPickupAction() {
+	public Consumer<InventoryClickEvent> getPickupAction() {
 		return pickupAction;
 	}
 
-	public PutAction getPutAction() {
+	public Consumer<InventoryClickEvent> getPutAction() {
 		return putAction;
 	}
 
-	public AdvancedSlot onPickup(PickupAction pickupAction) {
+	public AdvancedSlot onPickup(Consumer<InventoryClickEvent> pickupAction) {
 		this.pickupAction = pickupAction;
 		return this;
 	}
 
-	public AdvancedSlot onPut(PutAction putAction) {
+	public AdvancedSlot onPut(Consumer<InventoryClickEvent> putAction) {
 		this.putAction = putAction;
 		return this;
 	}
 
-	public AdvancedSlot onPreClick(PrePutClickAction prePutClickAction) {
+	public AdvancedSlot onPreClick(BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction) {
 		this.prePutClickAction = prePutClickAction;
 		return this;
 	}
 
 	public Icon getDisplayIcon() {
 		return displayIcon.onClick(e -> {
-			if (prePutClickAction.onPrePutClick(e, e.getCursor())) return;
+			if (prePutClickAction.test(e, e.getCursor())) return;
 			if (e.getCursor() != null && !e.getCursor().getType().equals(Material.AIR)) {
 				final ItemStack cursor = e.getCursor();
 				ItemStack newCursor = null;

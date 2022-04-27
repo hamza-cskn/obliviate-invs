@@ -1,38 +1,31 @@
 package mc.obliviate.inventory;
 
-import mc.obliviate.inventory.action.DragAction;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import mc.obliviate.inventory.action.ClickAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class Icon {
 
 	private final ItemStack item;
-	private ClickAction clickAction;
-	private DragAction dragAction;
+	private Consumer<InventoryClickEvent> clickAction = event -> {};
+	private Consumer<InventoryDragEvent> dragAction = event -> {};;
 
 	public Icon(final ItemStack item) {
 		this.item = item;
-		this.dragAction = event -> {
-		};
-		this.clickAction = event -> {
-		};
 	}
 
 	public Icon(final Material material) {
-		this.clickAction = event -> {
-		};
-		this.dragAction = event -> {
-		};
 		this.item = new ItemStack(material);
 	}
 
@@ -144,21 +137,21 @@ public class Icon {
 	}
 
 
-	public ClickAction getClickAction() {
+	public Consumer<InventoryClickEvent> getClickAction() {
 		return clickAction;
 	}
 
-	public Icon onClick(ClickAction clickAction) {
+	public Icon onClick(Consumer<InventoryClickEvent> clickAction) {
 		this.clickAction = clickAction;
 		return this;
 	}
 
-	public DragAction getDragAction() {
+	public Consumer<InventoryDragEvent> getDragAction() {
 		return dragAction;
 
 	}
 
-	public Icon onDrag(DragAction dragAction) {
+	public Icon onDrag(Consumer<InventoryDragEvent> dragAction) {
 		this.dragAction = dragAction;
 		return this;
 	}
