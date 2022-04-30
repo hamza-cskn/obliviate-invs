@@ -17,6 +17,9 @@
 ## ObliviateInvs 
 ObliviateInvs is an inventory GUI library for Bukkit servers.
 
+## Setup
+Visit [wiki](https://github.com/Obliviated/ObliviateInvs/wiki/) page usage guide.
+
 ## Features
 - Create, listen, manage GUIs in only one class.
 - Create advanced slots to make completely interactive slots. (see [wiki](https://github.com/Obliviated/ObliviateInvs/wiki/Advanced-Slots))
