@@ -1,6 +1,6 @@
 package mc.obliviate.inventory.pagination;
 
-import mc.obliviate.inventory.GUI;
+import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 
 import java.util.Arrays;
@@ -9,12 +9,12 @@ import java.util.List;
 
 public class Pagination {
 
-	private final GUI gui;
+	private final Gui gui;
 	private final LinkedList<Integer> slots = new LinkedList<>();
 	private final LinkedList<Icon> items = new LinkedList<>();
 	private int page;
 
-	public Pagination(GUI gui) {
+	public Pagination(Gui gui) {
 		this.gui = gui;
 	}
 
@@ -49,7 +49,7 @@ public class Pagination {
 		slots.clear();
 	}
 
-	public GUI getGui() {
+	public Gui getGui() {
 		return gui;
 	}
 

@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import mc.obliviate.inventory.GUI;
+import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 
 import java.util.Collection;
@@ -18,9 +18,9 @@ import java.util.Map;
 public class AdvancedSlotManager {
 
 	private final Map<Integer, AdvancedSlot> slots = new HashMap<>();
-	private final GUI gui;
+	private final Gui gui;
 
-	public AdvancedSlotManager(GUI gui) {
+	public AdvancedSlotManager(Gui gui) {
 		this.gui = gui;
 	}
 
@@ -161,7 +161,7 @@ public class AdvancedSlotManager {
 		return false;
 	}
 
-	public GUI getGui() {
+	public Gui getGui() {
 		return gui;
 	}
 }

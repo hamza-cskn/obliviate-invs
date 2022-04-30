@@ -21,7 +21,7 @@ public class InvListeners implements Listener {
 	public void onClick(final InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 
-		final GUI openGui = inventoryAPI.getPlayersCurrentGui((Player) event.getWhoClicked());
+		final Gui openGui = inventoryAPI.getPlayersCurrentGui((Player) event.getWhoClicked());
 		if (openGui == null) return;
 		if (event.getClickedInventory() == null) return;
 
@@ -61,7 +61,7 @@ public class InvListeners implements Listener {
 	public void onClose(final InventoryCloseEvent event) {
 		if (!(event.getPlayer() instanceof Player)) return;
 		final Player player = (Player) event.getPlayer();
-		final GUI openGui = inventoryAPI.getPlayersCurrentGui(player);
+		final Gui openGui = inventoryAPI.getPlayersCurrentGui(player);
 		if (openGui == null) return;
 		if (!event.getInventory().equals(openGui.getInventory())) return;
 
@@ -75,7 +75,7 @@ public class InvListeners implements Listener {
 	public void onDrag(final InventoryDragEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) return;
 		final Player player = (Player) event.getWhoClicked();
-		final GUI openGui = inventoryAPI.getPlayersCurrentGui(player);
+		final Gui openGui = inventoryAPI.getPlayersCurrentGui(player);
 		if (openGui == null) return;
 
 		//if forced to uncancel, uncancel. else cancel.
@@ -96,7 +96,7 @@ public class InvListeners implements Listener {
 		if (!(event.getPlayer() instanceof Player)) return;
 
 		final Player player = (Player) event.getPlayer();
-		final GUI openGui = inventoryAPI.getPlayersCurrentGui(player);
+		final Gui openGui = inventoryAPI.getPlayersCurrentGui(player);
 		if (openGui == null) return;
 		if (event.isCancelled()) return;
 

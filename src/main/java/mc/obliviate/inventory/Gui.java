@@ -17,7 +17,7 @@ import mc.obliviate.inventory.pagination.Pagination;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GUI implements InventoryHolder {
+public abstract class Gui implements InventoryHolder {
 
 	private final Map<Integer, Icon> items = new HashMap<>();
 	private final String id;
@@ -30,7 +30,7 @@ public abstract class GUI implements InventoryHolder {
 	private int size;
 	private boolean closed = false;
 
-	public GUI(Player player, String id, String title, int rows) {
+	public Gui(Player player, String id, String title, int rows) {
 		this.player = player;
 		this.size = rows * 9;
 		this.title = title;
@@ -38,7 +38,7 @@ public abstract class GUI implements InventoryHolder {
 		this.inventoryType = InventoryType.CHEST;
 	}
 
-	public GUI(Player player, String id, String title, InventoryType inventoryType) {
+	public Gui(Player player, String id, String title, InventoryType inventoryType) {
 		this.player = player;
 		this.size = Integer.MAX_VALUE;
 		this.title = title;
@@ -76,7 +76,7 @@ public abstract class GUI implements InventoryHolder {
 	 * METHODS
 	 */
 	public void open() {
-		final GUI gui = InventoryAPI.getInstance().getPlayersCurrentGui(player);
+		final Gui gui = InventoryAPI.getInstance().getPlayersCurrentGui(player);
 		if (gui != null) {
 			//call Bukkit's inventory close event
 			Bukkit.getPluginManager().callEvent(new InventoryCloseEvent(player.getOpenInventory()));
