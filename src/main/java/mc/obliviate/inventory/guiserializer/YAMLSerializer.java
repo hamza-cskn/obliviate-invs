@@ -19,13 +19,18 @@ public class YAMLSerializer {
 		setSafe(serializedSection, "data", item.getItem().getDurability());
 		setSafe(serializedSection, "slot", slot);
 		if (meta != null) {
-			setSafe(serializedSection, "display-name", meta.getDisplayName().replace("§","&"));
+			setSafe(serializedSection, "display-name", meta.getDisplayName().replace("§", "&"));
 			if (meta.getLore() != null && meta.getLore().size() > 0) {
 				final List<String> list = new ArrayList<>();
 				meta.getLore().forEach(line -> list.add(line.replace("§", "&")));
 				setSafe(serializedSection, "lore", list);
 			}
-			setSafe(serializedSection, "custom-model-data", meta.getCustomModelData());
+
+			// 1.8.8 servers does not know custom model data methods.
+			try {
+				setSafe(serializedSection, "custom-model-data", meta.getCustomModelData());
+			} catch (Exception ignore) {}
+
 			setSafe(serializedSection, "item-flags", Collections.singletonList(meta.getItemFlags()));
 		}
 		setSafe(serializedSection, "amount", item.getItem().getAmount());
