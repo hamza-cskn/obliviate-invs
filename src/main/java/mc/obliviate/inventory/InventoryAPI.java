@@ -13,7 +13,7 @@ public class InventoryAPI {
 	private final Plugin plugin;
 	private final HashMap<UUID, Gui> players = new HashMap<>();
 	private final Listener listener = new InvListeners(this);
-	private boolean inited = false;
+	private boolean initialized = false;
 
 	public InventoryAPI(Plugin plugin) {
 		this.plugin = plugin;
@@ -38,7 +38,7 @@ public class InventoryAPI {
 	}
 
 	public Gui getPlayersCurrentGui(Player player) {
-		if (!inited) throw new IllegalStateException("Inventory API instance created but is not inited! Please use init() method to init.");
+		if (!initialized) throw new IllegalStateException("Inventory API instance created but is not initialized! Please use init() method to init.");
 		return players.get(player.getUniqueId());
 	}
 

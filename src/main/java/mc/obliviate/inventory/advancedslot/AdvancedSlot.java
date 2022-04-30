@@ -11,30 +11,30 @@ public class AdvancedSlot {
 
 	private final int slot;
 	private final Icon displayIcon;
-	private final AdvancedSlotManager asm;
+	private final AdvancedSlotManager advancedSlotManager;
 	private PrePutClickAction prePutClickAction;
 	private PickupAction pickupAction;
 	private PutAction putAction;
 
-	public AdvancedSlot(int slot, Icon displayIcon, AdvancedSlotManager asm) {
+	public AdvancedSlot(int slot, Icon displayIcon, AdvancedSlotManager advancedSlotManager) {
 		this.slot = slot;
 		this.displayIcon = displayIcon;
-		this.asm = asm;
-		pickupAction = e -> {};
-		putAction = e -> {};
-		prePutClickAction = (e, item) -> false;
+		this.advancedSlotManager = advancedSlotManager;
+		this.pickupAction = e -> {};
+		this.putAction = e -> {};
+		this.prePutClickAction = (e, item) -> false;
 	}
 
 	public PrePutClickAction getPrePutClickAction() {
-		return prePutClickAction;
+		return this.prePutClickAction;
 	}
 
 	public PickupAction getPickupAction() {
-		return pickupAction;
+		return this.pickupAction;
 	}
 
 	public PutAction getPutAction() {
-		return putAction;
+		return this.putAction;
 	}
 
 	public AdvancedSlot onPickup(PickupAction pickupAction) {
@@ -67,7 +67,7 @@ public class AdvancedSlot {
 				}
 
 				e.setCursor(newCursor);
-				asm.putIcon(this, cursor, e);
+				advancedSlotManager.putIcon(this, cursor, e);
 
 
 			}
@@ -78,7 +78,7 @@ public class AdvancedSlot {
 	 * Replace slot to display icon.
 	 */
 	public void resetSlot() {
-		asm.getGui().addItem(slot, getDisplayIcon());
+		advancedSlotManager.getGui().addItem(slot, getDisplayIcon());
 	}
 
 	public int getSlot() {

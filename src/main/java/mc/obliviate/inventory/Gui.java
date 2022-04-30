@@ -19,16 +19,16 @@ import java.util.Map;
 
 public abstract class Gui implements InventoryHolder {
 
-	private final Map<Integer, Icon> items = new HashMap<>();
+	private final Map<Integer, Icon> registeredIcons = new HashMap<>();
 	private final String id;
 	private final AdvancedSlotManager advancedSlotManager = new AdvancedSlotManager(this);
 	private final InventoryType inventoryType;
 	public Player player;
-	private Pagination pagination = null;
+	private Pagination paginationManager = null;
 	private Inventory inventory;
 	private String title;
 	private int size;
-	private boolean closed = false;
+	private boolean isClosed = false;
 
 	public Gui(Player player, String id, String title, int rows) {
 		this.player = player;
@@ -144,8 +144,8 @@ public abstract class Gui implements InventoryHolder {
 			throw new NullPointerException("Item cannot be null!");
 		}
 
-		items.remove(slot);
-		items.put(slot, item);
+		registeredIcons.remove(slot);
+		registeredIcons.put(slot, item);
 		inventory.setItem(slot, item.getItem());
 	}
 
@@ -204,7 +204,7 @@ public abstract class Gui implements InventoryHolder {
 	 * GETTERS
 	 */
 	public Map<Integer, Icon> getItems() {
-		return items;
+		return registeredIcons;
 	}
 
 	public String getId() {
@@ -215,11 +215,11 @@ public abstract class Gui implements InventoryHolder {
 		return advancedSlotManager;
 	}
 
-	public Pagination getPagination() {
-		if (pagination == null) {
-			pagination = new Pagination(this);
+	public Pagination getPaginationManager() {
+		if (paginationManager == null) {
+			paginationManager = new Pagination(this);
 		}
-		return pagination;
+		return paginationManager;
 	}
 
 	@Override
@@ -274,11 +274,11 @@ public abstract class Gui implements InventoryHolder {
 	}
 
 	public boolean isClosed() {
-		return closed;
+		return isClosed;
 	}
 
 	public void setClosed(boolean closed) {
-		this.closed = closed;
+		this.isClosed = closed;
 	}
 
 }
