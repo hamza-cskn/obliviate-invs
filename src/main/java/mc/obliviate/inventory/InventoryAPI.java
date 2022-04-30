@@ -2,20 +2,20 @@ package mc.obliviate.inventory;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-public class InventoryAPI {
+public class InventoryAPI<P extends JavaPlugin> {
 
 	private static InventoryAPI instance;
-	private final Plugin plugin;
+	private final P plugin;
 	private final HashMap<UUID, Gui> players = new HashMap<>();
 	private final Listener listener = new InvListeners(this);
 	private boolean initialized = false;
 
-	public InventoryAPI(Plugin plugin) {
+	public InventoryAPI(P plugin) {
 		this.plugin = plugin;
 		instance = this;
 	}
@@ -24,12 +24,15 @@ public class InventoryAPI {
 		return instance;
 	}
 
+	/**
+	 * Registers listeners of the Inventory API
+	 */
 	public void init() {
 		plugin.getServer().getPluginManager().registerEvents(listener, plugin);
-		inited = true;
+		initialized = true;
 	}
 
-	public Plugin getPlugin() {
+	public P getPlugin() {
 		return plugin;
 	}
 
