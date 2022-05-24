@@ -13,7 +13,7 @@ public class InvListeners implements Listener {
 
 	private final InventoryAPI inventoryAPI;
 
-	public InvListeners(final InventoryAPI inventoryAPI) {
+	protected InvListeners(final InventoryAPI inventoryAPI) {
 		this.inventoryAPI = inventoryAPI;
 	}
 
@@ -49,10 +49,9 @@ public class InvListeners implements Listener {
 		final Icon item = openGui.getItems().get(index);
 
 		if (item == null) return;
-		if (item.getClickAction() == null) return;
 
 
-		item.getClickAction().click(event);
+		item.getClickAction().accept(event);
 
 
 	}
@@ -84,10 +83,7 @@ public class InvListeners implements Listener {
 			final Icon item = openGui.getItems().get(index);
 
 			if (item == null) return;
-			if (item.getClickAction() == null) {
-				return;
-			}
-			item.getDragAction().drag(event);
+			item.getDragAction().accept(event);
 		}
 	}
 

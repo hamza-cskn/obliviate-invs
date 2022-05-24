@@ -29,16 +29,9 @@ public class InventoryAPI {
 		return instance;
 	}
 
-	/**
-	 * Registers listeners of the Inventory API
-	 */
 	public void init() {
 		plugin.getServer().getPluginManager().registerEvents(listener, plugin);
 		initialized = true;
-	}
-
-	public JavaPlugin getPlugin() {
-		return plugin;
 	}
 
 	@NotNull
@@ -53,6 +46,10 @@ public class InventoryAPI {
 		if (!initialized)
 			throw new IllegalStateException("Inventory API instance created but is not initialized! Please use init() method to init.");
 		return players.get(player.getUniqueId());
+	}
+
+	public JavaPlugin getPlugin() {
+		return plugin;
 	}
 
 	public Listener getListener() {
