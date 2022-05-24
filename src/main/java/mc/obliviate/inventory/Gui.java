@@ -13,6 +13,8 @@ import org.bukkit.scheduler.BukkitTask;
 import mc.obliviate.inventory.advancedslot.AdvancedSlot;
 import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
 import mc.obliviate.inventory.pagination.Pagination;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +23,7 @@ public abstract class Gui implements InventoryHolder {
 
 	private final Map<Integer, Icon> registeredIcons = new HashMap<>();
 	private final String id;
-	private final AdvancedSlotManager advancedSlotManager = new AdvancedSlotManager(this);
+	private AdvancedSlotManager advancedSlotManager = null;
 	private final InventoryType inventoryType;
 	public Player player;
 	private Pagination paginationManager = null;
@@ -72,9 +74,6 @@ public abstract class Gui implements InventoryHolder {
 
 	}
 
-	/**
-	 * METHODS
-	 */
 	public void open() {
 		final Gui gui = InventoryAPI.getInstance().getPlayersCurrentGui(player);
 		if (gui != null) {
@@ -192,29 +191,33 @@ public abstract class Gui implements InventoryHolder {
 	}
 
 
+	@NotNull
+	@Contract("_,_ -> new")
 	public AdvancedSlot addAdvancedIcon(int slot, Icon item) {
-		final AdvancedSlot aSlot = new AdvancedSlot(slot, item, advancedSlotManager);
-		advancedSlotManager.registerSlot(aSlot);
+		final AdvancedSlot aSlot = new AdvancedSlot(slot, item, getAdvancedSlotManager());
+		getAdvancedSlotManager().registerSlot(aSlot);
 		aSlot.resetSlot();
 		return aSlot;
 	}
 
 
-	/**
-	 * GETTERS
-	 */
+	@NotNull
 	public Map<Integer, Icon> getItems() {
 		return registeredIcons;
 	}
 
+	@NotNull
 	public String getId() {
 		return id;
 	}
 
+	@NotNull
 	public AdvancedSlotManager getAdvancedSlotManager() {
+		if (advancedSlotManager == null) advancedSlotManager = new AdvancedSlotManager(this);
 		return advancedSlotManager;
 	}
 
+	@NotNull
 	public Pagination getPaginationManager() {
 		if (paginationManager == null) {
 			paginationManager = new Pagination(this);
@@ -223,19 +226,20 @@ public abstract class Gui implements InventoryHolder {
 	}
 
 	@Override
+	@NotNull
 	public Inventory getInventory() {
 		return inventory;
 	}
 
+	@NotNull
 	public String getTitle() {
 		return title;
 	}
 
 	/**
-	 * Sets title of GUI for GUIs that
-	 * will be open later.
+	 * Sets title of GUI. Without update.
 	 *
-	 * @param title
+	 * @param title new title
 	 */
 	public void setTitle(String title) {
 		this.title = title;
@@ -244,7 +248,7 @@ public abstract class Gui implements InventoryHolder {
 	/**
 	 * Automatically updates GUI title and reopens inventory
 	 *
-	 * @param titleUpdate
+	 * @param titleUpdate new title
 	 */
 	public void sendTitleUpdate(String titleUpdate) {
 		this.title = titleUpdate;
@@ -254,25 +258,29 @@ public abstract class Gui implements InventoryHolder {
 	/**
 	 * Automatically updates GUI size and reopens inventory
 	 *
-	 * @param sizeUpdate
+	 * @param sizeUpdate new size
 	 */
 	public void sendSizeUpdate(int sizeUpdate) {
 		this.size = sizeUpdate;
 		open();
 	}
 
+	@NotNull
 	public int getSize() {
 		return size;
 	}
 
+	@NotNull
 	public void setSize(int size) {
 		this.size = size;
 	}
 
+	@NotNull
 	public Plugin getPlugin() {
 		return InventoryAPI.getInstance().getPlugin();
 	}
 
+	@NotNull
 	public boolean isClosed() {
 		return isClosed;
 	}
