@@ -12,12 +12,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import mc.obliviate.inventory.advancedslot.AdvancedSlot;
 import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
-import mc.obliviate.inventory.pagination.Pagination;
+import mc.obliviate.inventory.pagination.PaginationManager;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public abstract class Gui implements InventoryHolder {
 
@@ -26,7 +27,7 @@ public abstract class Gui implements InventoryHolder {
 	private AdvancedSlotManager advancedSlotManager = null;
 	private final InventoryType inventoryType;
 	public Player player;
-	private Pagination paginationManager = null;
+	private PaginationManager paginationManager = null;
 	private Inventory inventory;
 	private String title;
 	private int size;
@@ -218,9 +219,9 @@ public abstract class Gui implements InventoryHolder {
 	}
 
 	@NotNull
-	public Pagination getPaginationManager() {
+	public PaginationManager getPaginationManager() {
 		if (paginationManager == null) {
-			paginationManager = new Pagination(this);
+			paginationManager = new PaginationManager(this);
 		}
 		return paginationManager;
 	}
