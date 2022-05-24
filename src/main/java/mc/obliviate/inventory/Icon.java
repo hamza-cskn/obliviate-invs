@@ -1,13 +1,13 @@
 package mc.obliviate.inventory;
 
-import mc.obliviate.inventory.action.DragAction;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import mc.obliviate.inventory.action.ClickAction;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,12 +15,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class Icon {
 
 	private final ItemStack item;
-	private ClickAction clickAction;
-	private DragAction dragAction;
+	private Consumer<InventoryClickEvent> clickAction;
+	private Consumer<InventoryDragEvent> dragAction;
 
 	public Icon(final ItemStack item) {
 		this.item = item;
@@ -176,26 +177,26 @@ public class Icon {
 	}
 
 	@NotNull
-	public ClickAction getClickAction() {
+	public Consumer<InventoryClickEvent> getClickAction() {
 		return clickAction;
 	}
 
 	@NotNull
 	@Contract("_ -> this")
-	public Icon onClick(ClickAction clickAction) {
+	public Icon onClick(Consumer<InventoryClickEvent> clickAction) {
 		this.clickAction = clickAction;
 		return this;
 	}
 
 	@NotNull
-	public DragAction getDragAction() {
+	public Consumer<InventoryDragEvent> getDragAction() {
 		return dragAction;
 
 	}
 
 	@NotNull
 	@Contract("_ -> this")
-	public Icon onDrag(DragAction dragAction) {
+	public Icon onDrag(Consumer<InventoryDragEvent> dragAction) {
 		this.dragAction = dragAction;
 		return this;
 	}

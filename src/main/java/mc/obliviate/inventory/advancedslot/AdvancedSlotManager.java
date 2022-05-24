@@ -48,13 +48,13 @@ public class AdvancedSlotManager {
 
 							//check is it put action
 							if (!isNullOrAir(getItemStackFromHotkeyClick(e))) {
-								if (aSlot.getPrePutClickAction().onPrePutClick(e, e.getCursor())) return;
+								if (aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
 							}
 							break;
 						case SWAP_WITH_CURSOR:
 							//check is it put action
 							if (!isNullOrAir(e.getCursor())) {
-								if (aSlot.getPrePutClickAction().onPrePutClick(e, e.getCursor())) return;
+								if (aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
 							}
 							break;
 					}
@@ -68,10 +68,10 @@ public class AdvancedSlotManager {
 						case HOTBAR_SWAP:
 						case MOVE_TO_OTHER_INVENTORY:
 						case COLLECT_TO_CURSOR:
-							aSlot.getPickupAction().pickup(e);
+							aSlot.getPickupAction().accept(e);
 							break;
 						default:
-							aSlot.getPutAction().put(e);
+							aSlot.getPutAction().accept(e);
 					}
 					Bukkit.getScheduler().runTaskLater(gui.getPlugin(), () -> {
 						if (gui.getInventory().getItem(aSlot.getSlot()) == null) {
@@ -79,7 +79,7 @@ public class AdvancedSlotManager {
 						}
 					}, 1);
 				}));
-		aSlot.getPutAction().put(event);
+		aSlot.getPutAction().accept(event);
 	}
 
 	public void onClick(InventoryClickEvent e) {
@@ -92,7 +92,7 @@ public class AdvancedSlotManager {
 
 				//if aSlot is empty, just put the clicked item.
 				if ((isNullOrAir(itemOnSlot) && isNullOrAir(aSlot.getDisplayIcon().getItem())) || aSlot.getDisplayIcon().getItem().equals(itemOnSlot)) {
-					if (aSlot.getPrePutClickAction().onPrePutClick(e, clickedItem)) {
+					if (aSlot.getPrePutClickAction().test(e, clickedItem)) {
 						return;
 					}
 					putIcon(aSlot, clickedItem, e);
@@ -100,7 +100,7 @@ public class AdvancedSlotManager {
 
 					//else, compare aSlot item and clicked item to merge item amount.
 				} else if (clickedItem != null && itemOnSlot != null && compareSimilar(clickedItem, itemOnSlot) && itemOnSlot.getAmount() < itemOnSlot.getType().getMaxStackSize()) {
-					if (aSlot.getPrePutClickAction().onPrePutClick(e, clickedItem)) return;
+					if (aSlot.getPrePutClickAction().test(e, clickedItem)) return;
 
 					int maxSize = itemOnSlot.getType().getMaxStackSize();
 

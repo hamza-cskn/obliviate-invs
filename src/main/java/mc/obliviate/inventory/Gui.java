@@ -170,14 +170,14 @@ public abstract class Gui implements InventoryHolder {
 		addItem(slot, new Icon(material));
 	}
 
-	public void updateTask(int runLater, int period, final Update update) {
+	public void updateTask(int runLater, int period, final Consumer<BukkitTask> update) {
 		final BukkitTask[] bukkitTask = new BukkitTask[]{null};
 
 		if (InventoryAPI.getInstance() != null) {
 			bukkitTask[0] = (new BukkitRunnable() {
 				public void run() {
 					if (!isClosed()) {
-						update.update(bukkitTask[0]);
+						update.accept(bukkitTask[0]);
 					} else {
 						cancel();
 					}
