@@ -32,28 +32,43 @@ public class Icon {
 	}
 
 	public Icon(final Material material) {
-		this.clickAction = event -> {
-		};
-		this.dragAction = event -> {
-		};
-		this.item = new ItemStack(material);
+		this(new ItemStack(material));
 	}
 
 
+	/**
+	 * sets durability of icon
+	 *
+	 * @param newDamage durability
+	 * @return this
+	 */
+	@SuppressWarnings("deprecation")
 	@NotNull
 	@Contract("_ -> this")
-	public Icon setDamage(final short dmg) {
-		item.setDurability(dmg);
+	public Icon setDurability(final short newDamage) {
+		item.setDurability(newDamage);
 		return this;
 	}
 
+	/**
+	 * sets durability of the icon
+	 *
+	 * @param newDamage durability
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
-	public Icon setDamage(final int dmg) {
-		setDamage((short) dmg);
+	public Icon setDurability(final int newDamage) {
+		setDurability((short) newDamage);
 		return this;
 	}
 
+	/**
+	 * sets display name of the icon
+	 *
+	 * @param name display name
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
 	public Icon setName(final String name) {
@@ -64,6 +79,12 @@ public class Icon {
 		return this;
 	}
 
+	/**
+	 * sets lore of the icon
+	 *
+	 * @param lore lore
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
 	public Icon setLore(final List<String> lore) {
@@ -74,46 +95,84 @@ public class Icon {
 		return this;
 	}
 
+	/**
+	 * sets lore of icon
+	 *
+	 * @param lore lore
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
 	public Icon setLore(final String... lore) {
 		return setLore(new ArrayList<>(Arrays.asList(lore)));
 	}
 
+	/**
+	 * adds new string lines to end of lore of the icon
+	 *
+	 * @param newLines lore lines
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
-	public Icon appendLore(final List<String> strings) {
+	public Icon appendLore(final List<String> newLines) {
 		final ItemMeta meta = item.getItemMeta();
 		if (meta == null) return this;
 		List<String> lore = meta.getLore();
-		if (lore != null) lore.addAll(strings);
-		else lore = strings;
+		if (lore != null) lore.addAll(newLines);
+		else lore = newLines;
 		return setLore(lore);
 	}
 
+	/**
+	 * adds new string lines to end of lore of the icon
+	 *
+	 * @param newLines lore lines
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
-	public Icon appendLore(final String... strings) {
-		return appendLore(new ArrayList<>(Arrays.asList(strings)));
+	public Icon appendLore(final String... newLines) {
+		return appendLore(new ArrayList<>(Arrays.asList(newLines)));
 	}
 
+	/**
+	 * inserts new lines to lore of the icon
+	 *
+	 * @param index    line index. entry 0 adds new line as first line.
+	 * @param newLines lore lines
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_,_ -> this")
-	public Icon insertLore(final int index, final String... strings) {
-		return insertLore(index, new ArrayList<>(Arrays.asList(strings)));
+	public Icon insertLore(final int index, final String... newLines) {
+		return insertLore(index, new ArrayList<>(Arrays.asList(newLines)));
 	}
 
+	/**
+	 * inserts new lines to lore of the icon
+	 *
+	 * @param index    line index. entry 0 adds new line as first line.
+	 * @param newLines lore lines
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_,_ -> this")
-	public Icon insertLore(final int index, final List<String> strings) {
+	public Icon insertLore(final int index, final List<String> newLines) {
 		final ItemMeta meta = item.getItemMeta();
 		if (meta == null) return this;
 		List<String> lore = meta.getLore();
-		if (lore != null) lore.addAll(index, strings);
-		else lore = strings;
+		if (lore != null) lore.addAll(index, newLines);
+		else lore = newLines;
 		return setLore(lore);
 	}
 
+	/**
+	 * sets item amount of the icon
+	 *
+	 * @param amount new amount
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
 	public Icon setAmount(final int amount) {
@@ -121,6 +180,12 @@ public class Icon {
 		return this;
 	}
 
+	/**
+	 * hides a flag of the icon
+	 *
+	 * @param itemFlag item flag on meta
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
 	public Icon hideFlags(final ItemFlag itemFlag) {
@@ -131,6 +196,11 @@ public class Icon {
 		return this;
 	}
 
+	/**
+	 * hides all flags (except dye)
+	 *
+	 * @return this
+	 */
 	@NotNull
 	@Contract("-> this")
 	public Icon hideFlags() {
@@ -144,12 +214,24 @@ public class Icon {
 		return this;
 	}
 
+	/**
+	 * enchants the item
+	 *
+	 * @param enchantment enchant
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
 	public Icon enchant(final Enchantment enchantment) {
 		return enchant(enchantment, enchantment.getStartLevel());
 	}
 
+	/**
+	 * enchants the item
+	 *
+	 * @param enchantments enchant
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_ -> this")
 	public Icon enchant(final Map<Enchantment, Integer> enchantments) {
@@ -159,19 +241,26 @@ public class Icon {
 		return this;
 	}
 
+	/**
+	 * enchants the item
+	 *
+	 * @param enchantment enchant
+	 * @param level       enchantment level
+	 * @return this
+	 */
 	@NotNull
 	@Contract("_,_ -> this")
-	public Icon enchant(final Enchantment enchantment, final int value) {
+	public Icon enchant(final Enchantment enchantment, final int level) {
 		if (item.getType().equals(Material.ENCHANTED_BOOK)) {
 			final EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
 
 			if (meta == null) return this;
 
-			meta.addStoredEnchant(enchantment, value, true);
+			meta.addStoredEnchant(enchantment, level, true);
 
 			item.setItemMeta(meta);
 		} else {
-			item.addUnsafeEnchantment(enchantment, value);
+			item.addUnsafeEnchantment(enchantment, level);
 		}
 		return this;
 	}
