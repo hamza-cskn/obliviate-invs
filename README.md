@@ -27,3 +27,8 @@ Visit [wiki](https://github.com/Obliviated/ObliviateInvs/wiki/) page to see usag
 - Create automatic update task for GUI
 - Don't work hard work smart. These methods will handle your boring works: fillColumn(), fillRow(), fillGui(), sendTitleUpdate(), sendSizeUpdate()
 - Feel safe. ObliviateInvs tested in live. It is stable.
+
+## Other
+Snake slot iteration algorithm for GUIs: [Click to go gist](https://gist.github.com/Obliviated/67c241c099d26e933a7662ba906322ce) 
+ItemBuilder class that is used in this project: [Click to go gist](https://gist.github.com/Obliviated/af71812e9235025be348f2600502d6cd)
+Gradient and TextAnimation algorithms for GUI: [Click to go gist](https://gist.github.com/Obliviated/c741466e33bb359210de3a24bb52c7c6)
