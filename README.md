@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/Obliviated/ObliviateInvs.svg)](https://jitpack.io/#Obliviated/ObliviateInvs)
 
-# Maven
+### Maven
 ```
 <repository>
     <id>jitpack.io</id>
