@@ -14,7 +14,7 @@
 </dependency>
 ```
 
-## ObliviateInvs 
+# ObliviateInvs 
 ObliviateInvs is an inventory GUI library for Bukkit servers.
 
 ## Setup
