@@ -23,7 +23,7 @@ Visit [wiki](https://github.com/Obliviated/ObliviateInvs/wiki/) page to see usag
 ## Features
 - Create, listen, manage GUIs in only one class.
 - Create advanced slots to make completely interactive slots. (see [wiki](https://github.com/Obliviated/ObliviateInvs/wiki/Advanced-Slots))
-- Make your GUIs YAML configurable in seconds.
+- Make your GUIs YAML-Configurable in seconds.
 - Add pagination support to your GUIs easily.
 - Create automatic update task for GUI
 - Don't work hard work smart. These methods will handle your boring works: fillColumn(), fillRow(), fillGui(), sendTitleUpdate(), sendSizeUpdate()
