@@ -27,7 +27,7 @@ public class PaginationManager {
 	 *
 	 * @param ints slots to be registered
 	 */
-	public void registerItemSlots(Integer... ints) {
+	public void registerPageSlots(Integer... ints) {
 		slots.addAll(Arrays.asList(ints));
 	}
 
@@ -35,7 +35,7 @@ public class PaginationManager {
 	 * Registers pagination slots between
 	 * the numbers
 	 */
-	public void registerSlotsBetween(int from, int to) {
+	public void registerPageSlotsBetween(int from, int to) {
 		if (from > to) return;
 		for (; from <= to; from++) {
 			slots.add(from);
@@ -45,7 +45,7 @@ public class PaginationManager {
 	/**
 	 * Unregisters pagination slots
 	 */
-	public void unregisterAllSlots() {
+	public void unregisterAllPageSlots() {
 		slots.clear();
 	}
 
@@ -53,7 +53,7 @@ public class PaginationManager {
 		return gui;
 	}
 
-	public int getPage() {
+	public int getCurrentPage() {
 		return page;
 	}
 
@@ -61,19 +61,22 @@ public class PaginationManager {
 		this.page = page;
 	}
 
-	public void nextPage() {
+	public void openNextPage() {
 		page += 1;
+		gui.open();
 	}
 
-	public void previousPage() {
+	public void openPreviousPage() {
 		page -= 1;
+		gui.open();
 	}
 
-	public void firstPage() {
+	public void openFirstPage() {
 		page = 0;
+		gui.open();
 	}
 
-	public void lastPage() {
+	public void openLastPage() {
 		page = getLastPage();
 	}
 
@@ -86,11 +89,11 @@ public class PaginationManager {
 	}
 
 	public int getLastPage() {
-		int m = (int) Math.ceil((double) items.size() / slots.size()) - 1;
-		return m != -1 ? m : 0;
+		if (slots.size() == 0) return 0;
+		return Math.max(items.size() / slots.size() - 1, 0);
 	}
 
-	public void addIcon(Icon... icons) {
+	public void addItem(Icon... icons) {
 		items.addAll(Arrays.asList(icons));
 	}
 
@@ -99,9 +102,7 @@ public class PaginationManager {
 	}
 
 	public void update() {
-
-		if (page < 0) return;
-		if (items.size() < (slots.size() + 1)) return;
+		if (page < 0) return; // invalid page
 
 		for (int i = 0; i < slots.size(); i++) {
 			if (items.size() < i + 1) return;

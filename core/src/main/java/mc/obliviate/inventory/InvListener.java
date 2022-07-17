@@ -4,16 +4,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 
-public class InvListeners implements Listener {
+public class InvListener implements Listener {
 
 	private final InventoryAPI inventoryAPI;
 
-	protected InvListeners(final InventoryAPI inventoryAPI) {
+	protected InvListener(final InventoryAPI inventoryAPI) {
 		this.inventoryAPI = inventoryAPI;
 	}
 
@@ -23,22 +20,23 @@ public class InvListeners implements Listener {
 
 		final Gui openGui = inventoryAPI.getPlayersCurrentGui((Player) event.getWhoClicked());
 		if (openGui == null) return;
-		if (event.getClickedInventory() == null) return;
 
 		openGui.getAdvancedSlotManager().onClick(event);
-		final boolean forceUncancel = openGui.onClick(event);
+		final boolean doNotProtect = openGui.onClick(event);
 		final int index = event.getRawSlot();
-		if (!forceUncancel) {
+
+		if (!doNotProtect) {
+			//default click
 			if (event.getSlot() == index) {
 				event.setCancelled(true);
 			} else {
 				switch (event.getAction()) {
-					//SHIFT CLICK etc.
 					case MOVE_TO_OTHER_INVENTORY:
-						//DOUBLE CLICK WITH CURSOR
+						//SHIFT CLICK etc.
 					case COLLECT_TO_CURSOR:
-						//SOMETIMES HACKED CLIENT CLICK etc.
+						//DOUBLE CLICK WITH CURSOR
 					case UNKNOWN:
+						//SOMETIMES HACKED CLIENT CLICK etc.
 						event.setCancelled(true);
 				}
 			}
@@ -47,13 +45,9 @@ public class InvListeners implements Listener {
 		}
 
 		final Icon item = openGui.getItems().get(index);
-
 		if (item == null) return;
 
-
 		item.getClickAction().accept(event);
-
-
 	}
 
 	@EventHandler

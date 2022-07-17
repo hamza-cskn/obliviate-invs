@@ -15,7 +15,7 @@ public class InventoryAPI {
 	private final JavaPlugin plugin;
 	private static InventoryAPI instance;
 	private final HashMap<UUID, Gui> players = new HashMap<>();
-	private final Listener listener = new InvListeners(this);
+	private final Listener listener = new InvListener(this);
 	private boolean initialized = false;
 
 	@Contract("null -> fail")

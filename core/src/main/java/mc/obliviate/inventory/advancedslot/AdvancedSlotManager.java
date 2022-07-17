@@ -1,5 +1,7 @@
 package mc.obliviate.inventory.advancedslot;
 
+import mc.obliviate.inventory.Gui;
+import mc.obliviate.inventory.Icon;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,8 +10,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import mc.obliviate.inventory.Gui;
-import mc.obliviate.inventory.Icon;
 
 import java.util.Collection;
 import java.util.HashMap;
