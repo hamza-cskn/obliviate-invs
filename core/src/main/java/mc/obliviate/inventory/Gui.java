@@ -1,5 +1,8 @@
 package mc.obliviate.inventory;
 
+import mc.obliviate.inventory.advancedslot.AdvancedSlot;
+import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
+import mc.obliviate.inventory.pagination.PaginationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,9 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import mc.obliviate.inventory.advancedslot.AdvancedSlot;
-import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
-import mc.obliviate.inventory.pagination.PaginationManager;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +48,6 @@ public abstract class Gui implements InventoryHolder {
 		this.id = id;
 		this.inventoryType = inventoryType;
 	}
-
 
 	/**
 	 * @param e event

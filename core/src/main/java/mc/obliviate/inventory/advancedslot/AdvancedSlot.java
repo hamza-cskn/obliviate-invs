@@ -21,8 +21,10 @@ public class AdvancedSlot {
 		this.slot = slot;
 		this.displayIcon = displayIcon;
 		this.advancedSlotManager = advancedSlotManager;
-		this.pickupAction = e -> {};
-		this.putAction = e -> {};
+		this.pickupAction = e -> {
+		};
+		this.putAction = e -> {
+		};
 		this.prePutClickAction = (e, item) -> false;
 	}
 
@@ -70,8 +72,6 @@ public class AdvancedSlot {
 
 				e.setCursor(newCursor);
 				advancedSlotManager.putIcon(this, cursor, e);
-
-
 			}
 		});
 	}

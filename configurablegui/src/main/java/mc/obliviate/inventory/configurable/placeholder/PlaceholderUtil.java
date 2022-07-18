@@ -23,6 +23,7 @@ public class PlaceholderUtil {
 		}
 		return result;
 	}
+
 	public String apply(String text) {
 		for (final InternalPlaceholder placeholder : placeholders) {
 			text = text.replace(placeholder.getPlaceholder(), placeholder.getValue());

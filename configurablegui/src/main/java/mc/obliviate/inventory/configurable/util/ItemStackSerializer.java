@@ -3,21 +3,22 @@ package mc.obliviate.inventory.configurable.util;
 import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.inventory.configurable.placeholder.PlaceholderUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class ItemStackSerializer {
 
-	@NonNull
+	@NotNull
 	public static ItemStack deserializeMaterial(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
 		final String materialName = section.getString(table.getMaterialSectionName());
 		if (materialName == null) throw new IllegalArgumentException("material section could not find");
@@ -34,7 +35,7 @@ public class ItemStackSerializer {
 		return item;
 	}
 
-	@NonNull
+	@NotNull
 	public static ItemStack deserializeItemStack(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
 		final ItemStack item = deserializeMaterial(section, table);
 		final ItemMeta meta = item.getItemMeta();

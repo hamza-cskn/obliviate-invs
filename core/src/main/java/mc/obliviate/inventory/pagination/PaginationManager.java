@@ -57,27 +57,29 @@ public class PaginationManager {
 		return page;
 	}
 
-	public void setPage(int page) {
+	public PaginationManager setPage(int page) {
 		this.page = page;
+		return this;
 	}
 
-	public void openNextPage() {
+	public PaginationManager openNextPage() {
 		page += 1;
-		gui.open();
+		return this;
 	}
 
-	public void openPreviousPage() {
+	public PaginationManager openPreviousPage() {
 		page -= 1;
-		gui.open();
+		return this;
 	}
 
-	public void openFirstPage() {
+	public PaginationManager goFirstPage() {
 		page = 0;
-		gui.open();
+		return this;
 	}
 
-	public void openLastPage() {
+	public PaginationManager goLastPage() {
 		page = getLastPage();
+		return this;
 	}
 
 	public boolean isLastPage() {

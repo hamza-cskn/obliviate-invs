@@ -1,0 +1,56 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group 'mc.obliviate'
+version '4.0.0'
+sourceCompatibility = 8
+compileJava.options.encoding = 'UTF-8'
+
+tasks.jar {
+    enabled = false
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    group rootProject.group
+    version rootProject.version
+    sourceCompatibility = 8
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenLocal()
+        maven { url 'https://repo.maven.apache.org/maven2/' }
+        maven { url 'https://repo.codemc.org/repository/nms/' }
+    }
+
+    dependencies {
+        implementation 'org.jetbrains:annotations:23.0.0'
+    }
+
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = project.group
+                version = project.version
+                artifactId = project.name
+                from components.java
+            }
+        }
+    }
+
+    artifacts.archives(tasks.shadowJar)
+
+    tasks.jar {
+        enabled = true
+    }
+
+    tasks.shadowJar {
+        archiveFileName.set(project.name + "-" + project.version + ".jar")
+    }
+}

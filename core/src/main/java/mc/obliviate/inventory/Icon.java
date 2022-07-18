@@ -139,7 +139,7 @@ public class Icon {
 	/**
 	 * inserts new lines to lore of the icon
 	 *
-	 * @param index line index. entry 0 adds new line as first line.
+	 * @param index    line index. entry 0 adds new line as first line.
 	 * @param newLines lore lines
 	 * @return this
 	 */
@@ -152,7 +152,7 @@ public class Icon {
 	/**
 	 * inserts new lines to lore of the icon
 	 *
-	 * @param index line index. entry 0 adds new line as first line.
+	 * @param index    line index. entry 0 adds new line as first line.
 	 * @param newLines lore lines
 	 * @return this
 	 */
