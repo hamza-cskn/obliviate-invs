@@ -2,17 +2,27 @@
 
 ### Maven
 
-```
+```xml
 <repository>
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
 </repository>
 
 <dependency>
-    <groupId>com.github.Obliviated</groupId>
-    <artifactId>obliviate-invs</artifactId>
-    <version>3.2.0</version>
+    <groupId>com.github.Obliviated.ObliviateInvs</groupId>
+    <artifactId>configurablegui</artifactId>
+    <version>4.0.1</version>
 </dependency>
+```
+### Gradle
+```gradle
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.Obliviated.ObliviateInvs:configurablegui:4.0.1'
+}
 ```
 
 # ObliviateInvs
