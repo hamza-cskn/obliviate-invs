@@ -48,9 +48,10 @@ public class ItemStackSerializer {
 
 		if (section.isSet(table.getCustomModelDataSectionName()))
 			meta.setCustomModelData(section.getInt(table.getCustomModelDataSectionName()));
-
 		if (section.getBoolean(table.getUnbreakableSectionName()))
 			meta.setUnbreakable(true);
+		if (section.isSet(table.getDurabilitySectionName()))
+			item.setDurability((short) section.getInt(table.getDurabilitySectionName()));
 
 		applyItemFlagsToItemStacks(item, deserializeItemFlags(section, table));
 		item.setAmount(section.getInt(table.getAmountSectionName(), 1));

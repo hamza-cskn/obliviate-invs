@@ -14,6 +14,7 @@ public class GuiConfigurationTable {
 	private String amountSectionName = "amount";
 	private String displayNameSectionName = "display-name";
 	private String slotSectionName = "slot";
+	private String durabilitySectionName = "durability";
 	private String unbreakableSectionName = "unbreakable";
 	private String loreSectionName = "lore";
 	private String itemFlagsSectionName = "item-flags";
@@ -136,5 +137,13 @@ public class GuiConfigurationTable {
 
 	public void setUnbreakableSectionName(String unbreakableSectionName) {
 		this.unbreakableSectionName = unbreakableSectionName;
+	}
+
+	public String getDurabilitySectionName() {
+		return durabilitySectionName;
+	}
+
+	public void setDurabilitySectionName(String durabilitySectionName) {
+		this.durabilitySectionName = durabilitySectionName;
 	}
 }
