@@ -1,8 +1,5 @@
 package mc.obliviate.inventory;
 
-import mc.obliviate.inventory.advancedslot.AdvancedSlot;
-import mc.obliviate.inventory.advancedslot.AdvancedSlotManager;
-import mc.obliviate.inventory.pagination.PaginationManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,8 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +22,8 @@ public abstract class Gui implements InventoryHolder {
 
 	private final Map<Integer, Icon> registeredIcons = new HashMap<>();
 	private final String id;
-	private AdvancedSlotManager advancedSlotManager = null;
 	private final InventoryType inventoryType;
 	public final Player player;
-	private PaginationManager paginationManager = null;
 	private Inventory inventory;
 	private String title;
 	private int size;
@@ -42,7 +37,7 @@ public abstract class Gui implements InventoryHolder {
 		this.inventoryType = InventoryType.CHEST;
 	}
 
-	public Gui(Player player, String id, String title, InventoryType inventoryType) {
+	public Gui(@NotNull Player player,@NotNull  String id, String title, InventoryType inventoryType) {
 		this.player = player;
 		this.size = Integer.MAX_VALUE;
 		this.title = title;
@@ -64,17 +59,17 @@ public abstract class Gui implements InventoryHolder {
 	 * Calls when the inventory event triggered.
 	 *
 	 * @param event Called event.
-	 * @return Force to uncanceled
+	 * @return force to uncancel
 	 */
 	public boolean onClick(InventoryClickEvent event) {
 		return false;
 	}
 
 	/**
-	 * @param e event
+	 * @param event event
 	 * @return force to uncancel
 	 */
-	public boolean onDrag(InventoryDragEvent e) {
+	public boolean onDrag(InventoryDragEvent event) {
 		return false;
 	}
 
@@ -139,15 +134,6 @@ public abstract class Gui implements InventoryHolder {
 		}
 	}
 
-	private boolean checkContainsInt(int i, Integer... ints) {
-		for (int j : ints) {
-			if (j == i) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	public void addItem(int slot, Icon item) {
 		if (this.inventory.getSize() <= slot) {
 			throw new IndexOutOfBoundsException("Slot cannot be bigger than inventory size! [ " + slot + " >= " + this.inventory.getSize() + " ]");
@@ -183,7 +169,16 @@ public abstract class Gui implements InventoryHolder {
 		this.addItem(slot, new Icon(material));
 	}
 
-	public void updateTask(int runLater, int period, final Consumer<BukkitTask> update) {
+	/**
+	 *
+	 * Creates a repeat-task that will continue
+	 * until the gui has closed.
+	 *
+	 * @param runDelayInTicks
+	 * @param periodInTicks
+	 * @param update
+	 */
+	public void updateTask(int runDelayInTicks, int periodInTicks, final Consumer<BukkitTask> update) {
 		final BukkitTask[] bukkitTask = new BukkitTask[]{null};
 
 		if (InventoryAPI.getInstance() != null) {
@@ -195,17 +190,8 @@ public abstract class Gui implements InventoryHolder {
 						cancel();
 					}
 				}
-			}).runTaskTimer(getPlugin(), runLater, period);
+			}).runTaskTimer(getPlugin(), runDelayInTicks, periodInTicks);
 		}
-	}
-
-	@NotNull
-	@Contract("_,_ -> new")
-	public AdvancedSlot addAdvancedIcon(int slot, Icon item) {
-		final AdvancedSlot aSlot = new AdvancedSlot(slot, item, getAdvancedSlotManager());
-		getAdvancedSlotManager().registerSlot(aSlot);
-		aSlot.resetSlot();
-		return aSlot;
 	}
 
 	@NotNull
@@ -218,27 +204,13 @@ public abstract class Gui implements InventoryHolder {
 		return id;
 	}
 
-	@NotNull
-	public AdvancedSlotManager getAdvancedSlotManager() {
-		if (advancedSlotManager == null) advancedSlotManager = new AdvancedSlotManager(this);
-		return advancedSlotManager;
-	}
-
-	@NotNull
-	public PaginationManager getPaginationManager() {
-		if (paginationManager == null) {
-			paginationManager = new PaginationManager(this);
-		}
-		return this.paginationManager;
-	}
-
 	@Override
 	@NotNull
 	public Inventory getInventory() {
 		return this.inventory;
 	}
 
-	@NotNull
+	@Nullable
 	public String getTitle() {
 		return this.title;
 	}
@@ -248,8 +220,8 @@ public abstract class Gui implements InventoryHolder {
 	 *
 	 * @param title new title
 	 */
-	public void setTitle(@NotNull String title) {
-		this.title = Objects.requireNonNull(title, "title cannot be null!");
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**
@@ -306,5 +278,14 @@ public abstract class Gui implements InventoryHolder {
 	 */
 	public void setClosed(boolean closed) {
 		this.isClosed = closed;
+	}
+
+	private boolean checkContainsInt(int i, Integer... ints) {
+		for (int n : ints) {
+			if (n == i) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

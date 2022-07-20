@@ -11,12 +11,12 @@ public class GuiConfigurationTable {
 	private String iconsSectionName = "icons";
 
 	private String materialSectionName = "material";
-	private String amountSectionName = "amount";
+	private String loreSectionName = "lore";
 	private String displayNameSectionName = "display-name";
+	private String amountSectionName = "amount";
 	private String slotSectionName = "slot";
 	private String durabilitySectionName = "durability";
 	private String unbreakableSectionName = "unbreakable";
-	private String loreSectionName = "lore";
 	private String itemFlagsSectionName = "item-flags";
 	private String enchantmentsSectionName = "enchantments";
 	private String customModelDataSectionName = "custom-model-data";

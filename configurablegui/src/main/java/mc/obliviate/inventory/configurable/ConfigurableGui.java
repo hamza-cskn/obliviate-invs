@@ -25,8 +25,8 @@ public class ConfigurableGui extends Gui {
 	public ConfigurableGui(Player player, String id, GuiConfigurationTable guiConfigurationTable) {
 		super(player, id, "No title found", 0);
 		this.guiConfigurationTable = guiConfigurationTable;
-		setTitle(guiConfigurationTable.getMenusSection(getSectionPath()).getString(guiConfigurationTable.getTitleSectionName()));
-		setSize(guiConfigurationTable.getMenusSection(getSectionPath()).getInt(guiConfigurationTable.getSizeSectionName()) * 9);
+		setTitle(guiConfigurationTable.getMenusSection(getSectionPath()).getString(guiConfigurationTable.getTitleSectionName(), "No Title Found"));
+		setSize(guiConfigurationTable.getMenusSection(getSectionPath()).getInt(guiConfigurationTable.getSizeSectionName(), 0) * 9);
 	}
 
 	public ConfigurableGuiCache getGuiCache() {
@@ -84,6 +84,4 @@ public class ConfigurableGui extends Gui {
 	public void putIcon(String configName, PlaceholderUtil placeholderUtil, Consumer<InventoryClickEvent> click) {
 		addItem(getConfigSlot(configName), new Icon(getConfigItem(configName, placeholderUtil)).onClick(click));
 	}
-
-
 }

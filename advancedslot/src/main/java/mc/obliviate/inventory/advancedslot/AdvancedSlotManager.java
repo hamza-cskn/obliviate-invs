@@ -10,13 +10,17 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AdvancedSlotManager {
 
+	protected static final Map<Gui, AdvancedSlotManager> ADVANCED_SLOT_MANAGERS = new HashMap<>();
 	private final Map<Integer, AdvancedSlot> slots = new HashMap<>();
 	private final Gui gui;
 
@@ -28,17 +32,36 @@ public class AdvancedSlotManager {
 		return slots.values();
 	}
 
-	public void registerSlot(AdvancedSlot slot) {
-		slots.put(slot.getSlot(), slot);
+	/**
+	 *
+	 * Puts new advanced slot icon normally.
+	 *
+	 * @param slot the slot where icon will put
+	 * @param icon the default slot icon (most of time, it is barrier or air)
+	 * @return new advanced slot instance
+	 */
+	@NotNull
+	@Contract("_,_ -> new")
+	public AdvancedSlot addAdvancedIcon(final int slot, final Icon icon) {
+		final AdvancedSlot aSlot = new AdvancedSlot(slot, icon, this);
+		registerSlot(aSlot);
+		aSlot.reset();
+		return aSlot;
 	}
 
-	private ItemStack getItemStackFromHotkeyClick(InventoryClickEvent event) {
-		if (event.getHotbarButton() == -1) return null;
-		final Player player = (Player) event.getWhoClicked();
-		return player.getInventory().getItem(event.getHotbarButton());
+	/**
+	 * @param aSlot advanced slot where the item will put.
+	 * @param item the item which will be putted
+	 */
+	public void putIconToAdvancedSlot(AdvancedSlot aSlot, ItemStack item) {
+		putIconToAdvancedSlot(aSlot, item, null);
 	}
 
-	public void putIcon(AdvancedSlot aSlot, ItemStack item, InventoryClickEvent event) {
+	/**
+	 * @param aSlot advanced slot where the item will put.
+	 * @param item the item which will be putted
+	 */
+	public void putIconToAdvancedSlot(AdvancedSlot aSlot, ItemStack item, InventoryClickEvent event) {
 		gui.addItem(aSlot.getSlot(), new Icon(item)
 				.onClick(e -> {
 					//pre put action checks
@@ -75,7 +98,7 @@ public class AdvancedSlotManager {
 					}
 					Bukkit.getScheduler().runTaskLater(gui.getPlugin(), () -> {
 						if (gui.getInventory().getItem(aSlot.getSlot()) == null) {
-							aSlot.resetSlot();
+							aSlot.reset();
 						}
 					}, 1);
 				}));
@@ -95,7 +118,7 @@ public class AdvancedSlotManager {
 					if (aSlot.getPrePutClickAction().test(e, clickedItem)) {
 						return;
 					}
-					putIcon(aSlot, clickedItem, e);
+					putIconToAdvancedSlot(aSlot, clickedItem, e);
 					e.setCurrentItem(new ItemStack(Material.AIR));
 
 					//else, compare aSlot item and clicked item to merge item amount.
@@ -118,7 +141,7 @@ public class AdvancedSlotManager {
 					}
 
 					e.setCurrentItem(clickedItem);
-					putIcon(aSlot, itemOnSlot, e);
+					putIconToAdvancedSlot(aSlot, itemOnSlot, e);
 
 				} else {
 					continue;
@@ -142,6 +165,16 @@ public class AdvancedSlotManager {
 		}
 	}
 
+	public void registerSlot(AdvancedSlot slot) {
+		slots.put(slot.getSlot(), slot);
+	}
+
+	private ItemStack getItemStackFromHotkeyClick(InventoryClickEvent event) {
+		if (event.getHotbarButton() == -1) return null;
+		final Player player = (Player) event.getWhoClicked();
+		return player.getInventory().getItem(event.getHotbarButton());
+	}
+
 	private boolean isNullOrAir(final ItemStack item) {
 		return item == null || item.getType().equals(Material.AIR);
 	}
@@ -163,5 +196,9 @@ public class AdvancedSlotManager {
 
 	public Gui getGui() {
 		return gui;
+	}
+
+	public static Map<Gui, AdvancedSlotManager> getAdvancedSlotManagers() {
+		return Collections.unmodifiableMap(ADVANCED_SLOT_MANAGERS);
 	}
 }
