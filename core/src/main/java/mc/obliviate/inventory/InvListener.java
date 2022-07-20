@@ -1,9 +1,12 @@
 package mc.obliviate.inventory;
 
+import mc.obliviate.inventory.event.GuiPreClickEvent;
+import mc.obliviate.inventory.event.GuiPreCloseEvent;
+import mc.obliviate.inventory.event.GuiPreDragEvent;
+import mc.obliviate.inventory.event.GuiPreOpenEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -24,7 +27,7 @@ public class InvListener implements Listener {
 		final Gui openGui = inventoryAPI.getPlayersCurrentGui((Player) event.getWhoClicked());
 		if (openGui == null) return;
 
-		openGui.getAdvancedSlotManager().onClick(event);
+		if (callAndCheckCancel(new GuiPreClickEvent(event, openGui))) return;
 		final boolean doNotProtect = openGui.onClick(event);
 		final int index = event.getRawSlot();
 
@@ -61,8 +64,8 @@ public class InvListener implements Listener {
 		if (openGui == null) return;
 		if (!event.getInventory().equals(openGui.getInventory())) return;
 
+		if (callAndCheckCancel(new GuiPreCloseEvent(event, openGui))) return;
 		openGui.onClose(event);
-		openGui.getAdvancedSlotManager().onClose(event);
 		openGui.setClosed(true);
 		inventoryAPI.getPlayers().remove(player.getUniqueId());
 	}
@@ -73,6 +76,7 @@ public class InvListener implements Listener {
 		final Player player = (Player) event.getWhoClicked();
 		final Gui openGui = inventoryAPI.getPlayersCurrentGui(player);
 		if (openGui == null) return;
+		if (callAndCheckCancel(new GuiPreDragEvent(event, openGui))) return;
 
 		//if forced to uncancel, uncancel. else cancel.
 		event.setCancelled(!openGui.onDrag(event));
@@ -91,8 +95,14 @@ public class InvListener implements Listener {
 		final Player player = (Player) event.getPlayer();
 		final Gui openGui = inventoryAPI.getPlayersCurrentGui(player);
 		if (openGui == null) return;
-		if (event.isCancelled()) return;
+		if (callAndCheckCancel(new GuiPreOpenEvent(event, openGui))) return;
 
+		if (event.isCancelled()) return;
 		openGui.onOpen(event);
+	}
+
+	private static boolean callAndCheckCancel(Event event) {
+		Bukkit.getPluginManager().callEvent(event);
+		return event instanceof Cancellable && ((Cancellable) event).isCancelled();
 	}
 }
