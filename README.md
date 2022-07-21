@@ -10,7 +10,7 @@
 
 <dependency>
     <groupId>com.github.Obliviated.ObliviateInvs</groupId>
-    <artifactId>configurablegui</artifactId>
+    <artifactId>core</artifactId>
     <version>4.0.1</version>
 </dependency>
 ```
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Obliviated.ObliviateInvs:configurablegui:4.0.1'
+    implementation 'com.github.Obliviated.ObliviateInvs:core:4.0.1'
 }
 ```
 
