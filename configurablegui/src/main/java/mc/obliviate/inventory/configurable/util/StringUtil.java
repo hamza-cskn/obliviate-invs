@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StringUtils {
+public class StringUtil {
 
 	private static final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
 

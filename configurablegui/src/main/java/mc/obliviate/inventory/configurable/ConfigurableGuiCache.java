@@ -1,5 +1,6 @@
 package mc.obliviate.inventory.configurable;
 
+import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.configurable.placeholder.PlaceholderUtil;
 import mc.obliviate.inventory.configurable.util.ItemStackSerializer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -36,7 +37,8 @@ public class ConfigurableGuiCache {
 	}
 
 	public ItemStack getConfigItem(ConfigurationSection section, PlaceholderUtil placeholderUtil, GuiConfigurationTable table) {
-		ItemStack item = findItemStack(section, table).clone();
+		Preconditions.checkNotNull(section,"section cannot be null");
+		ItemStack item = this.findItemStack(section, table).clone();
 		ItemStackSerializer.applyPlaceholdersToItemStack(item, placeholderUtil);
 		return item;
 	}

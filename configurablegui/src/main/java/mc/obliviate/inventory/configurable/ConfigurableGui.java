@@ -41,6 +41,10 @@ public class ConfigurableGui extends Gui {
 		return getId();
 	}
 
+	public ConfigurationSection getSection() {
+		return guiConfigurationTable.getMenusSection(getSectionPath());
+	}
+
 	public String getIconsSectionPath() {
 		return getSectionPath() + "." + guiConfigurationTable.getIconsSectionName();
 	}

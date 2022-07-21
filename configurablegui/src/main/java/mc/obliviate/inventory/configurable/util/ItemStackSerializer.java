@@ -41,8 +41,8 @@ public class ItemStackSerializer {
 		final ItemMeta meta = item.getItemMeta();
 		Preconditions.checkNotNull(meta, "item meta cannot be null");
 
-		meta.setDisplayName(StringUtils.parseColor(section.getString(table.getDisplayNameSectionName())));
-		meta.setLore(StringUtils.parseColor(section.getStringList(table.getLoreSectionName())));
+		meta.setDisplayName(StringUtil.parseColor(section.getString(table.getDisplayNameSectionName())));
+		meta.setLore(StringUtil.parseColor(section.getStringList(table.getLoreSectionName())));
 		item.setItemMeta(meta);
 		applyEnchantmentsToItemStack(item, deserializeEnchantments(section, table));
 
@@ -140,8 +140,8 @@ public class ItemStackSerializer {
 		if (item == null) return;
 		final ItemMeta meta = item.getItemMeta();
 		Preconditions.checkNotNull(meta, "item meta cannot be null");
-		meta.setDisplayName(StringUtils.applyPlaceholders(meta.getDisplayName(), placeholderUtil));
-		meta.setLore(StringUtils.applyPlaceholders(meta.getLore(), placeholderUtil));
+		meta.setDisplayName(StringUtil.applyPlaceholders(meta.getDisplayName(), placeholderUtil));
+		meta.setLore(StringUtil.applyPlaceholders(meta.getLore(), placeholderUtil));
 		item.setItemMeta(meta);
 	}
 

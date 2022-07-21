@@ -152,7 +152,7 @@ public class PaginationManager {
 	 */
 	public int getLastPage() {
 		if (this.slots.size() == 0) return 0;
-		return Math.max(this.items.size() / this.slots.size() - 1, 0);
+		return Math.max(this.items.size() / this.slots.size(), 0);
 	}
 
 	/**
@@ -175,9 +175,10 @@ public class PaginationManager {
 	public void update() {
 		if (this.page < 0) return; // invalid page
 
-		for (int i = 0; i < this.slots.size(); i++) {
-			if (this.items.size() < i + 1) return;
-			this.gui.addItem(this.slots.get(i), this.items.get(i + (this.page * this.slots.size())));
+		for (int slotNo = 0; slotNo < this.slots.size(); slotNo++) {
+			int itemNo = slotNo + (this.page * this.slots.size());
+			if (this.items.size() == itemNo) return;
+			this.gui.addItem(this.slots.get(slotNo), this.items.get(itemNo));
 		}
 	}
 }
