@@ -11,7 +11,7 @@
 <dependency>
     <groupId>com.github.Obliviated.ObliviateInvs</groupId>
     <artifactId>core</artifactId>
-    <version>4.0.1</version>
+    <version>4.0.2</version>
 </dependency>
 ```
 ### Gradle
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Obliviated.ObliviateInvs:core:4.0.1'
+    implementation 'com.github.Obliviated.ObliviateInvs:core:4.0.2'
 }
 ```
 
