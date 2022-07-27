@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/Obliviated/obliviate-invs.svg)](https://jitpack.io/#Obliviated/obliviate-invs)
 
-### Maven
+## Maven
 
 ```xml
 <repository>
@@ -14,7 +14,7 @@
     <version>4.0.2</version>
 </dependency>
 ```
-### Gradle
+## Gradle
 ```gradle
 repositories {
     maven { url 'https://jitpack.io' }
@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     implementation 'com.github.Obliviated.ObliviateInvs:core:4.0.2'
+    //implementation 'com.github.Obliviated.ObliviateInvs:configurablegui:4.0.2'
 }
 ```
 
