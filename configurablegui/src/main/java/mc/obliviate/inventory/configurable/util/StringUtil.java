@@ -1,7 +1,7 @@
 package mc.obliviate.inventory.configurable.util;
 
-import mc.obliviate.inventory.configurable.placeholder.InternalPlaceholder;
-import mc.obliviate.inventory.configurable.placeholder.PlaceholderUtil;
+import mc.obliviate.util.placeholder.InternalPlaceholder;
+import mc.obliviate.util.placeholder.PlaceholderUtil;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.Contract;
 
@@ -18,10 +18,7 @@ public class StringUtil {
 	public static String applyPlaceholders(String message, final PlaceholderUtil placeholderUtil) {
 		if (message == null) return null;
 		if (placeholderUtil == null) return message;
-		for (final InternalPlaceholder placeholder : placeholderUtil.getPlaceholders()) {
-			message = message.replace(placeholder.getPlaceholder(), placeholder.getValue());
-		}
-		return message;
+		return placeholderUtil.apply(message);
 	}
 
 	@Contract("null,_ -> null")

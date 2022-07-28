@@ -2,7 +2,7 @@ package mc.obliviate.inventory.configurable.util;
 
 import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.configurable.GuiConfigurationTable;
-import mc.obliviate.inventory.configurable.placeholder.PlaceholderUtil;
+import mc.obliviate.util.placeholder.PlaceholderUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
