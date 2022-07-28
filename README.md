@@ -11,7 +11,7 @@
 <dependency>
     <groupId>com.github.Obliviated.ObliviateInvs</groupId>
     <artifactId>core</artifactId>
-    <version>4.0.2</version>
+    <version>{INSERT_VERSION_HERE}</version>
 </dependency>
 ```
 ## Gradle
@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Obliviated.ObliviateInvs:core:4.0.2'
-    //implementation 'com.github.Obliviated.ObliviateInvs:configurablegui:4.0.2'
+    implementation 'com.github.Obliviated.ObliviateInvs:core:{INSERT_VERSION_HERE}'
+    //implementation 'com.github.Obliviated.ObliviateInvs:configurablegui:{INSERT_VERSION_HERE}'
 }
 ```
 
