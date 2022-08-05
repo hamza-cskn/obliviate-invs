@@ -138,14 +138,23 @@ public class ItemStackSerializer {
         return new Pair<>(enchantment, value);
     }
 
-	public static void applyPlaceholdersToItemStack(ItemStack item, PlaceholderUtil placeholderUtil) {
-		if (item == null) return;
-		final ItemMeta meta = item.getItemMeta();
-		Preconditions.checkNotNull(meta, "item meta cannot be null");
-		meta.setDisplayName(StringUtil.applyPlaceholders(meta.getDisplayName(), placeholderUtil));
-		meta.setLore(StringUtil.applyPlaceholders(meta.getLore(), placeholderUtil));
-		item.setItemMeta(meta);
-	}
+    public static void applyPlaceholdersToItemStack(ItemStack item, PlaceholderUtil placeholderUtil) {
+        if (item == null) return;
+        final ItemMeta meta = item.getItemMeta();
+        Preconditions.checkNotNull(meta, "item meta cannot be null");
+        meta.setDisplayName(StringUtil.applyPlaceholders(meta.getDisplayName(), placeholderUtil));
+        meta.setLore(StringUtil.applyPlaceholders(meta.getLore(), placeholderUtil));
+        item.setItemMeta(meta);
+    }
+
+    public static void parseColorOfItemStack(ItemStack item) {
+        if (item == null) return;
+        final ItemMeta meta = item.getItemMeta();
+        Preconditions.checkNotNull(meta, "item meta cannot be null");
+        meta.setDisplayName(StringUtil.parseColor(meta.getDisplayName()));
+        meta.setLore(StringUtil.parseColor(meta.getLore()));
+        item.setItemMeta(meta);
+    }
 
     private static class Pair<K, V> {
 
