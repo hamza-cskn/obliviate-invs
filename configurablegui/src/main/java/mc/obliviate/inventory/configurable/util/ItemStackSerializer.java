@@ -18,6 +18,19 @@ import java.util.Optional;
 
 public class ItemStackSerializer {
 
+    /**
+     * This method matches material and material name. Uses <a href="https://github.com/CryptoMorin/XSeries/blob/master/src/main/java/com/cryptomorin/xseries/XMaterial.java">XMaterial</a>
+     * at backend.
+     *
+     * Legacy versions needs material data (aka damage, durability)
+     * to recognize some materials. Ex: white wool and red wool are
+     * same material for 1.8 servers. That is why this method
+     * returns itemstack instead of material.
+     *
+     * @param section YAML configuration section of item stack
+     * @param table table to find section names
+     * @return raw item stack
+     */
     @NotNull
     public static ItemStack deserializeMaterial(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
         final String materialName = section.getString(table.getMaterialSectionName());
@@ -30,13 +43,30 @@ public class ItemStackSerializer {
 
         final ItemStack item = xmaterial.get().parseItem();
         if (item == null) {
-            throw new IllegalArgumentException("Material could not parsed as itemstack: " + materialName);
+            throw new IllegalArgumentException("Material could not parsed as item stack: " + materialName);
         }
         return item;
     }
 
+    /**
+     *
+     * This method deserialize a configuration as an item stack.
+     * This method parses item type, name, lore, amount, durability,
+     * enchantment, item flags, custom model data and unbreakability.
+     *
+     * However, this method does not parse placeholders because this
+     * type of itemstack must be raw to caching itemstacks and
+     * applying placeholders at runtime.
+     *
+     * @param section YAML configuration section of item stack
+     * @param table table to find section names
+     * @return deserialized item stack.
+     */
     @NotNull
     public static ItemStack deserializeItemStack(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
+        if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
+        Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
+
         final ItemStack item = deserializeMaterial(section, table);
         final ItemMeta meta = item.getItemMeta();
         Preconditions.checkNotNull(meta, "item meta cannot be null");
@@ -64,6 +94,7 @@ public class ItemStackSerializer {
 
     public static void applyItemFlagsToItemStacks(@NotNull ItemStack item, ItemFlag[] itemFlags) {
         ItemMeta meta = item.getItemMeta();
+        Preconditions.checkNotNull(itemFlags, "item flags cannot be null");
         Preconditions.checkNotNull(meta, "item meta cannot be null");
 
         if (itemFlags.length == 0) return;
@@ -76,6 +107,9 @@ public class ItemStackSerializer {
     }
 
     public static ItemFlag[] deserializeItemFlags(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
+        if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
+        Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
+
         ItemFlag[] itemFlags = new ItemFlag[ItemFlag.values().length];
 
         List<String> serializedItemFlags = section.getStringList(table.getItemFlagsSectionName());
@@ -113,6 +147,9 @@ public class ItemStackSerializer {
     }
 
     public static Map<Enchantment, Integer> deserializeEnchantments(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
+        if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
+        Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
+
         if (!section.isSet(table.getEnchantmentsSectionName())) return new HashMap<>();
         Map<Enchantment, Integer> map = new HashMap<>();
         for (final String serializedEnchantment : section.getStringList(table.getEnchantmentsSectionName())) {
