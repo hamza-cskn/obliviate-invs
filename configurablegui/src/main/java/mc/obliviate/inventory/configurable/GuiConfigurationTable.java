@@ -1,10 +1,11 @@
 package mc.obliviate.inventory.configurable;
 
+import com.google.common.base.Preconditions;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class GuiConfigurationTable {
 
-	protected static GuiConfigurationTable defaultConfigurationTable;
+	protected static GuiConfigurationTable defaultConfigurationTable = new GuiConfigurationTable(null);
 
 	private String titleSectionName = "title";
 	private String sizeSectionName = "row";
@@ -36,6 +37,7 @@ public class GuiConfigurationTable {
 	}
 
 	public ConfigurationSection getMenusSection(String section) {
+		Preconditions.checkNotNull(menuConfiguration, "No GUI configuration specified. If you're the developer, visit Wiki of obliviate-invs.");
 		return menuConfiguration.getConfigurationSection(section);
 	}
 
