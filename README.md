@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/Obliviated/obliviate-invs.svg)](https://jitpack.io/#Obliviated/obliviate-invs)
+[![](https://jitpack.io/v/hamza-cskn/obliviate-invs.svg)](https://jitpack.io/#hamza-cskn/obliviate-invs)
 
 ## Maven
 
@@ -9,7 +9,7 @@
 </repository>
 
 <dependency>
-    <groupId>com.github.Obliviated.ObliviateInvs</groupId>
+    <groupId>com.github.hamza-cskn.obliviate-invs</groupId>
     <artifactId>core</artifactId>
     <version>{INSERT_VERSION_HERE}</version>
 </dependency>
@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.Obliviated.ObliviateInvs:core:{INSERT_VERSION_HERE}'
-    //implementation 'com.github.Obliviated.ObliviateInvs:configurablegui:{INSERT_VERSION_HERE}'
+    implementation 'com.github.hamza-cskn.obliviate-invs:core:{INSERT_VERSION_HERE}'
+    //implementation 'com.github.hamza-cskn.obliviate-invs:configurablegui:{INSERT_VERSION_HERE}'
 }
 ```
 
@@ -48,8 +48,8 @@ Visit [wiki](https://github.com/Obliviated/obliviate-invs/wiki/) page to see usa
 ## Other useful codes for GUI development
 
 * Snake slot iteration algorithm for
-  GUIs: [Click to go gist](https://gist.github.com/Obliviated/67c241c099d26e933a7662ba906322ce)
+  GUIs: [Click to go gist](https://gist.github.com/hamza-cskn/67c241c099d26e933a7662ba906322ce)
 * ItemBuilder class that is used in this
-  project: [Click to go gist](https://gist.github.com/Obliviated/af71812e9235025be348f2600502d6cd)
+  project: [Click to go gist](https://gist.github.com/hamza-cskn/af71812e9235025be348f2600502d6cd)
 * Gradient and TextAnimation algorithms for
-  GUIs: [Click to go gist](https://gist.github.com/Obliviated/c741466e33bb359210de3a24bb52c7c6)
+  GUIs: [Click to go gist](https://gist.github.com/hamza-cskn/c741466e33bb359210de3a24bb52c7c6)
