@@ -21,14 +21,14 @@ public class ItemStackSerializer {
     /**
      * This method matches material and material name. Uses <a href="https://github.com/CryptoMorin/XSeries/blob/master/src/main/java/com/cryptomorin/xseries/XMaterial.java">XMaterial</a>
      * at backend.
-     *
+     * <p>
      * Legacy versions needs material data (aka damage, durability)
      * to recognize some materials. Ex: white wool and red wool are
      * same material for 1.8 servers. That is why this method
      * returns itemstack instead of material.
      *
      * @param section YAML configuration section of item stack
-     * @param table table to find section names
+     * @param table   table to find section names
      * @return raw item stack
      */
     @NotNull
@@ -49,17 +49,16 @@ public class ItemStackSerializer {
     }
 
     /**
-     *
      * This method deserialize a configuration as an item stack.
      * This method parses item type, name, lore, amount, durability,
      * enchantment, item flags, custom model data and unbreakability.
-     *
+     * <p>
      * However, this method does not parse placeholders because this
      * type of itemstack must be raw to caching itemstacks and
      * applying placeholders at runtime.
      *
      * @param section YAML configuration section of item stack
-     * @param table table to find section names
+     * @param table   table to find section names
      * @return deserialized item stack.
      */
     @NotNull
@@ -68,7 +67,7 @@ public class ItemStackSerializer {
         Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
 
         final ItemStack item = deserializeMaterial(section, table);
-        final ItemMeta meta = item.getItemMeta();
+        ItemMeta meta = item.getItemMeta();
         Preconditions.checkNotNull(meta, "item meta cannot be null");
 
         meta.setDisplayName(section.getString(table.getDisplayNameSectionName()));
@@ -78,12 +77,20 @@ public class ItemStackSerializer {
         parseColorOfItemStack(item);
         applyEnchantmentsToItemStack(item, deserializeEnchantments(section, table));
 
+        meta = item.getItemMeta();
         if (section.isSet(table.getCustomModelDataSectionName()))
             meta.setCustomModelData(section.getInt(table.getCustomModelDataSectionName()));
         if (section.getBoolean(table.getUnbreakableSectionName()))
             meta.setUnbreakable(true);
         if (section.isSet(table.getDurabilitySectionName()))
             item.setDurability((short) section.getInt(table.getDurabilitySectionName()));
+        if (section.getBoolean(table.getGlowSectionName())) {
+            meta.getItemFlags().add(ItemFlag.HIDE_ENCHANTS);
+            if (meta.getEnchants().isEmpty()) {
+                meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 1, true);
+            }
+        }
+        item.setItemMeta(meta);
 
         applyItemFlagsToItemStacks(item, deserializeItemFlags(section, table));
         item.setAmount(section.getInt(table.getAmountSectionName(), 1));
