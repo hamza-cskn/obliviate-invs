@@ -4,4 +4,3 @@ dependencies {
     implementation 'com.github.hamza-cskn:obliviate-utils:2.0.1-hotfix'
 }
 
-project.setLibsDirName('D:/Users/User/Desktop/Libraries/inventoryapi')
