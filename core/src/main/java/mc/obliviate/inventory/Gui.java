@@ -78,9 +78,17 @@ public abstract class Gui implements InventoryHolder {
 
 	}
 
-	public void onClose(InventoryCloseEvent event) {
-
-	}
+    /**
+     * @param event event
+     * @return force to uncancel
+     */
+    public void onClose(InventoryCloseEvent event) {
+        if (event instanceof FakeInventoryCloseEvent) return;
+        final Gui gui = InventoryAPI.getInstance().getGuiFromInventory(event.getPlayer().getOpenInventory().getTopInventory());
+        if (gui == null) return;
+        if (!gui.equals(this)) return;
+        taskList.forEach(BukkitTask::cancel);
+    }
 
 	public void open() {
 		final Gui gui = InventoryAPI.getInstance().getPlayersCurrentGui(this.player);
