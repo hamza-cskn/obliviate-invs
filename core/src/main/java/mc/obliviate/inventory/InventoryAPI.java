@@ -2,6 +2,7 @@ package mc.obliviate.inventory;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +47,16 @@ public class InventoryAPI {
 		if (!initialized)
 			throw new IllegalStateException("Inventory API instance created but is not initialized! Please use init() method to init.");
 		return players.get(player.getUniqueId());
+	}
+
+	@Nullable
+	public Gui getGuiFromInventory(final Inventory inventory) {
+		for (Gui gui : this.players.values()) {
+			if (gui.getInventory().equals(inventory)) {
+				return gui;
+			}
+		}
+		return null;
 	}
 
 	public JavaPlugin getPlugin() {
