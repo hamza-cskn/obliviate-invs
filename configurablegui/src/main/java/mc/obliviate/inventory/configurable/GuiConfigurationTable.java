@@ -1,6 +1,8 @@
 package mc.obliviate.inventory.configurable;
 
 import com.google.common.base.Preconditions;
+import mc.obliviate.util.versiondetection.ServerVersionController;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class GuiConfigurationTable {
@@ -27,6 +29,7 @@ public class GuiConfigurationTable {
 
 	public GuiConfigurationTable(ConfigurationSection menuConfiguration) {
 		this.menuConfiguration = menuConfiguration;
+		ServerVersionController.calculateServerVersion(Bukkit.getBukkitVersion());
 	}
 
 	public static GuiConfigurationTable getDefaultConfigurationTable() {
