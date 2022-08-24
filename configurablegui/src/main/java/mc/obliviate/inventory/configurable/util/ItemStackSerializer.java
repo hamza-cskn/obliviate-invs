@@ -3,14 +3,15 @@ package mc.obliviate.inventory.configurable.util;
 import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
+import mc.obliviate.util.string.StringUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +31,8 @@ public class ItemStackSerializer {
      * @param section YAML configuration section of item stack
      * @return raw item stack
      */
-    @NotNull
-    public static ItemStack deserializeMaterial(@NotNull ConfigurationSection section) {
+    @Nonnull
+    public static ItemStack deserializeMaterial(@Nonnull ConfigurationSection section) {
         return ItemStackSerializer.deserializeMaterial(section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
@@ -48,8 +49,8 @@ public class ItemStackSerializer {
      * @param table   table to find section names
      * @return raw item stack
      */
-    @NotNull
-    public static ItemStack deserializeMaterial(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
+    @Nonnull
+    public static ItemStack deserializeMaterial(@Nonnull ConfigurationSection section, GuiConfigurationTable table) {
         final String materialName = section.getString(table.getMaterialSectionName());
         if (materialName == null) throw new IllegalArgumentException("material section could not find");
 
@@ -77,8 +78,8 @@ public class ItemStackSerializer {
      * @param section YAML configuration section of item stack
      * @return deserialized item stack.
      */
-    @NotNull
-    public static ItemStack deserializeItemStack(@NotNull ConfigurationSection section) {
+    @Nonnull
+    public static ItemStack deserializeItemStack(@Nonnull ConfigurationSection section) {
         return ItemStackSerializer.deserializeItemStack(section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
@@ -95,8 +96,8 @@ public class ItemStackSerializer {
      * @param table   table to find section names
      * @return deserialized item stack.
      */
-    @NotNull
-    public static ItemStack deserializeItemStack(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
+    @Nonnull
+    public static ItemStack deserializeItemStack(@Nonnull ConfigurationSection section, GuiConfigurationTable table) {
         if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
         Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
 
@@ -133,7 +134,7 @@ public class ItemStackSerializer {
         return item;
     }
 
-    public static void applyItemFlagsToItemStacks(@NotNull ItemStack item, ItemFlag[] itemFlags) {
+    public static void applyItemFlagsToItemStacks(@Nonnull ItemStack item, ItemFlag[] itemFlags) {
         ItemMeta meta = item.getItemMeta();
         Preconditions.checkNotNull(itemFlags, "item flags cannot be null");
         Preconditions.checkNotNull(meta, "item meta cannot be null");
@@ -147,11 +148,11 @@ public class ItemStackSerializer {
         item.setItemMeta(meta);
     }
 
-    public static ItemFlag[] deserializeItemFlags(@NotNull ConfigurationSection section) {
+    public static ItemFlag[] deserializeItemFlags(@Nonnull ConfigurationSection section) {
         return ItemStackSerializer.deserializeItemFlags(section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
-    public static ItemFlag[] deserializeItemFlags(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
+    public static ItemFlag[] deserializeItemFlags(@Nonnull ConfigurationSection section, GuiConfigurationTable table) {
         if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
         Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
 
@@ -191,11 +192,11 @@ public class ItemStackSerializer {
         }
     }
 
-    public static Map<Enchantment, Integer> deserializeEnchantments(@NotNull ConfigurationSection section) {
+    public static Map<Enchantment, Integer> deserializeEnchantments(@Nonnull ConfigurationSection section) {
         return ItemStackSerializer.deserializeEnchantments(section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
-    public static Map<Enchantment, Integer> deserializeEnchantments(@NotNull ConfigurationSection section, GuiConfigurationTable table) {
+    public static Map<Enchantment, Integer> deserializeEnchantments(@Nonnull ConfigurationSection section, GuiConfigurationTable table) {
         if (!section.isSet(table.getEnchantmentsSectionName())) return new HashMap<>();
         Map<Enchantment, Integer> map = new HashMap<>();
         for (final String serializedEnchantment : section.getStringList(table.getEnchantmentsSectionName())) {
@@ -225,8 +226,8 @@ public class ItemStackSerializer {
         if (item == null) return;
         final ItemMeta meta = item.getItemMeta();
         Preconditions.checkNotNull(meta, "item meta cannot be null");
-        meta.setDisplayName(StringUtil.applyPlaceholders(meta.getDisplayName(), placeholderUtil));
-        meta.setLore(StringUtil.applyPlaceholders(meta.getLore(), placeholderUtil));
+        meta.setDisplayName(placeholderUtil.apply(meta.getDisplayName()));
+        meta.setLore(placeholderUtil.apply(meta.getLore()));
         item.setItemMeta(meta);
     }
 

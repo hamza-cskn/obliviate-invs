@@ -10,9 +10,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,8 +39,7 @@ public class AdvancedSlotManager {
 	 * @param icon the default slot icon (most of time, it is barrier or air)
 	 * @return new advanced slot instance
 	 */
-	@NotNull
-	@Contract("_,_ -> new")
+	@Nonnull
 	public AdvancedSlot addAdvancedIcon(final int slot, final Icon icon) {
 		final AdvancedSlot aSlot = new AdvancedSlot(slot, icon, this);
 		registerSlot(aSlot);

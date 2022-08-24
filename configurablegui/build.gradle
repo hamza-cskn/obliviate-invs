@@ -1,5 +1,7 @@
 dependencies {
     compileOnly project(':core')
     compileOnly 'org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT'
-    implementation 'com.github.hamza-cskn:obliviate-utils:1.0.0'
+    implementation 'com.github.hamza-cskn:obliviate-utils:2.0.1-hotfix'
 }
+
+project.setLibsDirName('D:/Users/User/Desktop/Libraries/inventoryapi')

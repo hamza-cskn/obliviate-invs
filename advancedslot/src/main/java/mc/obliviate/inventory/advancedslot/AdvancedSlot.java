@@ -4,9 +4,8 @@ import mc.obliviate.inventory.Icon;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -33,7 +32,7 @@ public class AdvancedSlot {
 	/**
 	 * @return defined action of PrePutClick event
 	 */
-	@NotNull
+	@Nonnull
 	public BiPredicate<InventoryClickEvent, ItemStack> getPrePutClickAction() {
 		return this.prePutClickAction;
 	}
@@ -41,7 +40,7 @@ public class AdvancedSlot {
 	/**
 	 * @return defined action of Pickup event
 	 */
-	@NotNull
+	@Nonnull
 	public Consumer<InventoryClickEvent> getPickupAction() {
 		return this.pickupAction;
 	}
@@ -49,7 +48,7 @@ public class AdvancedSlot {
 	/**
 	 * @return defined action of Put event
 	 */
-	@NotNull
+	@Nonnull
 	public Consumer<InventoryClickEvent> getPutAction() {
 		return this.putAction;
 	}
@@ -62,7 +61,6 @@ public class AdvancedSlot {
 	 * @param pickupAction the action
 	 * @return same instance
 	 */
-	@Contract("_ -> this")
 	public AdvancedSlot onPickup(Consumer<InventoryClickEvent> pickupAction) {
 		this.pickupAction = Objects.requireNonNull(pickupAction, "pickup action cannot be null");
 		return this;
@@ -76,7 +74,6 @@ public class AdvancedSlot {
 	 * @param putAction the action
 	 * @return same instance
 	 */
-	@Contract("_ -> this")
 	public AdvancedSlot onPut(Consumer<InventoryClickEvent> putAction) {
 		this.putAction = Objects.requireNonNull(putAction, "put action cannot be null");
 		return this;
@@ -93,7 +90,6 @@ public class AdvancedSlot {
 	 * @param prePutClickAction the action
 	 * @return same instance
 	 */
-	@Contract("_ -> this")
 	public AdvancedSlot onPreClick(BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction) {
 		this.prePutClickAction = Objects.requireNonNull(prePutClickAction, "prePut action cannot be null");
 		return this;

@@ -30,10 +30,6 @@ subprojects {
         maven { url 'https://jitpack.io' }
     }
 
-    dependencies {
-        implementation 'org.jetbrains:annotations:23.0.0'
-    }
-
     publishing {
         publications {
             maven(MavenPublication) {
