@@ -29,7 +29,7 @@ public class GuiConfigurationTable {
 
 	public GuiConfigurationTable(ConfigurationSection menuConfiguration) {
 		this.menuConfiguration = menuConfiguration;
-		ServerVersionController.calculateServerVersion(Bukkit.getBukkitVersion());
+		ServerVersionController.calculateServerVersion(Bukkit.getServer());
 	}
 
 	public static GuiConfigurationTable getDefaultConfigurationTable() {
