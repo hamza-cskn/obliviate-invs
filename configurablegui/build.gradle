@@ -1,6 +1,6 @@
 dependencies {
     compileOnly project(':core')
     compileOnly 'org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT'
-    implementation 'com.github.hamza-cskn:obliviate-utils:2.0.3'
+    implementation 'com.github.hamza-cskn:obliviate-utils:2.0.4'
 }
 
