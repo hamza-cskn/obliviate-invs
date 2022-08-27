@@ -224,6 +224,7 @@ public class ItemStackSerializer {
 
     public static void applyPlaceholdersToItemStack(ItemStack item, PlaceholderUtil placeholderUtil) {
         if (item == null) return;
+        if (placeholderUtil == null) return;
         final ItemMeta meta = item.getItemMeta();
         Preconditions.checkNotNull(meta, "item meta cannot be null");
         meta.setDisplayName(placeholderUtil.apply(meta.getDisplayName()));
