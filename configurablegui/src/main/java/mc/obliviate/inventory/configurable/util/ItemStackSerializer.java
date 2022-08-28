@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
 import mc.obliviate.util.string.StringUtil;
+import mc.obliviate.util.versiondetection.ServerVersionController;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -12,10 +13,12 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class ItemStackSerializer {
 
@@ -220,6 +223,47 @@ public class ItemStackSerializer {
         }
         Preconditions.checkArgument(enchantment != null, "Enchantment could not find: " + datas[0]);
         return new Pair<>(enchantment, value);
+    }
+
+    public void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section) {
+        serializeItemStack(item, section, GuiConfigurationTable.getDefaultConfigurationTable());
+    }
+
+    public void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section, @Nonnull GuiConfigurationTable table) {
+        if (item.getItemMeta() != null) {
+            section.set(table.getDisplayNameSectionName(), item.getItemMeta().getDisplayName());
+            section.set(table.getLoreSectionName(), item.getItemMeta().getLore());
+        }
+        section.set(table.getMaterialSectionName(), XMaterial.matchXMaterial(item).name());
+        section.set(table.getDurabilitySectionName(), item.getDurability());
+        section.set(table.getUnbreakableSectionName(), item.getItemMeta().isUnbreakable());
+        if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_9))
+            section.set(table.getCustomModelDataSectionName(), item.getItemMeta().getCustomModelData());
+        section.set(table.getAmountSectionName(), item.getAmount());
+        section.set(table.getEnchantmentsSectionName(), deserializeEnchantments(item.getEnchantments()));
+        section.set(table.getItemFlagsSectionName(), deserializeItemFlags(item.getItemMeta().getItemFlags()));
+    }
+
+    public static List<String> deserializeEnchantments(Map<Enchantment, Integer> enchantments) {
+        final List<String> results = new ArrayList<>();
+        for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+            results.add(deserializeEnchantment(entry.getKey(), entry.getValue()));
+        }
+        if (results.isEmpty()) return null;
+        return results;
+    }
+
+    public static String deserializeEnchantment(Enchantment enchantment, int level) {
+        return enchantment.getName() + ":" + level;
+    }
+
+    private static List<String> deserializeItemFlags(Set<ItemFlag> flags) {
+        final List<String> results = new ArrayList<>();
+        for (ItemFlag flag : flags) {
+            results.add(flag.name());
+        }
+        if (results.isEmpty()) return null;
+        return results;
     }
 
     public static void applyPlaceholdersToItemStack(ItemStack item, PlaceholderUtil placeholderUtil) {
