@@ -118,9 +118,9 @@ public class ItemStackSerializer {
         applyEnchantmentsToItemStack(item, deserializeEnchantments(section, table));
 
         meta = item.getItemMeta();
-        if (section.isSet(table.getCustomModelDataSectionName()))
+        if (section.isSet(table.getCustomModelDataSectionName()) && ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_14))
             meta.setCustomModelData(section.getInt(table.getCustomModelDataSectionName()));
-        if (section.getBoolean(table.getUnbreakableSectionName()))
+        if (section.getBoolean(table.getUnbreakableSectionName()) && ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_11))
             meta.setUnbreakable(true);
         if (section.isSet(table.getDurabilitySectionName()))
             item.setDurability((short) section.getInt(table.getDurabilitySectionName()));
@@ -234,16 +234,22 @@ public class ItemStackSerializer {
     public static void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section, @Nonnull GuiConfigurationTable table) {
         if (item.getItemMeta() != null) {
             section.set(table.getDisplayNameSectionName(), item.getItemMeta().getDisplayName());
-            section.set(table.getLoreSectionName(), item.getItemMeta().getLore());
+            if (item.getItemMeta().getLore() != null && !item.getItemMeta().getLore().isEmpty())
+                section.set(table.getLoreSectionName(), item.getItemMeta().getLore());
         }
         section.set(table.getMaterialSectionName(), XMaterial.matchXMaterial(item).name());
-        section.set(table.getDurabilitySectionName(), item.getDurability());
-        section.set(table.getUnbreakableSectionName(), item.getItemMeta().isUnbreakable());
-        if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_9))
+        if (item.getDurability() != 0)
+            section.set(table.getDurabilitySectionName(), item.getDurability());
+        if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_11))
+            section.set(table.getUnbreakableSectionName(), item.getItemMeta().isUnbreakable());
+        if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_14))
             section.set(table.getCustomModelDataSectionName(), item.getItemMeta().getCustomModelData());
-        section.set(table.getAmountSectionName(), item.getAmount());
-        section.set(table.getEnchantmentsSectionName(), deserializeEnchantments(item.getEnchantments()));
-        section.set(table.getItemFlagsSectionName(), deserializeItemFlags(item.getItemMeta().getItemFlags()));
+        if (item.getAmount() != 1)
+            section.set(table.getAmountSectionName(), item.getAmount());
+        if (!item.getEnchantments().isEmpty())
+            section.set(table.getEnchantmentsSectionName(), deserializeEnchantments(item.getEnchantments()));
+        if (!item.getItemMeta().getItemFlags().isEmpty())
+            section.set(table.getItemFlagsSectionName(), deserializeItemFlags(item.getItemMeta().getItemFlags()));
     }
 
     public static List<String> deserializeEnchantments(@Nonnull Map<Enchantment, Integer> enchantments) {
@@ -251,7 +257,6 @@ public class ItemStackSerializer {
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             results.add(deserializeEnchantment(entry.getKey(), entry.getValue()));
         }
-        if (results.isEmpty()) return null;
         return results;
     }
 
@@ -264,7 +269,6 @@ public class ItemStackSerializer {
         for (ItemFlag flag : flags) {
             results.add(flag.name());
         }
-        if (results.isEmpty()) return null;
         return results;
     }
 
