@@ -5,6 +5,9 @@ import mc.obliviate.util.versiondetection.ServerVersionController;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 public class GuiConfigurationTable {
 
 	protected static GuiConfigurationTable defaultConfigurationTable = new GuiConfigurationTable(null);
@@ -27,7 +30,7 @@ public class GuiConfigurationTable {
 
 	private final ConfigurationSection menuConfiguration;
 
-	public GuiConfigurationTable(ConfigurationSection menuConfiguration) {
+	public GuiConfigurationTable(@Nullable ConfigurationSection menuConfiguration) {
 		this.menuConfiguration = menuConfiguration;
 		ServerVersionController.calculateServerVersion(Bukkit.getServer());
 	}
@@ -36,11 +39,11 @@ public class GuiConfigurationTable {
 		return defaultConfigurationTable;
 	}
 
-	public static void setDefaultConfigurationTable(GuiConfigurationTable defaultConfigurationTable) {
+	public static void setDefaultConfigurationTable(@Nonnull GuiConfigurationTable defaultConfigurationTable) {
 		GuiConfigurationTable.defaultConfigurationTable = defaultConfigurationTable;
 	}
 
-	public ConfigurationSection getMenusSection(String section) {
+	public ConfigurationSection getMenusSection(@Nonnull String section) {
 		Preconditions.checkNotNull(menuConfiguration, "No GUI configuration specified. If you're the developer, visit Wiki of obliviate-invs.");
 		return menuConfiguration.getConfigurationSection(section);
 	}
@@ -49,7 +52,7 @@ public class GuiConfigurationTable {
 		return titleSectionName;
 	}
 
-	public void setTitleSectionName(String titleSectionName) {
+	public void setTitleSectionName(@Nonnull String titleSectionName) {
 		this.titleSectionName = titleSectionName;
 	}
 
@@ -57,7 +60,7 @@ public class GuiConfigurationTable {
 		return sizeSectionName;
 	}
 
-	public void setSizeSectionName(String sizeSectionName) {
+	public void setSizeSectionName(@Nonnull String sizeSectionName) {
 		this.sizeSectionName = sizeSectionName;
 	}
 
@@ -65,7 +68,7 @@ public class GuiConfigurationTable {
 		return iconsSectionName;
 	}
 
-	public void setIconsSectionName(String iconsSectionName) {
+	public void setIconsSectionName(@Nonnull String iconsSectionName) {
 		this.iconsSectionName = iconsSectionName;
 	}
 
@@ -73,7 +76,7 @@ public class GuiConfigurationTable {
 		return materialSectionName;
 	}
 
-	public void setMaterialSectionName(String materialSectionName) {
+	public void setMaterialSectionName(@Nonnull String materialSectionName) {
 		this.materialSectionName = materialSectionName;
 	}
 
@@ -81,7 +84,7 @@ public class GuiConfigurationTable {
 		return amountSectionName;
 	}
 
-	public void setAmountSectionName(String amountSectionName) {
+	public void setAmountSectionName(@Nonnull String amountSectionName) {
 		this.amountSectionName = amountSectionName;
 	}
 
@@ -89,7 +92,7 @@ public class GuiConfigurationTable {
 		return displayNameSectionName;
 	}
 
-	public void setDisplayNameSectionName(String displayNameSectionName) {
+	public void setDisplayNameSectionName(@Nonnull String displayNameSectionName) {
 		this.displayNameSectionName = displayNameSectionName;
 	}
 
@@ -97,7 +100,7 @@ public class GuiConfigurationTable {
 		return loreSectionName;
 	}
 
-	public void setLoreSectionName(String loreSectionName) {
+	public void setLoreSectionName(@Nonnull String loreSectionName) {
 		this.loreSectionName = loreSectionName;
 	}
 
@@ -105,7 +108,7 @@ public class GuiConfigurationTable {
 		return itemFlagsSectionName;
 	}
 
-	public void setItemFlagsSectionName(String itemFlagsSectionName) {
+	public void setItemFlagsSectionName(@Nonnull String itemFlagsSectionName) {
 		this.itemFlagsSectionName = itemFlagsSectionName;
 	}
 
@@ -113,7 +116,7 @@ public class GuiConfigurationTable {
 		return enchantmentsSectionName;
 	}
 
-	public void setEnchantmentsSectionName(String enchantmentsSectionName) {
+	public void setEnchantmentsSectionName(@Nonnull String enchantmentsSectionName) {
 		this.enchantmentsSectionName = enchantmentsSectionName;
 	}
 
@@ -121,7 +124,7 @@ public class GuiConfigurationTable {
 		return customModelDataSectionName;
 	}
 
-	public void setCustomModelDataSectionName(String customModelDataSectionName) {
+	public void setCustomModelDataSectionName(@Nonnull String customModelDataSectionName) {
 		this.customModelDataSectionName = customModelDataSectionName;
 	}
 
@@ -133,7 +136,7 @@ public class GuiConfigurationTable {
 		return slotSectionName;
 	}
 
-	public void setSlotSectionName(String slotSectionName) {
+	public void setSlotSectionName(@Nonnull String slotSectionName) {
 		this.slotSectionName = slotSectionName;
 	}
 
@@ -141,7 +144,7 @@ public class GuiConfigurationTable {
 		return unbreakableSectionName;
 	}
 
-	public void setUnbreakableSectionName(String unbreakableSectionName) {
+	public void setUnbreakableSectionName(@Nonnull String unbreakableSectionName) {
 		this.unbreakableSectionName = unbreakableSectionName;
 	}
 
@@ -149,7 +152,7 @@ public class GuiConfigurationTable {
 		return durabilitySectionName;
 	}
 
-	public void setDurabilitySectionName(String durabilitySectionName) {
+	public void setDurabilitySectionName(@Nonnull String durabilitySectionName) {
 		this.durabilitySectionName = durabilitySectionName;
 	}
 
@@ -157,7 +160,7 @@ public class GuiConfigurationTable {
 		return glowSectionName;
 	}
 
-	public void setGlowSectionName(String glowSectionName) {
+	public void setGlowSectionName(@Nonnull String glowSectionName) {
 		this.glowSectionName = glowSectionName;
 	}
 }

@@ -6,12 +6,14 @@ import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
 import org.bukkit.configuration.ConfigurationSection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GuiSerializer {
 
-	public static void putDysfunctionalIcons(ConfigurableGui gui, GuiConfigurationTable table, ConfigurationSection iconsSection, PlaceholderUtil placeholderUtil, List<String> functionalSlots) {
+	public static void putDysfunctionalIcons(@Nonnull ConfigurableGui gui, @Nonnull GuiConfigurationTable table, @Nonnull ConfigurationSection iconsSection, @Nullable PlaceholderUtil placeholderUtil,@Nonnull List<String> functionalSlots) {
 		Preconditions.checkNotNull(gui, "dysfunctional icons could not put because gui was null!");
 		Preconditions.checkNotNull(iconsSection, "null configuration section given!");
 

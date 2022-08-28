@@ -1,6 +1,7 @@
 package mc.obliviate.inventory.configurable.util;
 
 import com.google.common.base.Preconditions;
+import com.sun.istack.internal.NotNull;
 import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
 import mc.obliviate.util.string.StringUtil;
@@ -12,7 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -100,7 +103,7 @@ public class ItemStackSerializer {
      * @return deserialized item stack.
      */
     @Nonnull
-    public static ItemStack deserializeItemStack(@Nonnull ConfigurationSection section, GuiConfigurationTable table) {
+    public static ItemStack deserializeItemStack(@Nonnull ConfigurationSection section, @Nullable GuiConfigurationTable table) {
         if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
         Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
 
@@ -137,9 +140,8 @@ public class ItemStackSerializer {
         return item;
     }
 
-    public static void applyItemFlagsToItemStacks(@Nonnull ItemStack item, ItemFlag[] itemFlags) {
+    public static void applyItemFlagsToItemStacks(@Nonnull ItemStack item, @Nonnull ItemFlag[] itemFlags) {
         ItemMeta meta = item.getItemMeta();
-        Preconditions.checkNotNull(itemFlags, "item flags cannot be null");
         Preconditions.checkNotNull(meta, "item meta cannot be null");
 
         if (itemFlags.length == 0) return;
@@ -155,7 +157,7 @@ public class ItemStackSerializer {
         return ItemStackSerializer.deserializeItemFlags(section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
-    public static ItemFlag[] deserializeItemFlags(@Nonnull ConfigurationSection section, GuiConfigurationTable table) {
+    public static ItemFlag[] deserializeItemFlags(@Nonnull ConfigurationSection section, @Nullable GuiConfigurationTable table) {
         if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
         Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
 
@@ -179,7 +181,8 @@ public class ItemStackSerializer {
         return itemFlags;
     }
 
-    public static void applyEnchantmentsToItemStack(ItemStack item, Map<Enchantment, Integer> enchantments) {
+    public static void applyEnchantmentsToItemStack(ItemStack item, @Nonnull Map<Enchantment, Integer> enchantments) {
+        if (item == null) return;
         if (enchantments.isEmpty()) return;
         if (item.getType().equals(XMaterial.ENCHANTED_BOOK.parseMaterial())) {
             final EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
@@ -199,7 +202,7 @@ public class ItemStackSerializer {
         return ItemStackSerializer.deserializeEnchantments(section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
-    public static Map<Enchantment, Integer> deserializeEnchantments(@Nonnull ConfigurationSection section, GuiConfigurationTable table) {
+    public static Map<Enchantment, Integer> deserializeEnchantments(@Nonnull ConfigurationSection section, @Nonnull GuiConfigurationTable table) {
         if (!section.isSet(table.getEnchantmentsSectionName())) return new HashMap<>();
         Map<Enchantment, Integer> map = new HashMap<>();
         for (final String serializedEnchantment : section.getStringList(table.getEnchantmentsSectionName())) {
@@ -209,7 +212,7 @@ public class ItemStackSerializer {
         return map;
     }
 
-    public static Pair<Enchantment, Integer> deserializeEnchantment(String serializedEnchantment) {
+    public static Pair<Enchantment, Integer> deserializeEnchantment(@Nonnull String serializedEnchantment) {
         Preconditions.checkNotNull(serializedEnchantment, "serialized enchantment cannot be null");
         String[] datas = serializedEnchantment.split(":");
         Preconditions.checkArgument(datas.length == 2, "Enchantment could not deserialized: " + serializedEnchantment);
@@ -244,7 +247,7 @@ public class ItemStackSerializer {
         section.set(table.getItemFlagsSectionName(), deserializeItemFlags(item.getItemMeta().getItemFlags()));
     }
 
-    public static List<String> deserializeEnchantments(Map<Enchantment, Integer> enchantments) {
+    public static List<String> deserializeEnchantments(@Nonnull Map<Enchantment, Integer> enchantments) {
         final List<String> results = new ArrayList<>();
         for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
             results.add(deserializeEnchantment(entry.getKey(), entry.getValue()));
@@ -253,11 +256,11 @@ public class ItemStackSerializer {
         return results;
     }
 
-    public static String deserializeEnchantment(Enchantment enchantment, int level) {
+    public static String deserializeEnchantment(@Nonnull Enchantment enchantment, @Nonnegative int level) {
         return enchantment.getName() + ":" + level;
     }
 
-    private static List<String> deserializeItemFlags(Set<ItemFlag> flags) {
+    private static List<String> deserializeItemFlags(@Nonnull Set<ItemFlag> flags) {
         final List<String> results = new ArrayList<>();
         for (ItemFlag flag : flags) {
             results.add(flag.name());
