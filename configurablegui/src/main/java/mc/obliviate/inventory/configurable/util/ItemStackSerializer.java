@@ -227,15 +227,21 @@ public class ItemStackSerializer {
         return new Pair<>(enchantment, value);
     }
 
-    public static void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section) {
+    public static void serializeItemStack(@Nullable ItemStack item, @Nonnull ConfigurationSection section) {
         serializeItemStack(item, section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
-    public static void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section, @Nonnull GuiConfigurationTable table) {
+    public static void serializeItemStack(@Nullable ItemStack item, @Nonnull ConfigurationSection section, @Nonnull GuiConfigurationTable table) {
+        if (item == null || item.getType().equals(XMaterial.AIR.parseMaterial())) {
+            section.set(table.getMaterialSectionName(), XMaterial.AIR.name());
+            return;
+        }
         if (item.getItemMeta() != null) {
             section.set(table.getDisplayNameSectionName(), item.getItemMeta().getDisplayName());
             if (item.getItemMeta().getLore() != null && !item.getItemMeta().getLore().isEmpty())
                 section.set(table.getLoreSectionName(), item.getItemMeta().getLore());
+            if (!item.getItemMeta().getItemFlags().isEmpty())
+                section.set(table.getItemFlagsSectionName(), deserializeItemFlags(item.getItemMeta().getItemFlags()));
         }
         section.set(table.getMaterialSectionName(), XMaterial.matchXMaterial(item).name());
         if (item.getDurability() != 0)
@@ -248,8 +254,6 @@ public class ItemStackSerializer {
             section.set(table.getAmountSectionName(), item.getAmount());
         if (!item.getEnchantments().isEmpty())
             section.set(table.getEnchantmentsSectionName(), deserializeEnchantments(item.getEnchantments()));
-        if (!item.getItemMeta().getItemFlags().isEmpty())
-            section.set(table.getItemFlagsSectionName(), deserializeItemFlags(item.getItemMeta().getItemFlags()));
     }
 
     public static List<String> deserializeEnchantments(@Nonnull Map<Enchantment, Integer> enchantments) {
