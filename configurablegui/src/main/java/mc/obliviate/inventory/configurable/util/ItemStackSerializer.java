@@ -227,11 +227,11 @@ public class ItemStackSerializer {
         return new Pair<>(enchantment, value);
     }
 
-    public void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section) {
+    public static void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section) {
         serializeItemStack(item, section, GuiConfigurationTable.getDefaultConfigurationTable());
     }
 
-    public void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section, @Nonnull GuiConfigurationTable table) {
+    public static void serializeItemStack(@Nonnull ItemStack item, @Nonnull ConfigurationSection section, @Nonnull GuiConfigurationTable table) {
         if (item.getItemMeta() != null) {
             section.set(table.getDisplayNameSectionName(), item.getItemMeta().getDisplayName());
             section.set(table.getLoreSectionName(), item.getItemMeta().getLore());
