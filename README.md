@@ -37,12 +37,14 @@ Visit [wiki](https://github.com/Obliviated/obliviate-invs/wiki/) page to see usa
 ## Features
 
 - Create, listen, manage GUIs in only one class.
-- Create advanced slots to make completely interactive slots. (
-  see [wiki](https://github.com/Obliviated/obliviate-invs/wiki/Advanced-Slots))
+- Create advanced slots to make completely interactive slots. (see wiki)
 - Add pagination support to your GUIs easily.
-- Create automatic update task for GUI
-- Don't work hard work smart. These methods will handle your boring works: fillColumn(), fillRow(), fillGui(),
-  sendTitleUpdate(), sendSizeUpdate()
+- Create automatic repeat task for GUI. The task will be stopped when GUI closed.
+- Fully, modular design.
+- Make configurable your GUIs easily.
+- Automatically caches configuration items. Doesn't deserializes over and over.
+- Don't work hard work smart. These methods will handle your boring works: fillColumn(), fillRow(), fillGui(), sendTitleUpdate(), sendSizeUpdate()
+- Allows players clicking their own inventory during they using a GUI.
 - Feel safe. obliviate-invs tested in live. It is stable.
 
 ## Other useful codes for GUI development
