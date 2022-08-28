@@ -108,7 +108,8 @@ public class ItemStackSerializer {
 
         final ItemStack item = deserializeMaterial(section, table);
         ItemMeta meta = item.getItemMeta();
-        Preconditions.checkNotNull(meta, "item meta cannot be null");
+
+        if (meta == null) return item;
 
         meta.setDisplayName(section.getString(table.getDisplayNameSectionName()));
         meta.setLore(section.getStringList(table.getLoreSectionName()));
@@ -141,7 +142,7 @@ public class ItemStackSerializer {
 
     public static void applyItemFlagsToItemStacks(@Nonnull ItemStack item, @Nonnull ItemFlag[] itemFlags) {
         ItemMeta meta = item.getItemMeta();
-        Preconditions.checkNotNull(meta, "item meta cannot be null");
+        if (meta == null) return;
 
         if (itemFlags.length == 0) return;
 
@@ -280,7 +281,7 @@ public class ItemStackSerializer {
         if (item == null) return;
         if (placeholderUtil == null) return;
         final ItemMeta meta = item.getItemMeta();
-        Preconditions.checkNotNull(meta, "item meta cannot be null");
+        if (meta == null) return;
         meta.setDisplayName(placeholderUtil.apply(meta.getDisplayName()));
         meta.setLore(placeholderUtil.apply(meta.getLore()));
         item.setItemMeta(meta);
@@ -289,7 +290,7 @@ public class ItemStackSerializer {
     public static void parseColorOfItemStack(ItemStack item) {
         if (item == null) return;
         final ItemMeta meta = item.getItemMeta();
-        Preconditions.checkNotNull(meta, "item meta cannot be null");
+        if (meta == null) return;
         meta.setDisplayName(StringUtil.parseColor(meta.getDisplayName()));
         meta.setLore(StringUtil.parseColor(meta.getLore()));
         item.setItemMeta(meta);
