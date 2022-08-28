@@ -5,12 +5,26 @@ import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
 import mc.obliviate.util.string.StringUtil;
 import mc.obliviate.util.versiondetection.ServerVersionController;
+import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BannerMeta;
+import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.FireworkEffectMeta;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.MapMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -19,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -64,7 +79,7 @@ public class ItemStackSerializer {
             throw new IllegalArgumentException("Material could not found: " + materialName);
         }
 
-        final ItemStack item = xmaterial.get().parseItem();
+        ItemStack item = xmaterial.get().parseItem();
         if (item == null) {
             throw new IllegalArgumentException("Material could not parsed as item stack: " + materialName);
         }
@@ -105,6 +120,12 @@ public class ItemStackSerializer {
     public static ItemStack deserializeItemStack(@Nonnull ConfigurationSection section, @Nullable GuiConfigurationTable table) {
         if (table == null) table = GuiConfigurationTable.getDefaultConfigurationTable();
         Preconditions.checkNotNull(table, "param table and default table cannot be null at same time.");
+
+        if (section.getBoolean("bukkit-serializing", false)) {
+            ItemStack item = section.getItemStack("item");
+            Preconditions.checkNotNull(item, "bukkit serializing could not applied to item: " + section.getName());
+            return item;
+        }
 
         final ItemStack item = deserializeMaterial(section, table);
         ItemMeta meta = item.getItemMeta();
@@ -237,24 +258,47 @@ public class ItemStackSerializer {
             section.set(table.getMaterialSectionName(), XMaterial.AIR.name());
             return;
         }
+
+        if (item.getItemMeta() instanceof PotionMeta ||
+                item.getItemMeta() instanceof EnchantmentStorageMeta ||
+                item.getItemMeta() instanceof FireworkMeta ||
+                item.getItemMeta() instanceof BookMeta ||
+                item.getItemMeta() instanceof BannerMeta ||
+                item.getItemMeta() instanceof MapMeta ||
+                item.getItemMeta() instanceof LeatherArmorMeta ||
+                item.getItemMeta() instanceof SkullMeta ||
+                item.getItemMeta() instanceof FireworkEffectMeta) {
+            section.set("bukkit-serializing", true);
+            section.set("item", item);
+            return;
+        }
+
+        section.set(table.getMaterialSectionName(), XMaterial.matchXMaterial(item).name());
+        if (item.getDurability() != 0) {
+            section.set(table.getDurabilitySectionName(), item.getDurability());
+        }
+        if (item.getAmount() != 1) {
+            section.set(table.getAmountSectionName(), item.getAmount());
+        }
+        if (!item.getEnchantments().isEmpty()) {
+            section.set(table.getEnchantmentsSectionName(), deserializeEnchantments(item.getEnchantments()));
+        }
+
         if (item.getItemMeta() != null) {
             section.set(table.getDisplayNameSectionName(), item.getItemMeta().getDisplayName());
-            if (item.getItemMeta().getLore() != null && !item.getItemMeta().getLore().isEmpty())
+            if (item.getItemMeta().getLore() != null && !item.getItemMeta().getLore().isEmpty()) {
                 section.set(table.getLoreSectionName(), item.getItemMeta().getLore());
-            if (!item.getItemMeta().getItemFlags().isEmpty())
+            }
+            if (!item.getItemMeta().getItemFlags().isEmpty()) {
                 section.set(table.getItemFlagsSectionName(), deserializeItemFlags(item.getItemMeta().getItemFlags()));
+            }
+            if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_11)) {
+                section.set(table.getUnbreakableSectionName(), item.getItemMeta().isUnbreakable());
+            }
+            if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_14)) {
+                section.set(table.getCustomModelDataSectionName(), item.getItemMeta().getCustomModelData());
+            }
         }
-        section.set(table.getMaterialSectionName(), XMaterial.matchXMaterial(item).name());
-        if (item.getDurability() != 0)
-            section.set(table.getDurabilitySectionName(), item.getDurability());
-        if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_11))
-            section.set(table.getUnbreakableSectionName(), item.getItemMeta().isUnbreakable());
-        if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_14))
-            section.set(table.getCustomModelDataSectionName(), item.getItemMeta().getCustomModelData());
-        if (item.getAmount() != 1)
-            section.set(table.getAmountSectionName(), item.getAmount());
-        if (!item.getEnchantments().isEmpty())
-            section.set(table.getEnchantmentsSectionName(), deserializeEnchantments(item.getEnchantments()));
     }
 
     public static List<String> deserializeEnchantments(@Nonnull Map<Enchantment, Integer> enchantments) {
