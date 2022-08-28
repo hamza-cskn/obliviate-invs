@@ -1,7 +1,6 @@
 package mc.obliviate.inventory.configurable.util;
 
 import com.google.common.base.Preconditions;
-import com.sun.istack.internal.NotNull;
 import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
 import mc.obliviate.util.string.StringUtil;
