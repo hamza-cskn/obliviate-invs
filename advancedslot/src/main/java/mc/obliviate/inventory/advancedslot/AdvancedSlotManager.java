@@ -25,6 +25,7 @@ public class AdvancedSlotManager {
 
 	public AdvancedSlotManager(Gui gui) {
 		this.gui = gui;
+		AdvancedSlotListener.poke();
 	}
 
 	public Collection<AdvancedSlot> getSlots() {
