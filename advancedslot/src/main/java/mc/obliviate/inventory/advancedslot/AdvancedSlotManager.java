@@ -153,9 +153,11 @@ public class AdvancedSlotManager {
 	public void onClose(InventoryCloseEvent e) {
 		for (int slot : slots.keySet()) {
 			final ItemStack itemOnSlot = e.getInventory().getItem(slot);
-			if (itemOnSlot == null) return;
-			if (!compareSimilar(itemOnSlot, slots.get(slot).getDisplayIcon().getItem())) {
-				if (hasSpace(e.getInventory())) {
+			if (itemOnSlot == null) continue;
+			AdvancedSlot advancedSlot = this.slots.get(slot);
+			if (!advancedSlot.isRefundOnClose()) continue;
+			if (!this.compareSimilar(itemOnSlot, advancedSlot.getDisplayIcon().getItem())) {
+				if (this.hasSpace(e.getInventory())) {
 					e.getPlayer().getInventory().addItem(itemOnSlot);
 				} else {
 					e.getPlayer().getWorld().dropItemNaturally(e.getPlayer().getLocation(), itemOnSlot);
