@@ -37,7 +37,7 @@ public class AdvancedSlotManager {
 	 * Puts new advanced slot icon normally.
 	 *
 	 * @param slot the slot where icon will put
-	 * @param icon the default slot icon (most of time, it is barrier or air)
+	 * @param icon the default slot icon (most time, it is barrier or air)
 	 * @return new advanced slot instance
 	 */
 	@Nonnull
@@ -66,7 +66,7 @@ public class AdvancedSlotManager {
 					//pre put action checks
 					switch (e.getAction()) {
 						case HOTBAR_MOVE_AND_READD:
-						case HOTBAR_SWAP: // theoretically its impossible but i'll add for guarantee.
+						case HOTBAR_SWAP: // theoretically it's impossible, but I'll add for guarantee.
 
 							//check is it put action
 							if (!isNullOrAir(getItemStackFromHotkeyClick(e))) {
@@ -151,7 +151,7 @@ public class AdvancedSlotManager {
 	}
 
 	public void onClose(InventoryCloseEvent e) {
-		for (int slot : slots.keySet()) {
+		for (int slot : this.slots.keySet()) {
 			final ItemStack itemOnSlot = e.getInventory().getItem(slot);
 			if (itemOnSlot == null) continue;
 			AdvancedSlot advancedSlot = this.slots.get(slot);
@@ -167,7 +167,7 @@ public class AdvancedSlotManager {
 	}
 
 	public void registerSlot(AdvancedSlot slot) {
-		slots.put(slot.getSlot(), slot);
+		this.slots.put(slot.getSlot(), slot);
 	}
 
 	private ItemStack getItemStackFromHotkeyClick(InventoryClickEvent event) {
@@ -196,7 +196,7 @@ public class AdvancedSlotManager {
 	}
 
 	public Gui getGui() {
-		return gui;
+		return this.gui;
 	}
 
 	public static Map<Gui, AdvancedSlotManager> getAdvancedSlotManagers() {
