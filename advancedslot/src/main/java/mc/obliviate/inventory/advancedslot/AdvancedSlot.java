@@ -15,6 +15,7 @@ public class AdvancedSlot {
 	private static final Consumer<InventoryClickEvent> EMPTY_CLICK_ACTION = e -> {
 	};
 
+	private boolean refundOnClose = true;
 	private final int slot;
 	private final Icon displayIcon;
 	private final AdvancedSlotManager advancedSlotManager;
@@ -132,5 +133,22 @@ public class AdvancedSlot {
 	 */
 	public int getSlot() {
 		return slot;
+	}
+
+	public boolean isRefundOnClose() {
+		return refundOnClose;
+	}
+
+	/**
+	 * when the gui closed, advanced slot
+	 * gives back putted item to player.
+	 * false parameter disables this feature
+	 * for that advanced slot.
+	 *
+	 * default is true.
+	 * @param refundOnClose
+	 */
+	public void setRefundOnClose(boolean refundOnClose) {
+		this.refundOnClose = refundOnClose;
 	}
 }
