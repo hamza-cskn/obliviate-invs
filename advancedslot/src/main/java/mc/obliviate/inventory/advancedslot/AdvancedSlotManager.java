@@ -87,6 +87,10 @@ public class AdvancedSlotManager {
                             //check is it put action
                             if (!isNullOrAir(e.getCursor()) && aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
                             break;
+                        case PLACE_ALL:
+                        case PLACE_ONE:
+                        case PLACE_SOME:
+                            if (aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
                     }
 
                     e.setCancelled(false);
