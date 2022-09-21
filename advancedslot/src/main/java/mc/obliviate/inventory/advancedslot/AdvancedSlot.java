@@ -135,9 +135,17 @@ public class AdvancedSlot {
 		return slot;
 	}
 
-	public boolean isRefundOnClose() {
-		return refundOnClose;
-	}
+    public ItemStack getPuttedItem() {
+        ItemStack itemOnSlot = this.advancedSlotManager.getGui().getInventory().getItem(this.getSlot());
+        if (Objects.equals(getDisplayIcon().getItem(), itemOnSlot)) {
+            return null;
+        }
+        return itemOnSlot;
+    }
+
+    public boolean isRefundOnClose() {
+        return refundOnClose;
+    }
 
 	/**
 	 * when the gui closed, advanced slot
