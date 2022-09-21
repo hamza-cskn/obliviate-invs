@@ -84,26 +84,42 @@ public class AdvancedSlotManager {
 
 					e.setCancelled(false);
 
-					//general checks
-					switch (e.getAction()) {
-						case PICKUP_ALL:
-						case DROP_ALL_SLOT:
-						case HOTBAR_SWAP:
-						case MOVE_TO_OTHER_INVENTORY:
-						case COLLECT_TO_CURSOR:
-							aSlot.getPickupAction().accept(e);
-							break;
-						default:
-							aSlot.getPutAction().accept(e);
-					}
-					Bukkit.getScheduler().runTaskLater(gui.getPlugin(), () -> {
-						if (gui.getInventory().getItem(aSlot.getSlot()) == null) {
-							aSlot.reset();
-						}
-					}, 1);
-				}));
-		aSlot.getPutAction().accept(event);
-	}
+                    //general checks
+                    switch (e.getAction()) {
+                        case PICKUP_ALL:
+                        case DROP_ALL_SLOT:
+                        case MOVE_TO_OTHER_INVENTORY:
+                        case COLLECT_TO_CURSOR:
+                        case PICKUP_ONE:
+                        case PICKUP_HALF:
+                        case PICKUP_SOME:
+                        case DROP_ALL_CURSOR:
+                        case DROP_ONE_SLOT:
+                        case DROP_ONE_CURSOR:
+                        case HOTBAR_MOVE_AND_READD:
+                            aSlot.getPickupAction().accept(e, e.getCurrentItem());
+                            break;
+                        case SWAP_WITH_CURSOR:
+                        case HOTBAR_SWAP:
+                            aSlot.getPickupAction().accept(e, e.getCurrentItem());
+                            aSlot.getPutAction().accept(e, e.getCursor());
+                            break;
+                        case PLACE_ALL:
+                        case PLACE_SOME:
+                        case PLACE_ONE:
+                            aSlot.getPutAction().accept(e, e.getCurrentItem());
+                            break;
+                        default:
+                            return;
+                    }
+                    Bukkit.getScheduler().runTaskLater(gui.getPlugin(), () -> {
+                        if (gui.getInventory().getItem(aSlot.getSlot()) == null) {
+                            aSlot.reset();
+                        }
+                    }, 1);
+                }));
+        aSlot.getPutAction().accept(event, event != null ? event.getCurrentItem() : null);
+    }
 
 	public void onClick(InventoryClickEvent e) {
 		if (e.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
