@@ -1,7 +1,7 @@
 package mc.obliviate.inventory.advancedslot;
 
 import mc.obliviate.inventory.Icon;
-import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -28,8 +28,8 @@ public class AdvancedSlot {
         this.slot = slot;
         this.advancedSlotManager = advancedSlotManager;
         this.displayIcon = displayIcon.onClick(e -> {
-            if (this.prePutClickAction.test(e, e.getCursor())) return;
-            if (e.getCursor() != null && !e.getCursor().getType().equals(Material.AIR)) {
+            if (!AdvancedSlotManager.isNullOrAir(e.getCursor())) {
+                if (this.prePutClickAction.test(e, e.getCursor())) return;
                 final ItemStack cursor = e.getCursor();
                 ItemStack newCursor = null;
                 if (e.isRightClick()) {

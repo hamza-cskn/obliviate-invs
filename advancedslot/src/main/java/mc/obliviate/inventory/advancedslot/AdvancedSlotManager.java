@@ -85,7 +85,8 @@ public class AdvancedSlotManager {
                             break;
                         case SWAP_WITH_CURSOR:
                             //check is it put action
-                            if (!isNullOrAir(e.getCursor()) && aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
+                            if (!isNullOrAir(e.getCursor()) && aSlot.getPrePutClickAction().test(e, e.getCursor()))
+                                return;
                             break;
                         case PLACE_ALL:
                         case PLACE_ONE:
@@ -100,11 +101,11 @@ public class AdvancedSlotManager {
                         //case COLLECT_TO_CURSOR:
                         case PICKUP_ONE:
                         case DROP_ONE_SLOT:
-                            aSlot.getPickupAction().accept(e, this.getCopyOfItemWithAmount(e.getCurrentItem(), 1));
+                            aSlot.getPickupAction().accept(e, getCopyOfItemWithAmount(e.getCurrentItem(), 1));
                             break;
                         case PICKUP_HALF:
                             final int amount = e.getCurrentItem().getAmount() / 2 + (e.getCurrentItem().getAmount() % 2 == 0 ? 0 : 1);
-                            aSlot.getPickupAction().accept(e, this.getCopyOfItemWithAmount(e.getCurrentItem(), amount));
+                            aSlot.getPickupAction().accept(e, getCopyOfItemWithAmount(e.getCurrentItem(), amount));
                             break;
                         //case PICKUP_SOME:
                         case MOVE_TO_OTHER_INVENTORY:
@@ -119,15 +120,15 @@ public class AdvancedSlotManager {
                         case HOTBAR_SWAP:
                         case HOTBAR_MOVE_AND_READD:
                             aSlot.getPickupAction().accept(e, e.getCurrentItem());
-                            ItemStack hotbarItem = this.getItemStackFromHotkeyClick(e);
+                            ItemStack hotbarItem = getItemStackFromHotkeyClick(e);
                             if (hotbarItem != null)
                                 aSlot.getPutAction().accept(e, hotbarItem);
                             break;
                         case PLACE_ONE:
-                            aSlot.getPutAction().accept(e, this.getCopyOfItemWithAmount(e.getCurrentItem(), 1));
+                            aSlot.getPutAction().accept(e, getCopyOfItemWithAmount(e.getCursor(), 1));
                             break;
                         case PLACE_SOME:
-                            aSlot.getPutAction().accept(e, this.getCopyOfItemWithAmount(e.getCurrentItem(), e.getCurrentItem().getMaxStackSize()));
+                            aSlot.getPutAction().accept(e, getCopyOfItemWithAmount(e.getCursor(), e.getCursor().getMaxStackSize()));
                             break;
                         case PLACE_ALL:
                             aSlot.getPutAction().accept(e, e.getCursor());
@@ -161,7 +162,7 @@ public class AdvancedSlotManager {
                     this.putIconToAdvancedSlot(aSlot, clickedItem, e);
                     e.setCurrentItem(new ItemStack(Material.AIR));
                     return;
-                //else, compare aSlot item and clicked item to merge item amount.
+                    //else, compare aSlot item and clicked item to merge item amount.
                 } else if (clickedItem != null && itemOnSlot != null && compareSimilar(clickedItem, itemOnSlot) && itemOnSlot.getAmount() < itemOnSlot.getType().getMaxStackSize()) {
                     if (aSlot.getPrePutClickAction().test(e, clickedItem)) continue;
 
@@ -208,19 +209,18 @@ public class AdvancedSlotManager {
         this.slots.put(slot.getSlot(), slot);
     }
 
-    private ItemStack getItemStackFromHotkeyClick(InventoryClickEvent event) {
+    static ItemStack getItemStackFromHotkeyClick(InventoryClickEvent event) {
         if (event.getHotbarButton() == -1) return null;
-        final Player player = (Player) event.getWhoClicked();
-        return player.getInventory().getItem(event.getHotbarButton());
+        return event.getWhoClicked().getInventory().getItem(event.getHotbarButton());
     }
 
-    private boolean isNullOrAir(final ItemStack item) {
+    static boolean isNullOrAir(final ItemStack item) {
         return item == null || item.getType().equals(Material.AIR);
     }
 
-    private boolean compareSimilar(final ItemStack item1, final ItemStack item2) {
-        final boolean inoa1 = isNullOrAir(item1);
-        final boolean inoa2 = isNullOrAir(item2);
+    private static boolean compareSimilar(final ItemStack item1, final ItemStack item2) {
+        final boolean inoa1 = AdvancedSlotManager.isNullOrAir(item1);
+        final boolean inoa2 = AdvancedSlotManager.isNullOrAir(item2);
         if (inoa1 && inoa2) return true;
         if (inoa1 || inoa2) return false;
         return item1.isSimilar(item2);
@@ -233,7 +233,7 @@ public class AdvancedSlotManager {
         return false;
     }
 
-    private ItemStack getCopyOfItemWithAmount(ItemStack item, int amount) {
+    static ItemStack getCopyOfItemWithAmount(ItemStack item, int amount) {
         ItemStack result = item.clone();
         result.setAmount(amount);
         return result;
