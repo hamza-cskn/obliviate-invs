@@ -137,7 +137,8 @@ public class AdvancedSlotManager {
                         }
                     }, 1);
                 }));
-        aSlot.getPutAction().accept(event, event != null ? event.getCurrentItem() : null);
+        if (event != null)
+            aSlot.getPutAction().accept(event, event.getCurrentItem());
     }
 
     public void onClick(InventoryClickEvent e) {
