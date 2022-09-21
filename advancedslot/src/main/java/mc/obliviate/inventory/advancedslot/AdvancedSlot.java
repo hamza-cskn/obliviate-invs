@@ -23,12 +23,27 @@ public class AdvancedSlot {
 	private Consumer<InventoryClickEvent> pickupAction = EMPTY_CLICK_ACTION;
 	private Consumer<InventoryClickEvent> putAction = EMPTY_CLICK_ACTION;
 
-	public AdvancedSlot(int slot, Icon displayIcon, AdvancedSlotManager advancedSlotManager) {
-		this.slot = slot;
-		this.displayIcon = displayIcon;
-		this.advancedSlotManager = advancedSlotManager;
-		this.prePutClickAction = (e, item) -> false;
-	}
+    public AdvancedSlot(int slot, Icon displayIcon, AdvancedSlotManager advancedSlotManager) {
+        this.slot = slot;
+        this.advancedSlotManager = advancedSlotManager;
+        this.prePutClickAction = (e, item) -> false;
+        this.displayIcon = displayIcon.onClick(e -> {
+            if (this.prePutClickAction.test(e, e.getCursor())) return;
+            if (e.getCursor() != null && !e.getCursor().getType().equals(Material.AIR)) {
+                final ItemStack cursor = e.getCursor();
+                ItemStack newCursor = null;
+                if (e.isRightClick()) {
+                    if (cursor.getAmount() > 1) {
+                        newCursor = cursor.clone();
+                        newCursor.setAmount(newCursor.getAmount() - 1);
+                    }
+                    cursor.setAmount(1);
+                }
+                e.setCursor(newCursor);
+                this.advancedSlotManager.putIconToAdvancedSlot(this, cursor, e);
+            }
+        });
+    }
 
 	/**
 	 * @return defined action of PrePutClick event
@@ -96,30 +111,29 @@ public class AdvancedSlot {
 		return this;
 	}
 
-	/**
-	 *
-	 * If you don't want go into deep. You don't need this method.
-	 *
-	 * @return default display icon of the advanced slot
-	 */
-	public Icon getDisplayIcon() {
-		return displayIcon.onClick(e -> {
-			if (prePutClickAction.test(e, e.getCursor())) return;
-			if (e.getCursor() != null && !e.getCursor().getType().equals(Material.AIR)) {
-				final ItemStack cursor = e.getCursor();
-				ItemStack newCursor = null;
-				if (e.isRightClick()) {
-					if (cursor.getAmount() > 1) {
-						newCursor = cursor.clone();
-						newCursor.setAmount(newCursor.getAmount() - 1);
-					}
-					cursor.setAmount(1);
-				}
-				e.setCursor(newCursor);
-				advancedSlotManager.putIconToAdvancedSlot(this, cursor, e);
-			}
-		});
-	}
+    /**
+     * Defines action of on PrePut event. It called when
+     * a player put an item. This event is able to cancel
+     * putting perform. Also, it called before the Put event.
+     * <p>
+     * Generics of action: <The Click Event, Clicked ItemStack>
+     *
+     * @param prePickupClick the action
+     * @return same instance
+     */
+    public AdvancedSlot onPrePickupClick(BiPredicate<InventoryClickEvent, ItemStack> prePickupClick) {
+        this.prePutClickAction = Objects.requireNonNull(prePickupClick, "prePut action cannot be null");
+        return this;
+    }
+
+    /**
+     * If you don't want go into deep. You don't need this method.
+     *
+     * @return default display icon of the advanced slot
+     */
+    public Icon getDisplayIcon() {
+        return displayIcon;
+    }
 
 	/**
 	 * Remove putted icon. Replace display icon.
