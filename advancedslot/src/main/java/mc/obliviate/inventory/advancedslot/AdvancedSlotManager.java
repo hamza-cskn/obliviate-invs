@@ -70,15 +70,12 @@ public class AdvancedSlotManager {
                         case HOTBAR_SWAP: // theoretically it's impossible, but I'll add for guarantee.
 
                             //check is it put action
-                            if (!isNullOrAir(getItemStackFromHotkeyClick(e))) {
-                                if (aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
-                            }
+                            ItemStack hotbarItem = getItemStackFromHotkeyClick(e);
+                            if (!isNullOrAir(hotbarItem) && aSlot.getPrePutClickAction().test(e, hotbarItem)) return;
                             break;
                         case SWAP_WITH_CURSOR:
                             //check is it put action
-                            if (!isNullOrAir(e.getCursor())) {
-                                if (aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
-                            }
+                            if (!isNullOrAir(e.getCursor()) && aSlot.getPrePutClickAction().test(e, e.getCursor())) return;
                             break;
                     }
 
