@@ -7,21 +7,21 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.Objects;
+import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
-import java.util.function.Consumer;
 
 public class AdvancedSlot {
 
-	private static final Consumer<InventoryClickEvent> EMPTY_CLICK_ACTION = e -> {
-	};
+    private static final BiConsumer<InventoryClickEvent, ItemStack> EMPTY_CLICK_ACTION = (e, item) -> {
+    };
 
-	private boolean refundOnClose = true;
-	private final int slot;
-	private final Icon displayIcon;
-	private final AdvancedSlotManager advancedSlotManager;
-	private BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction;
-	private Consumer<InventoryClickEvent> pickupAction = EMPTY_CLICK_ACTION;
-	private Consumer<InventoryClickEvent> putAction = EMPTY_CLICK_ACTION;
+    private boolean refundOnClose = true;
+    private final int slot;
+    private final Icon displayIcon;
+    private final AdvancedSlotManager advancedSlotManager;
+    private BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction;
+    private BiConsumer<InventoryClickEvent, ItemStack> pickupAction = EMPTY_CLICK_ACTION;
+    private BiConsumer<InventoryClickEvent, ItemStack> putAction = EMPTY_CLICK_ACTION;
 
     public AdvancedSlot(int slot, Icon displayIcon, AdvancedSlotManager advancedSlotManager) {
         this.slot = slot;
@@ -45,71 +45,68 @@ public class AdvancedSlot {
         });
     }
 
-	/**
-	 * @return defined action of PrePutClick event
-	 */
-	@Nonnull
-	public BiPredicate<InventoryClickEvent, ItemStack> getPrePutClickAction() {
-		return this.prePutClickAction;
-	}
+    /**
+     * @return defined action of PrePutClick event
+     */
+    @Nonnull
+    public BiPredicate<InventoryClickEvent, ItemStack> getPrePutClickAction() {
+        return this.prePutClickAction;
+    }
 
-	/**
-	 * @return defined action of Pickup event
-	 */
-	@Nonnull
-	public Consumer<InventoryClickEvent> getPickupAction() {
-		return this.pickupAction;
-	}
+    /**
+     * @return defined action of Pickup event
+     */
+    @Nonnull
+    public BiConsumer<InventoryClickEvent, ItemStack> getPickupAction() {
+        return this.pickupAction;
+    }
 
-	/**
-	 * @return defined action of Put event
-	 */
-	@Nonnull
-	public Consumer<InventoryClickEvent> getPutAction() {
-		return this.putAction;
-	}
+    /**
+     * @return defined action of Put event
+     */
+    @Nonnull
+    public BiConsumer<InventoryClickEvent, ItemStack> getPutAction() {
+        return this.putAction;
+    }
 
-	/**
-	 *
-	 * Defines action of on Pickup event. It called when
-	 * a player picked back an item.
-	 *
-	 * @param pickupAction the action
-	 * @return same instance
-	 */
-	public AdvancedSlot onPickup(Consumer<InventoryClickEvent> pickupAction) {
-		this.pickupAction = Objects.requireNonNull(pickupAction, "pickup action cannot be null");
-		return this;
-	}
+    /**
+     * Defines action of on Pickup event. It called when
+     * a player picked back an item.
+     *
+     * @param pickupAction the action
+     * @return same instance
+     */
+    public AdvancedSlot onPickup(BiConsumer<InventoryClickEvent, ItemStack> pickupAction) {
+        this.pickupAction = Objects.requireNonNull(pickupAction, "pickup action cannot be null");
+        return this;
+    }
 
-	/**
-	 *
-	 * Defines action of on Put event. It called when
-	 * a player put an item.
-	 *
-	 * @param putAction the action
-	 * @return same instance
-	 */
-	public AdvancedSlot onPut(Consumer<InventoryClickEvent> putAction) {
-		this.putAction = Objects.requireNonNull(putAction, "put action cannot be null");
-		return this;
-	}
+    /**
+     * Defines action of on Put event. It called when
+     * a player put an item.
+     *
+     * @param putAction the action
+     * @return same instance
+     */
+    public AdvancedSlot onPut(BiConsumer<InventoryClickEvent, ItemStack> putAction) {
+        this.putAction = Objects.requireNonNull(putAction, "put action cannot be null");
+        return this;
+    }
 
-	/**
-	 *
-	 * Defines action of on PrePut event. It called when
-	 * a player put an item. This event is able to cancel
-	 * putting perform. Also it called before the Put event.
-	 *
-	 * Generics of action: <The Click Event, Clicked ItemStack>
-	 *
-	 * @param prePutClickAction the action
-	 * @return same instance
-	 */
-	public AdvancedSlot onPreClick(BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction) {
-		this.prePutClickAction = Objects.requireNonNull(prePutClickAction, "prePut action cannot be null");
-		return this;
-	}
+    /**
+     * Defines action of on PrePut event. It called when
+     * a player put an item. This event is able to cancel
+     * putting perform. Also, it called before the Put event.
+     * <p>
+     * Generics of action: <The Click Event, Clicked ItemStack>
+     *
+     * @param prePutClickAction the action
+     * @return same instance
+     */
+    public AdvancedSlot onPrePutClick(BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction) {
+        this.prePutClickAction = Objects.requireNonNull(prePutClickAction, "prePut action cannot be null");
+        return this;
+    }
 
     /**
      * Defines action of on PrePut event. It called when
@@ -135,19 +132,19 @@ public class AdvancedSlot {
         return displayIcon;
     }
 
-	/**
-	 * Remove putted icon. Replace display icon.
-	 */
-	public void reset() {
-		advancedSlotManager.getGui().addItem(slot, getDisplayIcon());
-	}
+    /**
+     * Remove putted icon. Replace display icon.
+     */
+    public void reset() {
+        advancedSlotManager.getGui().addItem(slot, getDisplayIcon());
+    }
 
-	/**
-	 * @return inventory slot no of the icon
-	 */
-	public int getSlot() {
-		return slot;
-	}
+    /**
+     * @return inventory slot no of the icon
+     */
+    public int getSlot() {
+        return slot;
+    }
 
     public ItemStack getPuttedItem() {
         ItemStack itemOnSlot = this.advancedSlotManager.getGui().getInventory().getItem(this.getSlot());
@@ -161,16 +158,17 @@ public class AdvancedSlot {
         return refundOnClose;
     }
 
-	/**
-	 * when the gui closed, advanced slot
-	 * gives back putted item to player.
-	 * false parameter disables this feature
-	 * for that advanced slot.
-	 *
-	 * default is true.
-	 * @param refundOnClose
-	 */
-	public void setRefundOnClose(boolean refundOnClose) {
-		this.refundOnClose = refundOnClose;
-	}
+    /**
+     * when the gui closed, advanced slot
+     * gives back putted item to player.
+     * false parameter disables this feature
+     * for that advanced slot.
+     * <p>
+     * default is true.
+     *
+     * @param refundOnClose
+     */
+    public void setRefundOnClose(boolean refundOnClose) {
+        this.refundOnClose = refundOnClose;
+    }
 }
