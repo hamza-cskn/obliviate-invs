@@ -23,10 +23,11 @@ public class AdvancedSlotManager {
 	private final Map<Integer, AdvancedSlot> slots = new HashMap<>();
 	private final Gui gui;
 
-	public AdvancedSlotManager(Gui gui) {
-		this.gui = gui;
-		AdvancedSlotListener.poke();
-	}
+    public AdvancedSlotManager(Gui gui) {
+        this.gui = gui;
+        AdvancedSlotListener.poke();
+        ADVANCED_SLOT_MANAGERS.put(gui, this);
+    }
 
 	public Collection<AdvancedSlot> getSlots() {
 		return slots.values();
