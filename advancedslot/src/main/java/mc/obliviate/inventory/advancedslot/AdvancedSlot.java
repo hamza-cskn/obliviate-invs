@@ -41,6 +41,11 @@ public class AdvancedSlot {
                 }
                 e.setCursor(newCursor);
                 this.advancedSlotManager.putIconToAdvancedSlot(this, cursor, e);
+            } else if (e.getAction().equals(InventoryAction.HOTBAR_MOVE_AND_READD)) {
+                ItemStack hotbarItem = Objects.requireNonNull(AdvancedSlotManager.getItemStackFromHotkeyClick(e));
+                if (this.prePutClickAction.test(e, hotbarItem)) return;
+                this.advancedSlotManager.putIconToAdvancedSlot(this, hotbarItem, e);
+                e.getWhoClicked().getInventory().setItem(e.getHotbarButton(), null);
             }
         });
     }
