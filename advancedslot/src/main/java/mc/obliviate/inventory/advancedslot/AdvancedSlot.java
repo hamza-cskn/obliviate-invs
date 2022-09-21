@@ -12,21 +12,21 @@ import java.util.function.BiPredicate;
 
 public class AdvancedSlot {
 
-    private static final BiConsumer<InventoryClickEvent, ItemStack> EMPTY_CLICK_ACTION = (e, item) -> {
-    };
 
     private boolean refundOnClose = true;
     private final int slot;
     private final Icon displayIcon;
     private final AdvancedSlotManager advancedSlotManager;
-    private BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction;
-    private BiConsumer<InventoryClickEvent, ItemStack> pickupAction = EMPTY_CLICK_ACTION;
-    private BiConsumer<InventoryClickEvent, ItemStack> putAction = EMPTY_CLICK_ACTION;
+    private BiPredicate<InventoryClickEvent, ItemStack> prePutClickAction = (e, item) -> false;
+    private BiPredicate<InventoryClickEvent, ItemStack> prePickupClickAction = (e, item) -> false;
+    private BiConsumer<InventoryClickEvent, ItemStack> pickupAction = (e, item) -> {
+    };
+    private BiConsumer<InventoryClickEvent, ItemStack> putAction = (e, item) -> {
+    };
 
     public AdvancedSlot(int slot, Icon displayIcon, AdvancedSlotManager advancedSlotManager) {
         this.slot = slot;
         this.advancedSlotManager = advancedSlotManager;
-        this.prePutClickAction = (e, item) -> false;
         this.displayIcon = displayIcon.onClick(e -> {
             if (this.prePutClickAction.test(e, e.getCursor())) return;
             if (e.getCursor() != null && !e.getCursor().getType().equals(Material.AIR)) {
@@ -67,6 +67,14 @@ public class AdvancedSlot {
     @Nonnull
     public BiConsumer<InventoryClickEvent, ItemStack> getPutAction() {
         return this.putAction;
+    }
+
+    /**
+     * @return defined action of PrePickupClick event
+     */
+    @Nonnull
+    public BiPredicate<InventoryClickEvent, ItemStack> getPrePickupClickAction() {
+        return prePickupClickAction;
     }
 
     /**
@@ -119,7 +127,7 @@ public class AdvancedSlot {
      * @return same instance
      */
     public AdvancedSlot onPrePickupClick(BiPredicate<InventoryClickEvent, ItemStack> prePickupClick) {
-        this.prePutClickAction = Objects.requireNonNull(prePickupClick, "prePut action cannot be null");
+        this.prePickupClickAction = Objects.requireNonNull(prePickupClick, "prePickup action cannot be null");
         return this;
     }
 
