@@ -64,6 +64,16 @@ public class AdvancedSlotManager {
     public void putIconToAdvancedSlot(@Nonnull final AdvancedSlot aSlot, @Nonnull final ItemStack item, @Nullable final InventoryClickEvent event) {
         gui.addItem(aSlot.getSlot(), new Icon(item)
                 .onClick(e -> {
+                    //pre pickup action check
+                    switch (e.getAction()) {
+                        case PLACE_ALL:
+                        case PLACE_SOME:
+                        case PLACE_ONE:
+                            break;
+                        default:
+                            if (aSlot.getPrePickupClickAction().test(e, e.getCurrentItem())) return;
+                    }
+
                     //pre put action checks
                     switch (e.getAction()) {
                         case HOTBAR_MOVE_AND_READD:
