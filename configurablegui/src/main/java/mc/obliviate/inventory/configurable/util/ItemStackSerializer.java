@@ -295,7 +295,7 @@ public class ItemStackSerializer {
             if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_11)) {
                 section.set(table.getUnbreakableSectionName(), item.getItemMeta().isUnbreakable());
             }
-            if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_14)) {
+            if (ServerVersionController.isServerVersionAtLeast(ServerVersionController.V1_14) && item.getItemMeta().hasCustomModelData()) {
                 section.set(table.getCustomModelDataSectionName(), item.getItemMeta().getCustomModelData());
             }
         }
