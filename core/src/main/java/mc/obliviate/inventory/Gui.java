@@ -48,7 +48,7 @@ public abstract class Gui implements InventoryHolder {
 
     public Gui(@Nonnull Player player, @Nonnull String id, String title, InventoryType inventoryType) {
         this.player = player;
-        this.size = Integer.MAX_VALUE;
+        this.size = 0;
         this.title = title;
         this.id = id;
         this.inventoryType = inventoryType;
@@ -66,9 +66,9 @@ public abstract class Gui implements InventoryHolder {
 
     /**
      * Calls when the inventory event triggered.
-     *
+     * <p>
      * If returns true, ObliviateInvs does not cancel
-     * click event. Also Icon click event triggering after
+     * click event. Also, Icon click event triggering after
      * this check. So you can override from icon click event.
      *
      * @param event Called event.
@@ -80,9 +80,9 @@ public abstract class Gui implements InventoryHolder {
 
     /**
      * Calls when the inventory event triggered.
-     *
+     * <p>
      * If returns true, ObliviateInvs does not cancel
-     * drag event. Also Icon drag event triggering after
+     * drag event. Also, Icon drag event triggering after
      * this check. So you can override from icon drag event.
      *
      * @param event Called event.
@@ -110,6 +110,7 @@ public abstract class Gui implements InventoryHolder {
     }
 
     public void open() {
+        Preconditions.checkNotNull(InventoryAPI.getInstance(), "Inventory API is not initialized. Please use new InventoryAPI().init() also, you can visit wiki of obliviate-invs.");
         final Gui gui = InventoryAPI.getInstance().getPlayersCurrentGui(this.player);
         if (gui != null) {
             //call Bukkit's inventory close event
@@ -149,30 +150,41 @@ public abstract class Gui implements InventoryHolder {
         }
     }
 
-    public void fillRow(Icon item, int row) {
+    /**
+     * Puts an icon to entire a row of inventory.
+     * Row numbers starts from 0.
+     *
+     * @param item
+     * @param row
+     */
+    public void fillRow(Icon item, @Nonnegative int row) {
+        Preconditions.checkArgument(row < this.size / 9);
         for (int i = 0; i < 9; i++) {
             this.addItem((row * 9 + i), item);
         }
     }
 
-    public void fillColumn(Icon item, int column) {
+    /**
+     * Puts an icon to entire a column of inventory.
+     * Column numbers starts from 0.
+     *
+     * @param item
+     * @param column
+     */
+    public void fillColumn(Icon item, @Nonnegative int column) {
+        Preconditions.checkArgument(column < 9);
         for (int i = 0; i < 9; i++) {
             this.addItem((i * 9 + column), item);
         }
     }
 
-
-    public void addItem(@Nonnegative int slot, Icon item) {
+    public void addItem(@Nonnegative int slot, @Nullable Icon icon) {
         if (this.inventory.getSize() <= slot) {
             throw new IndexOutOfBoundsException("Slot cannot be bigger than inventory size! [ " + slot + " >= " + this.inventory.getSize() + " ]");
         }
-        if (item == null) {
-            throw new NullPointerException("Item cannot be null!");
-        }
 
-        this.registeredIcons.remove(slot);
-        this.registeredIcons.put(slot, item);
-        this.inventory.setItem(slot, item.getItem());
+        this.registeredIcons.put(slot, icon);
+        this.inventory.setItem(slot, (icon == null ? null : icon.getItem()));
     }
 
     public void addItem(Icon item, Integer... slots) {
@@ -181,15 +193,15 @@ public abstract class Gui implements InventoryHolder {
         }
     }
 
-    public void addItem(@Nonnegative int slot, ItemStack item) {
+    public void addItem(@Nonnegative int slot, @Nullable ItemStack item) {
         this.addItem(slot, new Icon(item));
     }
 
-    public void addItem(ItemStack item) {
+    public void addItem(@Nullable ItemStack item) {
         this.addItem(this.inventory.firstEmpty(), new Icon(item));
     }
 
-    public void addItem(Material material) {
+    public void addItem(@Nonnull Material material) {
         this.addItem(this.inventory.firstEmpty(), new Icon(material));
     }
 
