@@ -179,7 +179,7 @@ public class PaginationManager {
             if (this.items.size() > itemNo) {
                 this.gui.addItem(this.slots.get(slotNo), this.items.get(itemNo));
             } else {
-                this.gui.addItem(null, slotNo);
+                this.gui.addItem(null, this.slots.get(slotNo));
             }
         }
     }
