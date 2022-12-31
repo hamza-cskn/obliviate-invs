@@ -27,7 +27,7 @@ public class GuiSerializer {
 			if (!section.isSet(table.getMaterialSectionName())) continue;
 
 			final int slotNo = section.getInt(table.getSlotSectionName(), -1);
-			if (slotNo > 0) {
+			if (slotNo >= 0) {
 				gui.addItem(slotNo, new DysfunctionalConfigIcon(gui.getGuiCache().getConfigItem(section, placeholderUtil, table), section));
 				continue;
 			}
