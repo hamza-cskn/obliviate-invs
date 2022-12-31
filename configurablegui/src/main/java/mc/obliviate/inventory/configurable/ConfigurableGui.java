@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class ConfigurableGui extends Gui {
 
@@ -30,6 +31,13 @@ public class ConfigurableGui extends Gui {
         this.guiConfigurationTable = guiConfigurationTable;
         setTitle(guiConfigurationTable.getMenusSection(getSectionPath()).getString(guiConfigurationTable.getTitleSectionName(), "No Title Found"));
         setSize(guiConfigurationTable.getMenusSection(getSectionPath()).getInt(guiConfigurationTable.getSizeSectionName(), 0) * 9);
+    }
+
+    public List<DysfunctionalIcon> getDysfunctionalIcons() {
+        return super.getItems().values().stream()
+                .filter(icon -> icon instanceof DysfunctionalIcon)
+                .map(icon -> (DysfunctionalIcon) icon)
+                .collect(Collectors.toList());
     }
 
     public ConfigurableGuiCache getGuiCache() {
