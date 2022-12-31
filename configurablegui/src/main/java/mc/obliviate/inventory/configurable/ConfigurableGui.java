@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -51,8 +52,20 @@ public class ConfigurableGui extends Gui {
         return getSectionPath() + "." + guiConfigurationTable.getIconsSectionName();
     }
 
-    public ConfigurationSection getIconsSection(@Nonnull String sectionName) {
-        return guiConfigurationTable.getMenusSection(getIconsSectionPath() + "." + sectionName);
+    /**
+     * Example section for<br>
+     * iconSection = "example-icon"
+     *
+     * <pre>
+     * example-icon:
+     *   material: STONE
+     *   slot: 0</pre>
+     *
+     * @param iconSection name of icon
+     * @return sub configuration section of icons section
+     */
+    public ConfigurationSection getIconsSection(@Nonnull String iconSection) {
+        return guiConfigurationTable.getMenusSection(getIconsSectionPath() + "." + iconSection);
     }
 
     public int getConfigSlot(@Nonnull String sectionName) {
@@ -79,8 +92,24 @@ public class ConfigurableGui extends Gui {
         GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, functionalSlots);
     }
 
+    public void putDysfunctionalIcons(@Nonnull String... functionalSlots) {
+        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, Arrays.asList(functionalSlots));
+    }
+
+    public void putDysfunctionalIcons(@Nullable PlaceholderUtil placeholderUtil, @Nonnull String... functionalSlots) {
+        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, Arrays.asList(functionalSlots));
+    }
+
     public void putDysfunctionalIcons(@Nullable PlaceholderUtil placeholderUtil, @Nonnull List<String> functionalSlots) {
         GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, functionalSlots);
+    }
+
+    public void putIcon(@Nonnull String configName) {
+        addItem(getConfigSlot(configName), new Icon(getConfigItem(configName)));
+    }
+
+    public void putIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil) {
+        addItem(getConfigSlot(configName), new Icon(getConfigItem(configName, placeholderUtil)));
     }
 
     public void putIcon(@Nonnull String configName, @Nonnull Consumer<InventoryClickEvent> click) {
