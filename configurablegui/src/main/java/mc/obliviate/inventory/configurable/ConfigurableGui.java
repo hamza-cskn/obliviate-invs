@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ConfigurableGui extends Gui {
@@ -193,6 +194,18 @@ public class ConfigurableGui extends Gui {
     @Deprecated
     public void putIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil, @Nonnull Consumer<InventoryClickEvent> click) {
         addItem(getConfigSlot(configName), getConfigIcon(configName, placeholderUtil).onClick(click));
+    }
+
+    public Icon addConfigIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil, Function<ItemStack, ItemStack> refactorFunction) {
+        final Icon icon = new Icon(refactorFunction.apply(getConfigItem(configName, placeholderUtil)));
+        addItem(getConfigSlot(configName), icon);
+        return icon;
+    }
+
+    public Icon addConfigIcon(@Nonnull String configName, Function<ItemStack, ItemStack> refactorFunction) {
+        final Icon icon = new Icon(refactorFunction.apply(getConfigItem(configName)));
+        addItem(getConfigSlot(configName), icon);
+        return icon;
     }
 
     public Icon addConfigIcon(@Nonnull String configName) {
