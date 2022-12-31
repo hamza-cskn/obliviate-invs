@@ -181,7 +181,10 @@ public class ConfigurableGui extends Gui {
     }
 
     /**
-     * Use {@link #addConfigIcon(String)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}
+     * Use {@link #addConfigIcon(String)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}<br>
+     *
+     * Deprecated: {@code putIcon("any-icon", e -> {})}<br>
+     * Modern: {@code addConfigIcon("any-icon").onClick({})}
      */
     @Deprecated
     public void putIcon(@Nonnull String configName, @Nonnull Consumer<InventoryClickEvent> click) {
@@ -189,19 +192,24 @@ public class ConfigurableGui extends Gui {
     }
 
     /**
-     * Use {@link #addConfigIcon(String, PlaceholderUtil)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}
+     * Use {@link #addConfigIcon(String, PlaceholderUtil)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}<br>
+     *
+     * Deprecated: {@code putIcon("any-icon", placeholderUtil, e -> {})}<br>
+     * Modern: {@code addConfigIcon("any-icon", placeholderUtil).onClick({})}
      */
     @Deprecated
     public void putIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil, @Nonnull Consumer<InventoryClickEvent> click) {
         addItem(getConfigSlot(configName), getConfigIcon(configName, placeholderUtil).onClick(click));
     }
 
+    @Nonnull
     public Icon addConfigIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil, Function<ItemStack, ItemStack> refactorFunction) {
         final Icon icon = new Icon(refactorFunction.apply(getConfigItem(configName, placeholderUtil)));
         addItem(getConfigSlot(configName), icon);
         return icon;
     }
 
+    @Nonnull
     public Icon addConfigIcon(@Nonnull String configName, Function<ItemStack, ItemStack> refactorFunction) {
         final Icon icon = new Icon(refactorFunction.apply(getConfigItem(configName)));
         addItem(getConfigSlot(configName), icon);
