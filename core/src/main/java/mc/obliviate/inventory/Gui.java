@@ -196,6 +196,10 @@ public abstract class Gui implements InventoryHolder {
     public void addItem(@Nonnegative int slot, @Nullable ItemStack item) {
         this.addItem(slot, new Icon(item));
     }
+    
+    public void addItem(@Nonnull Icon icon) {
+        this.addItem(this.inventory.firstEmpty(), icon);
+    }    
 
     public void addItem(@Nullable ItemStack item) {
         this.addItem(this.inventory.firstEmpty(), new Icon(item));
