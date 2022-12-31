@@ -34,10 +34,10 @@ public class ConfigurableGui extends Gui {
         setSize(guiConfigurationTable.getMenusSection(getSectionPath()).getInt(guiConfigurationTable.getSizeSectionName(), 0) * 9);
     }
 
-    public List<DysfunctionalIcon> getDysfunctionalIcons() {
+    public List<DysfunctionalConfigIcon> getDysfunctionalIcons() {
         return super.getItems().values().stream()
-                .filter(icon -> icon instanceof DysfunctionalIcon)
-                .map(icon -> (DysfunctionalIcon) icon)
+                .filter(icon -> icon instanceof DysfunctionalConfigIcon)
+                .map(icon -> (DysfunctionalConfigIcon) icon)
                 .collect(Collectors.toList());
     }
 
@@ -132,12 +132,12 @@ public class ConfigurableGui extends Gui {
         return guiCache.getConfigItem(getIconsSection(sectionName), placeholderUtil, guiConfigurationTable);
     }
 
-    public Icon getConfigIcon(@Nonnull String sectionName) {
-        return new Icon(getConfigItem(sectionName));
+    public ConfigIcon getConfigIcon(@Nonnull String sectionName) {
+        return new ConfigIcon(getConfigItem(sectionName), getIconsSection(sectionName));
     }
 
-    public Icon getConfigIcon(@Nonnull String sectionName, @Nullable PlaceholderUtil placeholderUtil) {
-        return new Icon(getConfigItem(sectionName, placeholderUtil));
+    public ConfigIcon getConfigIcon(@Nonnull String sectionName, @Nullable PlaceholderUtil placeholderUtil) {
+        return new ConfigIcon(getConfigItem(sectionName, placeholderUtil), getIconsSection(sectionName));
     }
 
     public void putDysfunctionalIcons() {
@@ -203,27 +203,27 @@ public class ConfigurableGui extends Gui {
     }
 
     @Nonnull
-    public Icon addConfigIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil, Function<ItemStack, ItemStack> refactorFunction) {
-        final Icon icon = new Icon(refactorFunction.apply(getConfigItem(configName, placeholderUtil)));
+    public ConfigIcon addConfigIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil, Function<ItemStack, ItemStack> refactorFunction) {
+        final ConfigIcon icon = new ConfigIcon(refactorFunction.apply(getConfigItem(configName, placeholderUtil)), getIconsSection(configName));
         addItem(getConfigSlot(configName), icon);
         return icon;
     }
 
     @Nonnull
-    public Icon addConfigIcon(@Nonnull String configName, Function<ItemStack, ItemStack> refactorFunction) {
-        final Icon icon = new Icon(refactorFunction.apply(getConfigItem(configName)));
+    public ConfigIcon addConfigIcon(@Nonnull String configName, Function<ItemStack, ItemStack> refactorFunction) {
+        final ConfigIcon icon = new ConfigIcon(refactorFunction.apply(getConfigItem(configName)), getIconsSection(configName));
         addItem(getConfigSlot(configName), icon);
         return icon;
     }
 
-    public Icon addConfigIcon(@Nonnull String configName) {
-        final Icon icon = getConfigIcon(configName);
+    public ConfigIcon addConfigIcon(@Nonnull String configName) {
+        final ConfigIcon icon = getConfigIcon(configName);
         addItem(getConfigSlot(configName), icon);
         return icon;
     }
 
-    public Icon addConfigIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil) {
-        final Icon icon = getConfigIcon(configName, placeholderUtil);
+    public ConfigIcon addConfigIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil) {
+        final ConfigIcon icon = getConfigIcon(configName, placeholderUtil);
         addItem(getConfigSlot(configName), icon);
         return icon;
     }

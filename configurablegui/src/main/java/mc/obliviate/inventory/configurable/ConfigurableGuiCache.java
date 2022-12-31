@@ -1,6 +1,5 @@
 package mc.obliviate.inventory.configurable;
 
-import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.configurable.util.ItemStackSerializer;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
 import org.bukkit.configuration.ConfigurationSection;
