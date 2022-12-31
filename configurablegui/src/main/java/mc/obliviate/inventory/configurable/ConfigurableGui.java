@@ -131,6 +131,14 @@ public class ConfigurableGui extends Gui {
         return guiCache.getConfigItem(getIconsSection(sectionName), placeholderUtil, guiConfigurationTable);
     }
 
+    public Icon getConfigIcon(@Nonnull String sectionName) {
+        return new Icon(getConfigItem(sectionName));
+    }
+
+    public Icon getConfigIcon(@Nonnull String sectionName, @Nullable PlaceholderUtil placeholderUtil) {
+        return new Icon(getConfigItem(sectionName, placeholderUtil));
+    }
+
     public void putDysfunctionalIcons() {
         GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, new ArrayList<>());
     }
@@ -155,19 +163,48 @@ public class ConfigurableGui extends Gui {
         GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, functionalSlots);
     }
 
+    /**
+     * Use {@link #addConfigIcon(String)}
+     */
+    @Deprecated
     public void putIcon(@Nonnull String configName) {
-        addItem(getConfigSlot(configName), new Icon(getConfigItem(configName)));
+        addItem(getConfigSlot(configName), getConfigIcon(configName));
     }
 
+    /**
+     * Use {@link #addConfigIcon(String, PlaceholderUtil)}
+     */
+    @Deprecated
     public void putIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil) {
-        addItem(getConfigSlot(configName), new Icon(getConfigItem(configName, placeholderUtil)));
+        addItem(getConfigSlot(configName), getConfigIcon(configName, placeholderUtil));
     }
 
+    /**
+     * Use {@link #addConfigIcon(String)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}
+     */
+    @Deprecated
     public void putIcon(@Nonnull String configName, @Nonnull Consumer<InventoryClickEvent> click) {
-        addItem(getConfigSlot(configName), new Icon(getConfigItem(configName)).onClick(click));
+        addItem(getConfigSlot(configName), getConfigIcon(configName).onClick(click));
     }
 
+    /**
+     * Use {@link #addConfigIcon(String, PlaceholderUtil)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}
+     */
+    @Deprecated
     public void putIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil, @Nonnull Consumer<InventoryClickEvent> click) {
-        addItem(getConfigSlot(configName), new Icon(getConfigItem(configName, placeholderUtil)).onClick(click));
+        addItem(getConfigSlot(configName), getConfigIcon(configName, placeholderUtil).onClick(click));
     }
+
+    public Icon addConfigIcon(@Nonnull String configName) {
+        final Icon icon = getConfigIcon(configName);
+        addItem(getConfigSlot(configName), icon);
+        return icon;
+    }
+
+    public Icon addConfigIcon(@Nonnull String configName, @Nullable PlaceholderUtil placeholderUtil) {
+        final Icon icon = getConfigIcon(configName, placeholderUtil);
+        addItem(getConfigSlot(configName), icon);
+        return icon;
+    }
+
 }
