@@ -2,6 +2,7 @@ package mc.obliviate.inventory.configurable.util;
 
 import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.configurable.ConfigurableGui;
+import mc.obliviate.inventory.configurable.DysfunctionalIcon;
 import mc.obliviate.inventory.configurable.GuiConfigurationTable;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,14 +27,14 @@ public class GuiSerializer {
 
 			final int slotNo = section.getInt(table.getSlotSectionName(), -1);
 			if (slotNo > 0) {
-				gui.addItem(slotNo, gui.getGuiCache().getConfigItem(iconsSection.getConfigurationSection(sectionName), placeholderUtil, table));
+				gui.addItem(slotNo, new DysfunctionalIcon(gui.getGuiCache().getConfigItem(iconsSection.getConfigurationSection(sectionName), placeholderUtil, table)));
 				continue;
 			}
 
 			final List<Integer> slots = parseSlotString(section.getString(table.getSlotSectionName()));
 			if (!slots.isEmpty()) {
 				slots.forEach(slot -> {
-					gui.addItem(slot, gui.getGuiCache().getConfigItem(iconsSection.getConfigurationSection(sectionName), placeholderUtil, table));
+					gui.addItem(slot, new DysfunctionalIcon(gui.getGuiCache().getConfigItem(iconsSection.getConfigurationSection(sectionName), placeholderUtil, table)));
 				});
 			}
 		}
