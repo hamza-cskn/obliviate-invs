@@ -227,13 +227,13 @@ public class ItemStackSerializer {
         if (!section.isSet(table.getEnchantmentsSectionName())) return new HashMap<>();
         Map<Enchantment, Integer> map = new HashMap<>();
         for (final String serializedEnchantment : section.getStringList(table.getEnchantmentsSectionName())) {
-            final Pair<Enchantment, Integer> enchantmentValue = deserializeEnchantment(serializedEnchantment);
-            map.put(enchantmentValue.key, enchantmentValue.value);
+            final Map.Entry<Enchantment, Integer> enchantmentValue = deserializeEnchantment(serializedEnchantment);
+            map.put(enchantmentValue.getKey(), enchantmentValue.getValue());
         }
         return map;
     }
 
-    public static Pair<Enchantment, Integer> deserializeEnchantment(@Nonnull String serializedEnchantment) {
+    public static Map.Entry<Enchantment, Integer> deserializeEnchantment(@Nonnull String serializedEnchantment) {
         Preconditions.checkNotNull(serializedEnchantment, "serialized enchantment cannot be null");
         String[] datas = serializedEnchantment.split(":");
         Preconditions.checkArgument(datas.length == 2, "Enchantment could not deserialized: " + serializedEnchantment);
@@ -246,7 +246,22 @@ public class ItemStackSerializer {
             throw new IllegalArgumentException("Enchantment or its Value could not resolved: " + datas[0]);
         }
         Preconditions.checkArgument(enchantment != null, "Enchantment could not find: " + datas[0]);
-        return new Pair<>(enchantment, value);
+        return new Map.Entry<Enchantment, Integer>() {
+            @Override
+            public Enchantment getKey() {
+                return enchantment;
+            }
+
+            @Override
+            public Integer getValue() {
+                return value;
+            }
+
+            @Override
+            public Integer setValue(Integer value) {
+                throw new UnsupportedOperationException();
+            }
+        };
     }
 
     public static void serializeItemStack(@Nullable ItemStack item, @Nonnull ConfigurationSection section) {
@@ -339,16 +354,4 @@ public class ItemStackSerializer {
         meta.setLore(StringUtil.parseColor(meta.getLore()));
         item.setItemMeta(meta);
     }
-
-    private static class Pair<K, V> {
-
-        private final K key;
-        private final V value;
-
-        private Pair(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
-
 }
