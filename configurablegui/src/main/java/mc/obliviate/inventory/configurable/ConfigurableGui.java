@@ -52,8 +52,37 @@ public class ConfigurableGui extends Gui {
         return getId();
     }
 
+    /**
+     * Example section
+     * <pre>example-gui:
+     *   title: 'Test'
+     *   row: 3
+     *   icons:
+     *     example-icon:
+     *       material: STONE
+     *       slot: 0</pre>
+     *
+     * @return Configuration section of Gui.
+     */
     public ConfigurationSection getSection() {
         return guiConfigurationTable.getMenusSection(getSectionPath());
+    }
+
+    /**
+     * Example section for<br>
+     * subSection = "icons"
+     *
+     * <pre>
+     * icons:
+     *   example-icon:
+     *     material: STONE
+     *     slot: 0</pre>
+     *
+     * @param subSection name of any section that sub of gui section.
+     * @return sub configuration section of gui section
+     */
+    public ConfigurationSection getSection(String subSection) {
+        return getSection().getConfigurationSection(subSection);
     }
 
     public String getIconsSectionPath() {
@@ -74,6 +103,20 @@ public class ConfigurableGui extends Gui {
      */
     public ConfigurationSection getIconsSection(@Nonnull String iconSection) {
         return guiConfigurationTable.getMenusSection(getIconsSectionPath() + "." + iconSection);
+    }
+
+    /**
+     * Example section
+     * <pre>
+     * icons:
+     *   example-icon:
+     *     material: STONE
+     *     slot: 0</pre>
+     *
+     * @return sub configuration section of gui section
+     */
+    public ConfigurationSection getIconsSection() {
+        return guiConfigurationTable.getMenusSection(getIconsSectionPath());
     }
 
     public int getConfigSlot(@Nonnull String sectionName) {
