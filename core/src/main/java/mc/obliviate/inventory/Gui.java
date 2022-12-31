@@ -196,10 +196,10 @@ public abstract class Gui implements InventoryHolder {
     public void addItem(@Nonnegative int slot, @Nullable ItemStack item) {
         this.addItem(slot, new Icon(item));
     }
-    
+
     public void addItem(@Nonnull Icon icon) {
         this.addItem(this.inventory.firstEmpty(), icon);
-    }    
+    }
 
     public void addItem(@Nullable ItemStack item) {
         this.addItem(this.inventory.firstEmpty(), new Icon(item));
@@ -299,6 +299,13 @@ public abstract class Gui implements InventoryHolder {
      */
     public int getSize() {
         return this.size;
+    }
+
+    /**
+     * @return biggest slot number of the gui
+     */
+    public int getLastSlot() {
+        return this.size - 1;
     }
 
     /**
