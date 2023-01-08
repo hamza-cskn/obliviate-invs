@@ -47,11 +47,11 @@ public class ConfigurableGuiCache {
     }
 
     private ItemStack findItemStack(ConfigurationSection section, GuiConfigurationTable table) {
-        ItemStack item = itemStackCache.get(section.getName());
+        ItemStack item = this.itemStackCache.get(section.getName());
         if (item != null) return item;
 
         ItemStack serializedItemStack = ItemStackSerializer.deserializeItemStack(section, table);
-        itemStackCache.put(section.getName(), serializedItemStack);
+        this.itemStackCache.put(section.getName(), serializedItemStack);
         return serializedItemStack;
     }
 }
