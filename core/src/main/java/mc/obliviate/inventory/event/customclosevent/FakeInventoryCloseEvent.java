@@ -8,5 +8,4 @@ public class FakeInventoryCloseEvent extends InventoryCloseEvent {
     public FakeInventoryCloseEvent(InventoryView transaction) {
         super(transaction);
     }
-
 }

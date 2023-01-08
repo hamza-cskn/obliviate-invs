@@ -4,7 +4,6 @@ import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -13,10 +12,12 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AdvancedSlotManager {
 
@@ -30,8 +31,12 @@ public class AdvancedSlotManager {
         ADVANCED_SLOT_MANAGERS.put(gui, this);
     }
 
+    public Gui getGui() {
+        return this.gui;
+    }
+
     public Collection<AdvancedSlot> getSlots() {
-        return slots.values();
+        return this.slots.values();
     }
 
     /**
@@ -195,7 +200,7 @@ public class AdvancedSlotManager {
             if (itemOnSlot == null) continue;
             AdvancedSlot advancedSlot = this.slots.get(slot);
             if (!advancedSlot.isRefundOnClose()) continue;
-            if (!this.compareSimilar(itemOnSlot, advancedSlot.getDisplayIcon().getItem())) {
+            if (!compareSimilar(itemOnSlot, advancedSlot.getDisplayIcon().getItem())) {
                 if (this.hasSpace(e.getInventory())) {
                     e.getPlayer().getInventory().addItem(itemOnSlot);
                 } else {
@@ -209,6 +214,22 @@ public class AdvancedSlotManager {
         this.slots.put(slot.getSlot(), slot);
     }
 
+    private boolean hasSpace(Inventory inventory) {
+        return Arrays.stream(inventory.getContents()).anyMatch(Objects::isNull);
+    }
+
+
+
+    public static Map<Gui, AdvancedSlotManager> getAdvancedSlotManagers() {
+        return Collections.unmodifiableMap(ADVANCED_SLOT_MANAGERS);
+    }
+
+    static ItemStack getCopyOfItemWithAmount(ItemStack item, int amount) {
+        ItemStack result = item.clone();
+        result.setAmount(amount);
+        return result;
+    }
+
     static ItemStack getItemStackFromHotkeyClick(InventoryClickEvent event) {
         if (event.getHotbarButton() == -1) return null;
         return event.getWhoClicked().getInventory().getItem(event.getHotbarButton());
@@ -219,31 +240,10 @@ public class AdvancedSlotManager {
     }
 
     private static boolean compareSimilar(final ItemStack item1, final ItemStack item2) {
-        final boolean inoa1 = AdvancedSlotManager.isNullOrAir(item1);
-        final boolean inoa2 = AdvancedSlotManager.isNullOrAir(item2);
-        if (inoa1 && inoa2) return true;
-        if (inoa1 || inoa2) return false;
+        boolean inoa1 = AdvancedSlotManager.isNullOrAir(item1);
+        boolean inoa2 = AdvancedSlotManager.isNullOrAir(item2);
+        if (inoa1 ^ inoa2) return false;
+
         return item1.isSimilar(item2);
-    }
-
-    private boolean hasSpace(Inventory inventory) {
-        for (ItemStack item : inventory.getContents()) {
-            if (item == null) return true;
-        }
-        return false;
-    }
-
-    static ItemStack getCopyOfItemWithAmount(ItemStack item, int amount) {
-        ItemStack result = item.clone();
-        result.setAmount(amount);
-        return result;
-    }
-
-    public Gui getGui() {
-        return this.gui;
-    }
-
-    public static Map<Gui, AdvancedSlotManager> getAdvancedSlotManagers() {
-        return Collections.unmodifiableMap(ADVANCED_SLOT_MANAGERS);
     }
 }
