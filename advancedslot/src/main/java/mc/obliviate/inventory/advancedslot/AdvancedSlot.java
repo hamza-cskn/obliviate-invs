@@ -79,7 +79,7 @@ public class AdvancedSlot {
      */
     @Nonnull
     public BiPredicate<InventoryClickEvent, ItemStack> getPrePickupClickAction() {
-        return prePickupClickAction;
+        return this.prePickupClickAction;
     }
 
     /**
@@ -142,33 +142,38 @@ public class AdvancedSlot {
      * @return default display icon of the advanced slot
      */
     public Icon getDisplayIcon() {
-        return displayIcon;
+        return this.displayIcon;
     }
 
     /**
      * Remove putted icon. Replace display icon.
      */
     public void reset() {
-        advancedSlotManager.getGui().addItem(slot, getDisplayIcon());
+        this.advancedSlotManager.getGui().addItem(this.slot, getDisplayIcon());
     }
 
     /**
      * @return inventory slot no of the icon
      */
     public int getSlot() {
-        return slot;
+        return this.slot;
     }
 
-    public ItemStack getPuttedItem() {
+    /**
+     * Gets bukkit itemstack from the slot.
+     *
+     * @return Bukkit ItemStack.
+     */
+    public ItemStack getItemStack() {
         ItemStack itemOnSlot = this.advancedSlotManager.getGui().getInventory().getItem(this.getSlot());
-        if (Objects.equals(getDisplayIcon().getItem(), itemOnSlot)) {
+        if (Objects.equals(getDisplayIcon().getItem(), itemOnSlot))
             return null;
-        }
+
         return itemOnSlot;
     }
 
     public boolean isRefundOnClose() {
-        return refundOnClose;
+        return this.refundOnClose;
     }
 
     /**
@@ -179,7 +184,7 @@ public class AdvancedSlot {
      * <p>
      * default is true.
      *
-     * @param refundOnClose
+     * @param refundOnClose refund on close.
      */
     public void setRefundOnClose(boolean refundOnClose) {
         this.refundOnClose = refundOnClose;

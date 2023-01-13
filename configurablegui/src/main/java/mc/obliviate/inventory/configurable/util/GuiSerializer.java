@@ -14,76 +14,74 @@ import java.util.List;
 
 public class GuiSerializer {
 
-	@SuppressWarnings("ConstantConditions")
-	public static void putDysfunctionalIcons(@Nonnull ConfigurableGui gui, @Nonnull GuiConfigurationTable table, @Nonnull ConfigurationSection iconsSection, @Nullable PlaceholderUtil placeholderUtil, @Nonnull List<String> functionalSlots) {
-		Preconditions.checkNotNull(gui, "dysfunctional icons could not put because gui was null!");
-		Preconditions.checkNotNull(iconsSection, "null configuration section given!");
+    @SuppressWarnings("ConstantConditions")
+    public static void putDysfunctionalIcons(@Nonnull ConfigurableGui gui, @Nonnull GuiConfigurationTable table, @Nonnull ConfigurationSection iconsSection, @Nullable PlaceholderUtil placeholderUtil, @Nonnull List<String> functionalSlots) {
+        Preconditions.checkNotNull(gui, "dysfunctional icons could not put because gui was null!");
+        Preconditions.checkNotNull(iconsSection, "null configuration section given!");
 
-		for (final String sectionName : iconsSection.getKeys(false)) {
-			final ConfigurationSection section = iconsSection.getConfigurationSection(sectionName);
+        for (final String sectionName : iconsSection.getKeys(false)) {
+            final ConfigurationSection section = iconsSection.getConfigurationSection(sectionName);
 
-			if (functionalSlots.contains(sectionName)) continue;
-			if (!section.isSet(table.getSlotSectionName())) continue;
-			if (!section.isSet(table.getMaterialSectionName())) continue;
+            if (functionalSlots.contains(sectionName)) continue;
+            if (!section.isSet(table.getSlotSectionName())) continue;
+            if (!section.isSet(table.getMaterialSectionName())) continue;
 
-			final int slotNo = section.getInt(table.getSlotSectionName(), -1);
-			if (slotNo >= 0) {
-				gui.addItem(slotNo, new DysfunctionalConfigIcon(gui.getGuiCache().getConfigItem(section, placeholderUtil, table), section));
-				continue;
-			}
+            final int slotNo = section.getInt(table.getSlotSectionName(), -1);
+            if (slotNo >= 0) {
+                gui.addItem(slotNo, new DysfunctionalConfigIcon(gui.getGuiCache().getConfigItem(section, placeholderUtil, table), section));
+                continue;
+            }
 
-			final List<Integer> slots = parseSlotString(section.getString(table.getSlotSectionName()));
-			if (!slots.isEmpty()) {
-				slots.forEach(slot -> {
-					ConfigurationSection iconSection = iconsSection.getConfigurationSection(sectionName);
-					gui.addItem(slot, new DysfunctionalConfigIcon(gui.getGuiCache().getConfigItem(section, placeholderUtil, table), iconSection));
-				});
-			}
-		}
-	}
+            final List<Integer> slots = parseSlotString(section.getString(table.getSlotSectionName()));
+            if (!slots.isEmpty()) {
+                slots.forEach(slot -> {
+                    ConfigurationSection iconSection = iconsSection.getConfigurationSection(sectionName);
+                    gui.addItem(slot, new DysfunctionalConfigIcon(gui.getGuiCache().getConfigItem(section, placeholderUtil, table), iconSection));
+                });
+            }
+        }
+    }
 
-	public static List<Integer> parseSlotString(String str) {
-		if (str == null) return new ArrayList<>();
-		if (str.contains("-")) {
-			return parseStringAsIntegerRange(str);
-		} else if (str.contains(",")) {
-			return parseStringAsIntegerList(str);
-		}
-		return new ArrayList<>();
-	}
+    public static List<Integer> parseSlotString(String str) {
+        if (str == null) return new ArrayList<>();
+        if (str.contains("-")) {
+            return parseStringAsIntegerRange(str);
+        } else if (str.contains(",")) {
+            return parseStringAsIntegerList(str);
+        }
+        return new ArrayList<>();
+    }
 
-	private static List<Integer> parseStringAsIntegerRange(String str) {
-		final String[] slots = str.split("-");
-		if (slots.length != 2) new ArrayList<>();
-		int from, to;
+    private static List<Integer> parseStringAsIntegerRange(String str) {
+        final String[] slots = str.split("-");
+        if (slots.length != 2) new ArrayList<>();
+        int from, to;
 
-		try {
-			from = Integer.parseInt(slots[0]);
-			to = Integer.parseInt(slots[1]);
-		} catch (NumberFormatException ignore) {
-			return new ArrayList<>();
-		}
+        try {
+            from = Integer.parseInt(slots[0]);
+            to = Integer.parseInt(slots[1]);
+        } catch (NumberFormatException ignore) {
+            return new ArrayList<>();
+        }
 
-		if (from > to) return new ArrayList<>();
+        if (from > to) return new ArrayList<>();
 
-		final List<Integer> result = new ArrayList<>();
-		for (; from <= to; from++) {
-			result.add(from);
-		}
-		return result;
-	}
+        final List<Integer> result = new ArrayList<>();
+        while (from <= to) result.add(from++);
+        return result;
+    }
 
-	private static List<Integer> parseStringAsIntegerList(String str) {
-		final List<Integer> pageSlots = new ArrayList<>();
-		final String[] slotStrings = str.split(",");
+    private static List<Integer> parseStringAsIntegerList(String str) {
+        final List<Integer> pageSlots = new ArrayList<>();
+        final String[] slotStrings = str.split(",");
 
-		for (final String slotText : slotStrings) {
-			try {
-				pageSlots.add(Integer.parseInt(slotText));
-			} catch (NumberFormatException ignore) {
-			}
-		}
-		return pageSlots;
-	}
+        for (final String slotText : slotStrings) {
+            try {
+                pageSlots.add(Integer.parseInt(slotText));
+            } catch (NumberFormatException ignore) {
+            }
+        }
+        return pageSlots;
+    }
 
 }

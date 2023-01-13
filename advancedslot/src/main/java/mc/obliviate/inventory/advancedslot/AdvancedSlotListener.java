@@ -13,6 +13,7 @@ public class AdvancedSlotListener implements Listener {
     private static boolean registered = false;
 
     private AdvancedSlotListener() {
+
     }
 
     public static void poke() {

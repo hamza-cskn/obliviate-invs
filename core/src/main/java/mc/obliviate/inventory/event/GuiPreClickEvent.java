@@ -8,40 +8,42 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class GuiPreClickEvent extends Event implements Cancellable {
 
-	private static final HandlerList handlers = new HandlerList();
-	private final InventoryClickEvent event;
-	private final Gui gui;
-	private boolean cancelled;
+    private static final HandlerList handlers = new HandlerList();
 
-	public GuiPreClickEvent(InventoryClickEvent event, Gui gui) {
-		this.event = event;
-		this.gui = gui;
-	}
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
-	public InventoryClickEvent getEvent() {
-		return event;
-	}
 
-	public Gui getGui() {
-		return gui;
-	}
+    private final InventoryClickEvent event;
+    private final Gui gui;
+    private boolean cancelled;
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+    public GuiPreClickEvent(InventoryClickEvent event, Gui gui) {
+        this.event = event;
+        this.gui = gui;
+    }
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
-	@Override
-	public boolean isCancelled() {
-		return cancelled;
-	}
+    public InventoryClickEvent getEvent() {
+        return this.event;
+    }
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		this.cancelled = cancelled;
-	}
+    public Gui getGui() {
+        return this.gui;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
+    }
 }

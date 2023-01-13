@@ -43,11 +43,11 @@ public class ConfigurableGui extends Gui {
     }
 
     public ConfigurableGuiCache getGuiCache() {
-        return guiCache;
+        return this.guiCache;
     }
 
     public GuiConfigurationTable getGuiConfigurationTable() {
-        return guiConfigurationTable;
+        return this.guiConfigurationTable;
     }
 
     public String getSectionPath() {
@@ -67,7 +67,7 @@ public class ConfigurableGui extends Gui {
      * @return Configuration section of Gui.
      */
     public ConfigurationSection getSection() {
-        return guiConfigurationTable.getMenusSection(getSectionPath());
+        return this.guiConfigurationTable.getMenusSection(getSectionPath());
     }
 
     /**
@@ -88,7 +88,7 @@ public class ConfigurableGui extends Gui {
     }
 
     public String getIconsSectionPath() {
-        return getSectionPath() + "." + guiConfigurationTable.getIconsSectionName();
+        return getSectionPath() + "." + this.guiConfigurationTable.getIconsSectionName();
     }
 
     /**
@@ -104,7 +104,7 @@ public class ConfigurableGui extends Gui {
      * @return sub configuration section of icons section
      */
     public ConfigurationSection getIconsSection(@Nonnull String iconSection) {
-        return guiConfigurationTable.getMenusSection(getIconsSectionPath() + "." + iconSection);
+        return this.guiConfigurationTable.getMenusSection(getIconsSectionPath() + "." + iconSection);
     }
 
     /**
@@ -118,19 +118,19 @@ public class ConfigurableGui extends Gui {
      * @return sub configuration section of gui section
      */
     public ConfigurationSection getIconsSection() {
-        return guiConfigurationTable.getMenusSection(getIconsSectionPath());
+        return this.guiConfigurationTable.getMenusSection(getIconsSectionPath());
     }
 
     public int getConfigSlot(@Nonnull String sectionName) {
-        return guiCache.getConfigSlot(getIconsSection(sectionName), guiConfigurationTable);
+        return this.guiCache.getConfigSlot(getIconsSection(sectionName), this.guiConfigurationTable);
     }
 
     public ItemStack getConfigItem(@Nonnull String sectionName) {
-        return guiCache.getConfigItem((getIconsSection(sectionName)), guiConfigurationTable);
+        return this.guiCache.getConfigItem((getIconsSection(sectionName)), this.guiConfigurationTable);
     }
 
     public ItemStack getConfigItem(@Nonnull String sectionName, @Nullable PlaceholderUtil placeholderUtil) {
-        return guiCache.getConfigItem(getIconsSection(sectionName), placeholderUtil, guiConfigurationTable);
+        return this.guiCache.getConfigItem(getIconsSection(sectionName), placeholderUtil, this.guiConfigurationTable);
     }
 
     public ConfigIcon getConfigIcon(@Nonnull String sectionName) {
@@ -142,27 +142,33 @@ public class ConfigurableGui extends Gui {
     }
 
     public void putDysfunctionalIcons() {
-        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, new ArrayList<>());
+        GuiSerializer.putDysfunctionalIcons(this, this.guiConfigurationTable,
+                this.guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, new ArrayList<>());
     }
 
     public void putDysfunctionalIcons(@Nullable PlaceholderUtil placeholderUtil) {
-        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, new ArrayList<>());
+        GuiSerializer.putDysfunctionalIcons(this, this.guiConfigurationTable,
+                this.guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, new ArrayList<>());
     }
 
     public void putDysfunctionalIcons(@Nonnull List<String> functionalSlots) {
-        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, functionalSlots);
+        GuiSerializer.putDysfunctionalIcons(this, this.guiConfigurationTable,
+                this.guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, functionalSlots);
     }
 
     public void putDysfunctionalIcons(@Nonnull String... functionalSlots) {
-        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, Arrays.asList(functionalSlots));
+        GuiSerializer.putDysfunctionalIcons(this, this.guiConfigurationTable,
+                this.guiConfigurationTable.getMenusSection(getIconsSectionPath()), null, Arrays.asList(functionalSlots));
     }
 
     public void putDysfunctionalIcons(@Nullable PlaceholderUtil placeholderUtil, @Nonnull String... functionalSlots) {
-        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, Arrays.asList(functionalSlots));
+        GuiSerializer.putDysfunctionalIcons(this, this.guiConfigurationTable,
+                this.guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, Arrays.asList(functionalSlots));
     }
 
     public void putDysfunctionalIcons(@Nullable PlaceholderUtil placeholderUtil, @Nonnull List<String> functionalSlots) {
-        GuiSerializer.putDysfunctionalIcons(this, guiConfigurationTable, guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, functionalSlots);
+        GuiSerializer.putDysfunctionalIcons(this, this.guiConfigurationTable,
+                this.guiConfigurationTable.getMenusSection(getIconsSectionPath()), placeholderUtil, functionalSlots);
     }
 
     /**
@@ -228,5 +234,4 @@ public class ConfigurableGui extends Gui {
         addItem(getConfigSlot(configName), icon);
         return icon;
     }
-
 }

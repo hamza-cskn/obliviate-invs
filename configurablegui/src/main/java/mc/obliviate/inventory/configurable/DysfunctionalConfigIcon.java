@@ -34,6 +34,7 @@ public class DysfunctionalConfigIcon extends ConfigIcon {
 
     /**
      * Reproduces normal Icon clone of the object.
+     *
      * @return new {@link Icon} instance using same item.
      */
     public Icon toFunctional() {
