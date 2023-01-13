@@ -4,6 +4,7 @@ import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
 import mc.obliviate.inventory.configurable.util.GuiSerializer;
 import mc.obliviate.util.placeholder.PlaceholderUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -30,7 +31,7 @@ public class ConfigurableGui extends Gui {
     public ConfigurableGui(@Nonnull Player player, @Nonnull String id, @Nonnull GuiConfigurationTable guiConfigurationTable) {
         super(player, id, "No title found", 0);
         this.guiConfigurationTable = guiConfigurationTable;
-        setTitle(guiConfigurationTable.getMenusSection(getSectionPath()).getString(guiConfigurationTable.getTitleSectionName(), "No Title Found"));
+        setTitle(ChatColor.translateAlternateColorCodes('&', guiConfigurationTable.getMenusSection(getSectionPath()).getString(guiConfigurationTable.getTitleSectionName(), "No Title Found")));
         setSize(guiConfigurationTable.getMenusSection(getSectionPath()).getInt(guiConfigurationTable.getSizeSectionName(), 0) * 9);
     }
 
@@ -182,7 +183,7 @@ public class ConfigurableGui extends Gui {
 
     /**
      * Use {@link #addConfigIcon(String)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}<br>
-     *
+     * <p>
      * Deprecated: {@code putIcon("any-icon", e -> {})}<br>
      * Modern: {@code addConfigIcon("any-icon").onClick({})}
      */
@@ -193,7 +194,7 @@ public class ConfigurableGui extends Gui {
 
     /**
      * Use {@link #addConfigIcon(String, PlaceholderUtil)} and {@link Icon#onClick(Consumer<InventoryClickEvent>)}<br>
-     *
+     * <p>
      * Deprecated: {@code putIcon("any-icon", placeholderUtil, e -> {})}<br>
      * Modern: {@code addConfigIcon("any-icon", placeholderUtil).onClick({})}
      */
