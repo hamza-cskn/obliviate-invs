@@ -6,4 +6,5 @@ dependencies {
     api("net.kyori:adventure-api:$adventure")
     api("net.kyori:adventure-text-serializer-legacy:$adventure")
     api("net.kyori:adventure-text-serializer-gson:$adventure")
+    implementation 'com.github.hamza-cskn:obliviate-utils:2.0.6'
 }
