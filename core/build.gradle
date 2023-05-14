@@ -1,10 +1,11 @@
 var adventure = "4.13.1"
 
 dependencies {
-    implementation 'org.jetbrains:annotations:24.0.1'
     compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
     api("net.kyori:adventure-api:$adventure")
     api("net.kyori:adventure-text-serializer-legacy:$adventure")
     api("net.kyori:adventure-text-serializer-gson:$adventure")
     implementation 'com.github.hamza-cskn:obliviate-utils:2.0.6'
 }
+
+project.setLibsDirName('../../target')
