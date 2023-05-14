@@ -201,7 +201,7 @@ public class AdvancedSlotManager {
             AdvancedSlot advancedSlot = this.slots.get(slot);
             if (!advancedSlot.isRefundOnClose()) continue;
             if (!compareSimilar(itemOnSlot, advancedSlot.getDisplayIcon().getItem())) {
-                if (this.hasSpace(e.getInventory())) {
+                if (this.hasSpace(e.getPlayer().getInventory())) {
                     e.getPlayer().getInventory().addItem(itemOnSlot);
                 } else {
                     e.getPlayer().getWorld().dropItemNaturally(e.getPlayer().getLocation(), itemOnSlot);
