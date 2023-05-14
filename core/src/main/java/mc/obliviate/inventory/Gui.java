@@ -2,8 +2,8 @@ package mc.obliviate.inventory;
 
 import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.event.customclosevent.FakeInventoryCloseEvent;
+import mc.obliviate.inventory.util.NMSUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,9 +30,6 @@ import java.util.function.Consumer;
 
 public abstract class Gui implements InventoryHolder {
 
-    private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.builder()
-            .hexColors().useUnusualXRepeatedCharacterHexFormat().build();
-
     private final Map<Integer, Icon> registeredIcons = new HashMap<>();
     private final List<BukkitTask> taskList = new ArrayList<>();
     private final String id;
@@ -43,10 +40,6 @@ public abstract class Gui implements InventoryHolder {
     private int size;
     private boolean isClosed = false;
 
-    /**
-     * @deprecated Use components instead
-     */
-    @Deprecated
     public Gui(@Nonnull Player player, @Nonnull String id, String title, @Nonnegative int rows) {
         this.player = player;
         this.size = rows * 9;
@@ -55,10 +48,6 @@ public abstract class Gui implements InventoryHolder {
         this.inventoryType = InventoryType.CHEST;
     }
 
-    /**
-     * @deprecated Use components instead
-     */
-    @Deprecated
     public Gui(@Nonnull Player player, @Nonnull String id, String title, InventoryType inventoryType) {
         this.player = player;
         this.size = 0;
@@ -71,7 +60,7 @@ public abstract class Gui implements InventoryHolder {
         this.player = player;
         this.size = rows * 9;
         // todo find a better way to do this using paper
-        this.title = LEGACY.serialize(title);
+        this.title = NMSUtil.LEGACY.serialize(title);
         this.id = id;
         this.inventoryType = InventoryType.CHEST;
     }
@@ -80,7 +69,7 @@ public abstract class Gui implements InventoryHolder {
         this.player = player;
         this.size = 0;
         // todo find a better way to do this using paper
-        this.title = LEGACY.serialize(title);
+        this.title = NMSUtil.LEGACY.serialize(title);
         this.id = id;
         this.inventoryType = inventoryType;
     }
