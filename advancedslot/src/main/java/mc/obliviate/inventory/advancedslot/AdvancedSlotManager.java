@@ -205,7 +205,7 @@ public class AdvancedSlotManager {
                 InventoryView openInventory = e.getPlayer().getOpenInventory();
                 Inventory bottomInventory = openInventory.getBottomInventory();
                 if (this.hasSpace(bottomInventory)) {
-                    e.getPlayer().getInventory().addItem(itemOnSlot);
+                    bottomInventory.addItem(itemOnSlot);
                 } else {
                     e.getPlayer().getWorld().dropItemNaturally(e.getPlayer().getLocation(), itemOnSlot);
                 }
