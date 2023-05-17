@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'mc.obliviate'
-version '4.1.10'
+version '4.1.12'
 sourceCompatibility = 8
 compileJava.options.encoding = 'UTF-8'
 
