@@ -72,9 +72,9 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public Icon setLore(final List<Component> lore) {
+	public ComponentIcon setLore(final List<Component> lore) {
 		final ItemMeta meta = icon.getItem().getItemMeta();
-		if (meta == null) return icon;
+		if (meta == null) return this;
 
 		if (NMSUtil.CAN_USE_COMPONENTS) {
 			try {
@@ -88,7 +88,7 @@ public class ComponentProxy implements GuiIcon {
 
 		meta.setLore(lore.stream().map(NMSUtil.LEGACY::serialize).collect(Collectors.toList()));
 		icon.getItem().setItemMeta(meta);
-		return icon;
+		return this;
 	}
 
 	/**
@@ -98,9 +98,9 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public Icon setName(final Component name) {
+	public ComponentIcon setName(final Component name) {
 		final ItemMeta meta = icon.getItem().getItemMeta();
-		if (meta == null) return icon;
+		if (meta == null) return this;
 
 		if (NMSUtil.CAN_USE_COMPONENTS) {
 			try {
@@ -113,7 +113,7 @@ public class ComponentProxy implements GuiIcon {
 
 		meta.setDisplayName(NMSUtil.LEGACY.serialize(name));
 		icon.getItem().setItemMeta(meta);
-		return icon;
+		return this;
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public Icon appendLore(final Component... newLines) {
+	public ComponentIcon appendLore(final Component... newLines) {
 		return appendLore(new ArrayList<>(Arrays.asList(newLines)));
 	}
 
@@ -134,9 +134,9 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public Icon appendLore(final List<Component> lore) {
+	public ComponentIcon appendLore(final List<Component> lore) {
 		final ItemMeta meta = icon.getItem().getItemMeta();
-		if (meta == null) return icon;
+		if (meta == null) return this;
 
 		if (NMSUtil.CAN_USE_COMPONENTS) {
 			try {
@@ -159,7 +159,8 @@ public class ComponentProxy implements GuiIcon {
 		else list = serialized;
 
 		// no need to re-call the component based method just call the legacy one
-		return icon.setLore(list);
+		icon.setLore(list);
+		return this;
 	}
 
 	/**
@@ -170,9 +171,21 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public Icon insertLore(final int index, final List<Component> newLines) {
+	public ComponentIcon insertLore(final int index, final Component... newLines) {
+		return insertLore(index, new ArrayList<>(Arrays.asList(newLines)));
+	}
+
+	/**
+	 * inserts new lines to lore of the icon
+	 *
+	 * @param index    line index. entry 0 adds new line as first line.
+	 * @param newLines lore lines
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentIcon insertLore(final int index, final List<Component> newLines) {
 		final ItemMeta meta = icon.getItem().getItemMeta();
-		if (meta == null) return icon;
+		if (meta == null) return this;
 
 		if (NMSUtil.CAN_USE_COMPONENTS) {
 			try {
@@ -195,19 +208,8 @@ public class ComponentProxy implements GuiIcon {
 		else list = serialized;
 
 		// no need to re-call the component based method just call the legacy one
-		return icon.setLore(list);
-	}
-
-	/**
-	 * inserts new lines to lore of the icon
-	 *
-	 * @param index    line index. entry 0 adds new line as first line.
-	 * @param newLines lore lines
-	 * @return this
-	 */
-	@Nonnull
-	public Icon insertLore(final int index, final Component... newLines) {
-		return insertLore(index, new ArrayList<>(Arrays.asList(newLines)));
+		icon.setLore(list);
+		return this;
 	}
 
 	/**
