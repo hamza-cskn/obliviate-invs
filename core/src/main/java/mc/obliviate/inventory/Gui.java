@@ -21,6 +21,7 @@ import org.bukkit.scheduler.BukkitTask;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -121,7 +122,7 @@ public abstract class Gui implements InventoryHolder {
         final Gui gui = InventoryAPI.getInstance().getGuiFromInventory(event.getPlayer().getOpenInventory().getTopInventory());
         if (gui == null) return;
         if (!gui.equals(this)) return;
-        taskList.forEach(BukkitTask::cancel);
+        gui.stopAllTasks();
     }
 
     public void open() {
@@ -354,6 +355,21 @@ public abstract class Gui implements InventoryHolder {
      */
     public void setClosed(boolean closed) {
         this.isClosed = closed;
+    }
+
+    public List<BukkitTask> getTaskList() {
+        return Collections.unmodifiableList(taskList);
+    }
+
+    public void stopTask(@Nonnull BukkitTask task) {
+        Preconditions.checkNotNull(task, "task cannot be null");
+        task.cancel();
+        taskList.remove(task);
+    }
+
+    public void stopAllTasks() {
+        taskList.forEach(BukkitTask::cancel);
+        taskList.clear();
     }
 
     private boolean checkContainsInt(int i, Iterable<Integer> ints) {
