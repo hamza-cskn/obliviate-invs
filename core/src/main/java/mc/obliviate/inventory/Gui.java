@@ -84,7 +84,7 @@ public abstract class Gui implements InventoryHolder {
      * this check. So you can override from icon click event.
      *
      * @param event Called event.
-     * @return force to uncancel
+     * @return force to uncancel, should be allowed.
      */
     public boolean onClick(InventoryClickEvent event) {
         return false;
@@ -98,20 +98,23 @@ public abstract class Gui implements InventoryHolder {
      * this check. So you can override from icon drag event.
      *
      * @param event Called event.
-     * @return force to uncancel
+     * @return force to uncancel, should be allowed.
      */
     public boolean onDrag(InventoryDragEvent event) {
         return false;
     }
 
 
+    /**
+     * @param event The InventoryOpenEvent that triggered when the Gui opened.
+     */
     public void onOpen(InventoryOpenEvent event) {
 
     }
 
     /**
-     * @param event event
-     * @return force to uncancel
+     * @param event The InventoryCloseEvent that triggered when the Gui closed
+     * WARN: Always call super.onClose() event! This method is not empty!
      */
     public void onClose(InventoryCloseEvent event) {
         if (event instanceof FakeInventoryCloseEvent) return;
