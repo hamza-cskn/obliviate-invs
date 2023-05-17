@@ -3,6 +3,11 @@ package mc.obliviate.inventory;
 import mc.obliviate.inventory.util.NMSUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import javax.annotation.Nonnull;
@@ -10,13 +15,16 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class ComponentManager {
+public class ComponentProxy implements GuiIcon {
 
 	private static final GsonComponentSerializer SERIALIZER = GsonComponentSerializer.gson();
 	private static final Field DISPLAY_NAME_FIELD;
 	private static final Field LORE_FIELD;
+
 	static {
 		try {
 			final Class<?> metaClass = NMSUtil.getCraftBukkitClass("inventory.CraftMetaItem");
@@ -34,12 +42,12 @@ public class ComponentManager {
 
 	private final Icon icon;
 
-	public static ComponentManager fromIcon(Icon icon) {
-		return new ComponentManager(icon);
+	private ComponentProxy(Icon icon) {
+		this.icon = icon;
 	}
 
-	private ComponentManager(Icon icon) {
-		this.icon = icon;
+	public static ComponentProxy fromIcon(Icon icon) {
+		return new ComponentProxy(icon);
 	}
 
 	public Icon toIcon() {
@@ -200,6 +208,129 @@ public class ComponentManager {
 	@Nonnull
 	public Icon insertLore(final int index, final Component... newLines) {
 		return insertLore(index, new ArrayList<>(Arrays.asList(newLines)));
+	}
+
+	/**
+	 * sets durability of icon
+	 *
+	 * @param newDamage durability
+	 * @return this
+	 */
+	@SuppressWarnings("deprecation")
+	@Nonnull
+	public ComponentProxy setDurability(final short newDamage) {
+		this.icon.setDurability(newDamage);
+		return this;
+	}
+
+	/**
+	 * sets durability of the icon
+	 *
+	 * @param newDamage durability
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentProxy setDurability(final int newDamage) {
+		this.setDurability((short) newDamage);
+		return this;
+	}
+
+	/**
+	 * sets item amount of the icon
+	 *
+	 * @param amount new amount
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentProxy setAmount(final int amount) {
+		this.icon.setAmount(amount);
+		return this;
+	}
+
+	/**
+	 * hides a flag of the icon
+	 *
+	 * @param itemFlag item flag on meta
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentProxy hideFlags(final ItemFlag... itemFlag) {
+		this.icon.hideFlags(itemFlag);
+		return this;
+	}
+
+	/**
+	 * hides all flags
+	 *
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentProxy hideFlags() {
+		this.icon.hideFlags();
+		return this;
+	}
+
+	/**
+	 * enchants the item
+	 *
+	 * @param enchantment enchant
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentProxy enchant(final Enchantment enchantment) {
+		enchant(enchantment, enchantment.getStartLevel());
+		return this;
+	}
+
+	/**
+	 * enchants the item
+	 *
+	 * @param enchantments enchant
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentProxy enchant(final Map<Enchantment, Integer> enchantments) {
+		this.icon.enchant(enchantments);
+		return this;
+	}
+
+	/**
+	 * enchants the item
+	 *
+	 * @param enchantment enchant
+	 * @param level       enchantment level
+	 * @return this
+	 */
+	@Nonnull
+	public ComponentProxy enchant(final Enchantment enchantment, final int level) {
+		this.icon.enchant(enchantment, level);
+		return this;
+	}
+
+	@Nonnull
+	public Consumer<InventoryClickEvent> getClickAction() {
+		return this.icon.getClickAction();
+	}
+
+	@Nonnull
+	public ComponentProxy onClick(Consumer<InventoryClickEvent> clickAction) {
+		this.icon.onClick(clickAction);
+		return this;
+	}
+
+	@Nonnull
+	public Consumer<InventoryDragEvent> getDragAction() {
+		return this.icon.getDragAction();
+	}
+
+	@Nonnull
+	public ComponentProxy onDrag(Consumer<InventoryDragEvent> dragAction) {
+		this.icon.onDrag(dragAction);
+		return this;
+	}
+
+	public ItemStack getItem() {
+		return icon.getItem();
 	}
 
 }
