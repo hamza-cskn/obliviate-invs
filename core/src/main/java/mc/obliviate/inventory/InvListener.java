@@ -54,7 +54,7 @@ public class InvListener implements Listener {
             event.setCancelled(false);
         }
 
-        final Icon item = openGui.getItems().get(index);
+        final GuiIcon item = openGui.getItems().get(index);
         if (item == null) return;
 
         item.getClickAction().accept(event);
@@ -85,7 +85,7 @@ public class InvListener implements Listener {
         //if forced to uncancel, uncancel. else cancel.
         event.setCancelled(!openGui.onDrag(event));
         for (int index : event.getRawSlots()) {
-            final Icon item = openGui.getItems().get(index);
+            final GuiIcon item = openGui.getItems().get(index);
 
             if (item == null) return;
             item.getDragAction().accept(event);
