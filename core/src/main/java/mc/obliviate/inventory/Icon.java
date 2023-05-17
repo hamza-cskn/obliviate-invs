@@ -37,8 +37,8 @@ public class Icon implements GuiIcon {
 	/**
 	 * @return ComponentProxy of the Icon. The object supports applying adventure components to the Icon.
 	 */
-	public ComponentProxy toComp() {
-		return ComponentProxy.fromIcon(this);
+	public ComponentIcon toComp() {
+		return ComponentIcon.fromIcon(this);
 	}
 
 	/**

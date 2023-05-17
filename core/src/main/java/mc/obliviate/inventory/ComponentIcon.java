@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-public class ComponentProxy implements GuiIcon {
+public class ComponentIcon implements GuiIcon {
 
 	private static final GsonComponentSerializer SERIALIZER = GsonComponentSerializer.gson();
 	private static final Field DISPLAY_NAME_FIELD;
@@ -42,12 +42,12 @@ public class ComponentProxy implements GuiIcon {
 
 	private final Icon icon;
 
-	private ComponentProxy(Icon icon) {
+	private ComponentIcon(Icon icon) {
 		this.icon = icon;
 	}
 
-	public static ComponentProxy fromIcon(Icon icon) {
-		return new ComponentProxy(icon);
+	public static ComponentIcon fromIcon(Icon icon) {
+		return new ComponentIcon(icon);
 	}
 
 	public Icon toIcon() {
@@ -61,7 +61,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public Icon setLore(final Component... lore) {
+	public ComponentIcon setLore(final Component... lore) {
 		return setLore(new ArrayList<>(Arrays.asList(lore)));
 	}
 
@@ -220,7 +220,7 @@ public class ComponentProxy implements GuiIcon {
 	 */
 	@SuppressWarnings("deprecation")
 	@Nonnull
-	public ComponentProxy setDurability(final short newDamage) {
+	public ComponentIcon setDurability(final short newDamage) {
 		this.icon.setDurability(newDamage);
 		return this;
 	}
@@ -232,7 +232,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public ComponentProxy setDurability(final int newDamage) {
+	public ComponentIcon setDurability(final int newDamage) {
 		this.setDurability((short) newDamage);
 		return this;
 	}
@@ -244,7 +244,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public ComponentProxy setAmount(final int amount) {
+	public ComponentIcon setAmount(final int amount) {
 		this.icon.setAmount(amount);
 		return this;
 	}
@@ -256,7 +256,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public ComponentProxy hideFlags(final ItemFlag... itemFlag) {
+	public ComponentIcon hideFlags(final ItemFlag... itemFlag) {
 		this.icon.hideFlags(itemFlag);
 		return this;
 	}
@@ -267,7 +267,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public ComponentProxy hideFlags() {
+	public ComponentIcon hideFlags() {
 		this.icon.hideFlags();
 		return this;
 	}
@@ -279,7 +279,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public ComponentProxy enchant(final Enchantment enchantment) {
+	public ComponentIcon enchant(final Enchantment enchantment) {
 		enchant(enchantment, enchantment.getStartLevel());
 		return this;
 	}
@@ -291,7 +291,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public ComponentProxy enchant(final Map<Enchantment, Integer> enchantments) {
+	public ComponentIcon enchant(final Map<Enchantment, Integer> enchantments) {
 		this.icon.enchant(enchantments);
 		return this;
 	}
@@ -304,7 +304,7 @@ public class ComponentProxy implements GuiIcon {
 	 * @return this
 	 */
 	@Nonnull
-	public ComponentProxy enchant(final Enchantment enchantment, final int level) {
+	public ComponentIcon enchant(final Enchantment enchantment, final int level) {
 		this.icon.enchant(enchantment, level);
 		return this;
 	}
@@ -315,7 +315,7 @@ public class ComponentProxy implements GuiIcon {
 	}
 
 	@Nonnull
-	public ComponentProxy onClick(Consumer<InventoryClickEvent> clickAction) {
+	public ComponentIcon onClick(Consumer<InventoryClickEvent> clickAction) {
 		this.icon.onClick(clickAction);
 		return this;
 	}
@@ -326,7 +326,7 @@ public class ComponentProxy implements GuiIcon {
 	}
 
 	@Nonnull
-	public ComponentProxy onDrag(Consumer<InventoryDragEvent> dragAction) {
+	public ComponentIcon onDrag(Consumer<InventoryDragEvent> dragAction) {
 		this.icon.onDrag(dragAction);
 		return this;
 	}
