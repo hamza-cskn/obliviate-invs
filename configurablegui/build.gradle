@@ -1,6 +1,8 @@
+var adventure = "4.13.1"
 dependencies {
     compileOnly project(':core')
     compileOnly 'org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT'
+    compileOnly "net.kyori:adventure-api:$adventure"
     implementation 'com.github.hamza-cskn:obliviate-utils:2.0.5'
 }
 
