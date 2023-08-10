@@ -15,6 +15,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class ConfigurableGui extends Gui {
     public ConfigurableGui(@Nonnull Player player, @Nonnull String id, @Nonnull GuiConfigurationTable guiConfigurationTable) {
         super(player, id, "No title found", 0);
         this.guiConfigurationTable = guiConfigurationTable;
-        setTitle(ChatColor.translateAlternateColorCodes('&', guiConfigurationTable.getMenusSection(getSectionPath()).getString(guiConfigurationTable.getTitleSectionName(), "No Title Found")));
+        setTitle(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(guiConfigurationTable.getMenusSection(getSectionPath()).getString(guiConfigurationTable.getTitleSectionName(), "No Title Found"))));
         setSize(guiConfigurationTable.getMenusSection(getSectionPath()).getInt(guiConfigurationTable.getSizeSectionName(), 0) * 9);
     }
 
