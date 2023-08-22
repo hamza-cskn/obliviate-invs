@@ -189,7 +189,7 @@ public abstract class Gui implements InventoryHolder {
 	 */
 	public void fillColumn(GuiIcon item, @Nonnegative int column) {
 		Preconditions.checkArgument(column < 9);
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < (size/9); i++) {
 			this.addItem((i * 9 + column), item);
 		}
 	}
