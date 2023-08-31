@@ -6,6 +6,7 @@ dependencies {
     compileOnly 'net.kyori:adventure-text-serializer-legacy:$adventure'
     compileOnly 'net.kyori:adventure-text-serializer-gson:$adventure'
     implementation 'com.github.hamza-cskn:obliviate-utils:2.0.6'
+    implementation 'com.github.Anon8281:UniversalScheduler:0.1.6'
 }
 
 project.setLibsDirName('../../target')

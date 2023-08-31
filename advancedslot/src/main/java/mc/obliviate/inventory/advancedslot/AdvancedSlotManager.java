@@ -1,8 +1,10 @@
 package mc.obliviate.inventory.advancedslot;
 
+import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler;
 import mc.obliviate.inventory.Gui;
 import mc.obliviate.inventory.Icon;
-import org.bukkit.Bukkit;
+
+import mc.obliviate.inventory.Scheduler;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -142,7 +144,10 @@ public class AdvancedSlotManager {
                         default:
                             return;
                     }
-                    Bukkit.getScheduler().runTaskLater(this.gui.getPlugin(), () -> {
+
+                    TaskScheduler scheduler = Scheduler.getScheduler();
+
+                    scheduler.runTaskLater(() -> {
                         if (this.gui.getInventory().getItem(aSlot.getSlot()) == null) {
                             aSlot.reset();
                         }
