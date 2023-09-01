@@ -10,11 +10,6 @@ public class GuiPreCloseEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
-
     private final InventoryCloseEvent event;
     private final Gui gui;
     private boolean cancelled;
@@ -22,6 +17,10 @@ public class GuiPreCloseEvent extends Event implements Cancellable {
     public GuiPreCloseEvent(InventoryCloseEvent event, Gui gui) {
         this.event = event;
         this.gui = gui;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     @Override

@@ -18,6 +18,10 @@ public class GuiPreDragEvent extends Event implements Cancellable {
         this.gui = gui;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     @Override
     public HandlerList getHandlers() {
         return handlers;
@@ -31,9 +35,6 @@ public class GuiPreDragEvent extends Event implements Cancellable {
         return gui;
     }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
 
     @Override
     public boolean isCancelled() {
