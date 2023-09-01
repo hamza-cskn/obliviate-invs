@@ -434,7 +434,7 @@ public abstract class Gui implements InventoryHolder {
 	 * @param title Requested inventory title.
 	 * @return Created inventory.
 	 */
-	private Inventory createInventory(InventoryHolder owner, int size, String title) {
+	protected Inventory createInventory(InventoryHolder owner, int size, String title) {
 		return Bukkit.createInventory(owner, size, title);
 	}
 
@@ -448,7 +448,7 @@ public abstract class Gui implements InventoryHolder {
 	 * @param title Requested inventory title.
 	 * @return Created inventory.
 	 */
-	private Inventory createInventory(InventoryHolder owner, InventoryType type, String title) {
+	protected Inventory createInventory(InventoryHolder owner, InventoryType type, String title) {
 		return Bukkit.createInventory(owner, type, title);
 	}
 
