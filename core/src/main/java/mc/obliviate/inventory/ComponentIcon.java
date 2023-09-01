@@ -34,8 +34,8 @@ public class ComponentIcon implements GuiIcon {
 
 			LORE_FIELD = metaClass.getDeclaredField("lore");
 			LORE_FIELD.setAccessible(true);
-		} catch (NoSuchFieldException | ClassNotFoundException exception) {
-			exception.printStackTrace();
+		} catch (NoSuchFieldException | ClassNotFoundException e) {
+			e.printStackTrace();
 			throw new RuntimeException("Could not initialize Icon.class, please report this to the plugin developer!");
 		}
 	}

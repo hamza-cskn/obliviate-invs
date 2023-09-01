@@ -125,6 +125,9 @@ public abstract class Gui implements InventoryHolder {
 		gui.stopAllTasks();
 	}
 
+	/**
+	 * Opens the inventory.
+	 */
 	public void open() {
 		Preconditions.checkNotNull(InventoryAPI.getInstance(), "Inventory API is not initialized. Please use new InventoryAPI().init() also, you can visit wiki of obliviate-invs.");
 		final Gui gui = InventoryAPI.getInstance().getPlayersCurrentGui(this.player);
@@ -144,20 +147,41 @@ public abstract class Gui implements InventoryHolder {
 		this.player.openInventory(inventory);
 	}
 
+	/**
+	 * Fills the gui with icon.
+	 *
+	 * @param icon Icon to fill.
+	 */
 	public void fillGui(GuiIcon icon) {
 		for (int slot = 0; slot < size; slot++) {
 			this.addItem(slot, icon);
 		}
 	}
 
+	/**
+	 * Fills the gui with item with icon.
+	 *
+	 * @param item Icon to fill.
+	 */
 	public void fillGui(ItemStack item) {
 		this.fillGui(new Icon(item));
 	}
 
+	/**
+	 * Fills the gui with item with material.
+	 *
+	 * @param material Material of item to fill.
+	 */
 	public void fillGui(Material material) {
 		this.fillGui(new Icon(material));
 	}
 
+	/**
+	 * Fills the gui with the icon, except the blacklisted slots.
+	 *
+	 * @param icon Icon to fill.
+	 * @param blacklisted_slots Slots to not fill.
+	 */
 	public void fillGui(GuiIcon icon, Iterable<Integer> blacklisted_slots) {
 		for (int slot = 0; slot < size; slot++) {
 			if (!checkContainsInt(slot, blacklisted_slots)) {
@@ -170,8 +194,8 @@ public abstract class Gui implements InventoryHolder {
 	 * Puts an icon to entire a row of inventory.
 	 * Row numbers starts from 0.
 	 *
-	 * @param item
-	 * @param row
+	 * @param item Icon to put.
+	 * @param row Row number. Starts from 0.
 	 */
 	public void fillRow(GuiIcon item, @Nonnegative int row) {
 		Preconditions.checkArgument(row < this.size / 9);
@@ -184,8 +208,8 @@ public abstract class Gui implements InventoryHolder {
 	 * Puts an icon to entire a column of inventory.
 	 * Column numbers starts from 0.
 	 *
-	 * @param item
-	 * @param column
+	 * @param item  Icon to put.
+	 * @param column Column number. Starts from 0.
 	 */
 	public void fillColumn(GuiIcon item, @Nonnegative int column) {
 		Preconditions.checkArgument(column < 9);
@@ -357,16 +381,35 @@ public abstract class Gui implements InventoryHolder {
 		this.isClosed = closed;
 	}
 
+	/**
+	 * Gets tasks of the gui. Which can be
+	 * created by {@link Gui#updateTask(long, long, Consumer)} or {@link Gui#runTaskLater(long, Consumer)}.
+	 * <p>
+	 * To remove a task, use {@link Gui#stopTask(MyScheduledTask)}.
+	 * or {@link Gui#stopAllTasks()} to remove all tasks.
+	 * </p>
+	 * @return Unmodifiable list of tasks.
+	 */
 	public List<MyScheduledTask> getTaskList() {
 		return Collections.unmodifiableList(taskList);
 	}
 
+	/**
+	 * Stops a gui based task. Which can be
+	 * created by {@link Gui#updateTask(long, long, Consumer)} or {@link Gui#runTaskLater(long, Consumer)}.
+	 *
+	 * @param task Task to stop.
+	 */
 	public void stopTask(@Nonnull MyScheduledTask task) {
 		Preconditions.checkNotNull(task, "task cannot be null");
 		task.cancel();
 		taskList.remove(task);
 	}
 
+	/**
+	 * Stops all gui based tasks. Which can be
+	 * created by {@link Gui#updateTask(long, long, Consumer)} or {@link Gui#runTaskLater(long, Consumer)}.
+	 */
 	public void stopAllTasks() {
 		taskList.forEach(MyScheduledTask::cancel);
 		taskList.clear();
