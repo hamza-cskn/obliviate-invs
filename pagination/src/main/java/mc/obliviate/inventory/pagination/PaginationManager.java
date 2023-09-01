@@ -150,8 +150,14 @@ public class PaginationManager {
      * @return calculates last page's number
      */
     public int getLastPage() {
-        if (this.slots.size() == 0) return 0;
-        return Math.max(this.items.size() / this.slots.size(), 0);
+        if (this.slots.isEmpty())
+            return 0;
+        
+        int divison = (int) Math.floor(this.items.size() / this.slots.size());
+    
+        if (this.items.size() % this.slots.size() == 0)
+            return divison - 1;
+        return divison;
     }
 
     /**
