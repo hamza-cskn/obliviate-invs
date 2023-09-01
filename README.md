@@ -55,3 +55,14 @@ Visit [wiki](https://github.com/Obliviated/obliviate-invs/wiki/) page to see usa
   project: [Click to go gist](https://gist.github.com/hamza-cskn/af71812e9235025be348f2600502d6cd)
 * Gradient and TextAnimation algorithms for
   GUIs: [Click to go gist](https://gist.github.com/hamza-cskn/c741466e33bb359210de3a24bb52c7c6)
+
+## Star History
+
+<a href="https://star-history.com/#hamza-cskn/obliviate-invs&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=hamza-cskn/obliviate-invs&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=hamza-cskn/obliviate-invs&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hamza-cskn/obliviate-invs&type=Date" />
+  </picture>
+</a>
+
