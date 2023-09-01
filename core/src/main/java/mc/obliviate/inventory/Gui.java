@@ -1,6 +1,5 @@
 package mc.obliviate.inventory;
 
-import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler;
 import com.github.Anon8281.universalScheduler.scheduling.tasks.MyScheduledTask;
 import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.event.customclosevent.FakeInventoryCloseEvent;

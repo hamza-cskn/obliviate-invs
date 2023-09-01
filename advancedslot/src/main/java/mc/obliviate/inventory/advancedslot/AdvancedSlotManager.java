@@ -85,7 +85,6 @@ public class AdvancedSlotManager {
                     switch (e.getAction()) {
                         case HOTBAR_MOVE_AND_READD:
                         case HOTBAR_SWAP: // theoretically it's impossible, but I'll add for guarantee.
-
                             //check is it put action
                             ItemStack hotbarItem = getItemStackFromHotkeyClick(e);
                             if (!isNullOrAir(hotbarItem) && aSlot.getPrePutClickAction().test(e, hotbarItem)) return;
@@ -222,8 +221,6 @@ public class AdvancedSlotManager {
     private boolean hasSpace(Inventory inventory) {
         return Arrays.stream(inventory.getContents()).anyMatch(Objects::isNull);
     }
-
-
 
     public static Map<Gui, AdvancedSlotManager> getAdvancedSlotManagers() {
         return Collections.unmodifiableMap(ADVANCED_SLOT_MANAGERS);
