@@ -136,9 +136,9 @@ public abstract class Gui implements InventoryHolder {
 		InventoryAPI.getInstance().getPlayers().put(this.player.getUniqueId(), this);
 
 		if (this.inventoryType.equals(InventoryType.CHEST)) {
-			this.inventory = Bukkit.createInventory(null, this.size, this.title);
+			this.inventory = createInventory(null, this.size, this.title);
 		} else {
-			this.inventory = Bukkit.createInventory(null, this.inventoryType, this.title);
+			this.inventory = createInventory(null, this.inventoryType, this.title);
 		}
 
 		this.player.openInventory(inventory);
@@ -379,5 +379,37 @@ public abstract class Gui implements InventoryHolder {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Creates a chest inventory. Before opening the inventory.
+	 * {@link Gui#open()} method will call this method.
+	 * Fell free to override this method.
+	 *
+	 * @param owner Requested inventory owner. (Mostly null)
+	 * @param size  Requested inventory size (must be multiple of 9).
+	 * @param title Requested inventory title.
+	 * @return Created inventory.
+	 */
+	private Inventory createInventory(InventoryHolder owner, int size, String title) {
+		return Bukkit.createInventory(owner, size, title);
+	}
+
+	/**
+	 * Creates an inventory. Before opening the inventory.
+	 * {@link Gui#open()} method will call this method.
+	 * Fell free to override this method.
+	 *
+	 * @param owner Requested inventory owner. (Mostly null)
+	 * @param type  Requested inventory type.
+	 * @param title Requested inventory title.
+	 * @return Created inventory.
+	 */
+	private Inventory createInventory(InventoryHolder owner, InventoryType type, String title) {
+		return Bukkit.createInventory(owner, type, title);
+	}
+
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 }
