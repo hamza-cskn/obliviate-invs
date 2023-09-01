@@ -1,6 +1,7 @@
 dependencies {
     compileOnly project(':core')
     compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
+    implementation 'com.github.Anon8281:UniversalScheduler:0.1.6'
 }
 
 project.setLibsDirName('../../target')

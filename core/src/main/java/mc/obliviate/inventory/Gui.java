@@ -1,5 +1,7 @@
 package mc.obliviate.inventory;
 
+import com.github.Anon8281.universalScheduler.scheduling.schedulers.TaskScheduler;
+import com.github.Anon8281.universalScheduler.scheduling.tasks.MyScheduledTask;
 import com.google.common.base.Preconditions;
 import mc.obliviate.inventory.event.customclosevent.FakeInventoryCloseEvent;
 import mc.obliviate.inventory.util.NMSUtil;
@@ -16,7 +18,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -32,7 +33,7 @@ import java.util.function.Consumer;
 public abstract class Gui implements InventoryHolder {
 
 	private final Map<Integer, GuiIcon> registeredIcons;
-	private final List<BukkitTask> taskList = new ArrayList<>();
+	private final List<MyScheduledTask> taskList = new ArrayList<>();
 	private final String id;
 	private final InventoryType inventoryType;
 	public final Player player;
@@ -243,11 +244,14 @@ public abstract class Gui implements InventoryHolder {
 	 * @param periodInTicks
 	 * @param update
 	 */
-	public void updateTask(@Nonnegative long runDelayInTicks, @Nonnegative long periodInTicks, @Nonnull final Consumer<BukkitTask> update) {
+	public void updateTask(@Nonnegative long runDelayInTicks, @Nonnegative long periodInTicks, @Nonnull final Consumer<MyScheduledTask> update) {
 		Preconditions.checkNotNull(InventoryAPI.getInstance(), "InventoryAPI is not initialized.");
-		final BukkitTask[] bukkitTask = new BukkitTask[]{null};
-		bukkitTask[0] = Bukkit.getScheduler().runTaskTimer(getPlugin(), () -> update.accept(bukkitTask[0]), runDelayInTicks, periodInTicks);
-		taskList.add(bukkitTask[0]);
+		final MyScheduledTask[] scheduledTask = new MyScheduledTask[]{null};
+
+		TaskScheduler scheduler = Scheduler.getScheduler();
+
+		scheduledTask[0] = scheduler.runTaskTimer(() -> update.accept(scheduledTask[0]), runDelayInTicks, periodInTicks);
+		taskList.add(scheduledTask[0]);
 	}
 
 	/**
@@ -257,11 +261,14 @@ public abstract class Gui implements InventoryHolder {
 	 * @param runDelayInTicks
 	 * @param update
 	 */
-	public void runTaskLater(@Nonnegative long runDelayInTicks, @Nonnull final Consumer<BukkitTask> update) {
+	public void runTaskLater(@Nonnegative long runDelayInTicks, @Nonnull final Consumer<MyScheduledTask> update) {
 		Preconditions.checkNotNull(InventoryAPI.getInstance(), "InventoryAPI is not initialized.");
-		final BukkitTask[] bukkitTask = new BukkitTask[]{null};
-		bukkitTask[0] = Bukkit.getScheduler().runTaskLater(getPlugin(), () -> update.accept(bukkitTask[0]), runDelayInTicks);
-		taskList.add(bukkitTask[0]);
+		final MyScheduledTask[] scheduledTask = new MyScheduledTask[]{null};
+
+		TaskScheduler scheduler = Scheduler.getScheduler();
+
+		scheduledTask[0] = scheduler.runTaskLater(() -> update.accept(scheduledTask[0]), runDelayInTicks);
+		taskList.add(scheduledTask[0]);
 	}
 
 	@Nonnull
@@ -357,18 +364,18 @@ public abstract class Gui implements InventoryHolder {
 		this.isClosed = closed;
 	}
 
-	public List<BukkitTask> getTaskList() {
+	public List<MyScheduledTask> getTaskList() {
 		return Collections.unmodifiableList(taskList);
 	}
 
-	public void stopTask(@Nonnull BukkitTask task) {
+	public void stopTask(@Nonnull MyScheduledTask task) {
 		Preconditions.checkNotNull(task, "task cannot be null");
 		task.cancel();
 		taskList.remove(task);
 	}
 
 	public void stopAllTasks() {
-		taskList.forEach(BukkitTask::cancel);
+		taskList.forEach(MyScheduledTask::cancel);
 		taskList.clear();
 	}
 
