@@ -247,10 +247,7 @@ public abstract class Gui implements InventoryHolder {
 	public void updateTask(@Nonnegative long runDelayInTicks, @Nonnegative long periodInTicks, @Nonnull final Consumer<MyScheduledTask> update) {
 		Preconditions.checkNotNull(InventoryAPI.getInstance(), "InventoryAPI is not initialized.");
 		final MyScheduledTask[] scheduledTask = new MyScheduledTask[]{null};
-
-		TaskScheduler scheduler = Scheduler.getScheduler();
-
-		scheduledTask[0] = scheduler.runTaskTimer(() -> update.accept(scheduledTask[0]), runDelayInTicks, periodInTicks);
+		scheduledTask[0] = InventoryAPI.getScheduler().runTaskTimer(() -> update.accept(scheduledTask[0]), runDelayInTicks, periodInTicks);
 		taskList.add(scheduledTask[0]);
 	}
 
@@ -264,10 +261,7 @@ public abstract class Gui implements InventoryHolder {
 	public void runTaskLater(@Nonnegative long runDelayInTicks, @Nonnull final Consumer<MyScheduledTask> update) {
 		Preconditions.checkNotNull(InventoryAPI.getInstance(), "InventoryAPI is not initialized.");
 		final MyScheduledTask[] scheduledTask = new MyScheduledTask[]{null};
-
-		TaskScheduler scheduler = Scheduler.getScheduler();
-
-		scheduledTask[0] = scheduler.runTaskLater(() -> update.accept(scheduledTask[0]), runDelayInTicks);
+		scheduledTask[0] = InventoryAPI.getScheduler().runTaskLater(() -> update.accept(scheduledTask[0]), runDelayInTicks);
 		taskList.add(scheduledTask[0]);
 	}
 
