@@ -44,10 +44,11 @@ public class GuiSerializer {
 
     public static List<Integer> parseSlotString(String str) {
         if (str == null) return new ArrayList<>();
-        if (str.contains("-")) {
-            return parseStringAsIntegerRange(str);
-        } else if (str.contains(",")) {
+        str = str.replaceAll(" ", "");
+        if (str.contains(",")) {
             return parseStringAsIntegerList(str);
+        } else if (str.contains("-")) {
+            return parseStringAsIntegerRange(str);
         }
         return new ArrayList<>();
     }
@@ -77,7 +78,11 @@ public class GuiSerializer {
 
         for (final String slotText : slotStrings) {
             try {
-                pageSlots.add(Integer.parseInt(slotText));
+                if (slotText.contains("-")) {
+                    pageSlots.addAll(parseStringAsIntegerRange(slotText));
+                } else {
+                    pageSlots.add(Integer.parseInt(slotText));
+                }
             } catch (NumberFormatException ignore) {
             }
         }
