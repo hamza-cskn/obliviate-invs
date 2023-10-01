@@ -55,7 +55,7 @@ public class GuiSerializer {
 
     private static List<Integer> parseStringAsIntegerRange(String str) {
         final String[] slots = str.split("-");
-        if (slots.length != 2) new ArrayList<>();
+        if (slots.length != 2) return new ArrayList<>();
         int from, to;
 
         try {
