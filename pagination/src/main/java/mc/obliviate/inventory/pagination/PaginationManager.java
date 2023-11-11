@@ -150,7 +150,7 @@ public class PaginationManager {
      * @return calculates last page's number
      */
     public int getLastPage() {
-        if (this.slots.isEmpty())
+        if (this.slots.isEmpty() || this.items.isEmpty())
             return 0;
         
         int divison = (int) Math.floor(this.items.size() / this.slots.size());
