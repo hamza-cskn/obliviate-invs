@@ -153,11 +153,11 @@ public class PaginationManager {
         if (this.slots.isEmpty() || this.items.isEmpty())
             return 0;
         
-        int divison = (int) Math.floor(this.items.size() / this.slots.size());
+        int division = (int) Math.floor(this.items.size() / this.slots.size());
     
         if (this.items.size() % this.slots.size() == 0)
-            return divison - 1;
-        return divison;
+            return division - 1;
+        return division;
     }
 
     /**
