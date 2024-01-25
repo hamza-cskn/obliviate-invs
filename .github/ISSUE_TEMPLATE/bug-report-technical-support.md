@@ -7,13 +7,12 @@ assignees: hamza-cskn
 
 ---
 
-# Issue
-Explain issue.
+Explain issue here.
 
-# Checklist
+### Checklist
 Ensure you've done everything in this list before submitting the issue. (Just put the 'X' char between brackets.)
 
-[ ] I explained the expected behavior.
-[ ] I explained current behavior.
-[ ] I shared console outputs or I said there is no output.
-[ ] I do not assume that people already know what I am doing.
+- [ ] I explained the expected behavior.
+- [ ] I explained current behavior.
+- [ ] I shared console outputs or I said there is no output.
+- [ ] I do not assume that people already know what I am doing.
