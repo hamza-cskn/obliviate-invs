@@ -1,8 +1,8 @@
 ---
-name: Bug Report/Technical Support
-about: Use this when you think that you find bug or you cannot anything due to misunderstanding.
-title: ''
-labels: ''
+name: Bug Report
+about: Use this when you think that you find bug.
+title: "[BUG]"
+labels: bug
 assignees: hamza-cskn
 
 ---
