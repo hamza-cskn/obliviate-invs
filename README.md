@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/hamza-cskn/obliviate-invs.svg)](https://jitpack.io/#hamza-cskn/obliviate-invs) <-- current version
+![Downloads](https://jitpack.io/v/hamza-cskn/obliviate-invs/month.svg) [![](https://jitpack.io/v/hamza-cskn/obliviate-invs.svg)](https://jitpack.io/#hamza-cskn/obliviate-invs) <-- current version
 
 ## Maven
 
