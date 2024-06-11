@@ -31,7 +31,9 @@ public class NMSUtil {
 
     public static Class<?> getCraftBukkitClass(final String name) throws ClassNotFoundException {
         Class cl = Class.forName("org.bukkit.craftbukkit." + NMS + "." + name);
+        Bukkit.getLogger().info(Bukkit.getServer().getClass().getPackage().getName());
         Bukkit.getLogger().info("clye bak: " + cl);
+        Bukkit.getLogger().info("versiona bak: " + NMS);
         return Class.forName("org.bukkit.craftbukkit." + NMS + "." + name);
     }
 
