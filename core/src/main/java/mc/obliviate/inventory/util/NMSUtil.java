@@ -15,14 +15,17 @@ public class NMSUtil {
     private static boolean isPaper() {
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
+            Bukkit.getLogger().info("Paper detected");
             return true;
         } catch (ClassNotFoundException ignored) {
+            Bukkit.getLogger().info("Paper detected");
             return false;
         }
     }
 
     private static String getNMS() {
         final String version = Bukkit.getServer().getClass().getPackage().getName();
+        Bukkit.getLogger().info("version" + version);
         return version.substring(version.lastIndexOf('.') + 1);
     }
 

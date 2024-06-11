@@ -1,4 +1,4 @@
-var adventure = "4.13.1"
+var adventure = "4.17.0"
 dependencies {
     compileOnly project(':core')
     compileOnly 'org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT'
