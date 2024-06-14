@@ -11,7 +11,7 @@ public class PaginationManager {
 
     private final Gui gui;
     private final LinkedList<Integer> slots = new LinkedList<>();
-    private final LinkedList<Icon> items = new LinkedList<>();
+    private LinkedList<Icon> items = new LinkedList<>();
     private int page;
 
     public PaginationManager(Gui gui) {
@@ -164,7 +164,18 @@ public class PaginationManager {
      * Registers new itemstack to paginate. You don't have any limit to register.
      */
     public void addItem(Icon... icons) {
+
         this.items.addAll(Arrays.asList(icons));
+
+    }
+
+    /**
+     * Clear all items in pagination.
+     */
+    public void clearAllItems() {
+
+        this.items = new LinkedList<>();
+
     }
 
     /**
