@@ -174,7 +174,7 @@ public class PaginationManager {
      */
     public void clearAllItems() {
 
-        this.items = new LinkedList<>();
+        this.items.clear();
 
     }
 
