@@ -11,7 +11,7 @@ public class PaginationManager {
 
     private final Gui gui;
     private final LinkedList<Integer> slots = new LinkedList<>();
-    private LinkedList<Icon> items = new LinkedList<>();
+    private final LinkedList<Icon> items = new LinkedList<>();
     private int page;
 
     public PaginationManager(Gui gui) {
