@@ -164,18 +164,14 @@ public class PaginationManager {
      * Registers new itemstack to paginate. You don't have any limit to register.
      */
     public void addItem(Icon... icons) {
-
         this.items.addAll(Arrays.asList(icons));
-
     }
 
     /**
      * Clear all items in pagination.
      */
     public void clearAllItems() {
-
         this.items.clear();
-
     }
 
     /**
