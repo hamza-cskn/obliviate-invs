@@ -14,5 +14,5 @@ Ensure you've done everything in this list before submitting the issue. (Just pu
 
 - [ ] I explained the expected behavior.
 - [ ] I explained current behavior.
-- [ ] I shared console outputs or I said there is no output.
+- [ ] I shared console outputs or said there was no output. (Please do not use pastesbin.com. Here is an alternative: https://pastes.dev/)
 - [ ] I did not assume that people already knew what I was doing.
