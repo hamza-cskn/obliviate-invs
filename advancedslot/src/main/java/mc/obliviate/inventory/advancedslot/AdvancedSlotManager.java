@@ -9,7 +9,6 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -203,8 +202,7 @@ public class AdvancedSlotManager {
             AdvancedSlot advancedSlot = this.slots.get(slot);
             if (!advancedSlot.isRefundOnClose()) continue;
             if (!compareSimilar(itemOnSlot, advancedSlot.getDisplayIcon().getItem())) {
-                InventoryView openInventory = e.getPlayer().getOpenInventory();
-                Inventory bottomInventory = openInventory.getBottomInventory();
+                Inventory bottomInventory = e.getPlayer().getInventory();
                 if (this.hasSpace(bottomInventory)) {
                     bottomInventory.addItem(itemOnSlot);
                 } else {

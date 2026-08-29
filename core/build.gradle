@@ -1,12 +1,13 @@
-var adventure = "4.13.1"
-
 dependencies {
-    compileOnly 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
-    compileOnly "net.kyori:adventure-api:$adventure"
-    compileOnly 'net.kyori:adventure-text-serializer-legacy:$adventure'
-    compileOnly 'net.kyori:adventure-text-serializer-gson:$adventure'
-    implementation 'com.github.hamza-cskn:obliviate-utils:2.0.6'
-    implementation 'com.github.Anon8281:UniversalScheduler:0.1.6'
-}
+    compileOnly "org.spigotmc:spigot:$spigotVersion"
+    compileOnly "net.kyori:adventure-api:$adventureVersion"
+    compileOnly "net.kyori:adventure-text-serializer-legacy:$adventureVersion"
+    compileOnly "net.kyori:adventure-text-serializer-gson:$adventureVersion"
+    implementation "com.github.hamza-cskn:obliviate-utils:$obliviateUtilsVersion"
+    implementation "com.github.Anon8281:UniversalScheduler:$universalSchedulerVersion"
 
-project.setLibsDirName('../../target')
+    testImplementation "org.spigotmc:spigot:$spigotVersion"
+    testImplementation "net.kyori:adventure-api:$adventureVersion"
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-inline:4.11.0'
+}

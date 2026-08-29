@@ -115,14 +115,10 @@ public abstract class Gui implements InventoryHolder {
 
 	/**
 	 * @param event The InventoryCloseEvent that triggered when the Gui closed
-	 *              WARN: Always call super.onClose() event! This method is not empty!
+	 *              WARN: Always call super.onClose(event)! This method stops GUI tasks.
 	 */
 	public void onClose(InventoryCloseEvent event) {
-		if (event instanceof FakeInventoryCloseEvent) return;
-		final Gui gui = InventoryAPI.getInstance().getGuiFromInventory(event.getPlayer().getOpenInventory().getTopInventory());
-		if (gui == null) return;
-		if (!gui.equals(this)) return;
-		gui.stopAllTasks();
+		stopAllTasks();
 	}
 
 	/**
@@ -136,6 +132,7 @@ public abstract class Gui implements InventoryHolder {
 			Bukkit.getPluginManager().callEvent(new FakeInventoryCloseEvent(this.player.getOpenInventory()));
 		}
 
+		this.isClosed = false;
 		InventoryAPI.getInstance().getPlayers().put(this.player.getUniqueId(), this);
 
 		if (this.inventoryType.equals(InventoryType.CHEST)) {

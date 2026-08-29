@@ -68,10 +68,13 @@ public class InvListener implements Listener {
         if (openGui == null) return;
         if (!event.getInventory().equals(openGui.getInventory())) return;
 
-        Bukkit.getPluginManager().callEvent(new GuiPreCloseEvent(event, openGui));
-        openGui.onClose(event);
-        openGui.setClosed(true);
-        inventoryAPI.getPlayers().remove(player.getUniqueId());
+        try {
+            Bukkit.getPluginManager().callEvent(new GuiPreCloseEvent(event, openGui));
+            openGui.onClose(event);
+        } finally {
+            openGui.setClosed(true);
+            inventoryAPI.getPlayers().remove(player.getUniqueId(), openGui);
+        }
     }
 
     @EventHandler
